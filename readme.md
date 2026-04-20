@@ -28,14 +28,14 @@ git clone https://github.com/aimimisman/farmster.git
 cd farmster
 ```
 
-Make sure `main` is up to date:
+Make sure `main` is updated first:
 
 ```bash
 git checkout main
 git pull origin main
 ```
 
-Create your personal branch:
+Create your branch using your name:
 
 ```bash
 git checkout -b yourname
@@ -44,10 +44,10 @@ git checkout -b yourname
 Example:
 
 ```bash
-git checkout -b ali
+git checkout -b aimi
 ```
 
-Push your branch:
+Push your branch to GitHub:
 
 ```bash
 git push -u origin yourname
@@ -56,14 +56,16 @@ git push -u origin yourname
 Example:
 
 ```bash
-git push -u origin ali
+git push -u origin aimi
 ```
+
+> If push does not work, first make sure you already pulled from `main` before creating your branch.
 
 ---
 
 ## Every Time You Start Working
 
-Get the latest code from `main`:
+Update local `main` first:
 
 ```bash
 git checkout main
@@ -76,7 +78,7 @@ Switch to your branch:
 git checkout yourname
 ```
 
-Update your branch:
+Merge latest `main` into your branch:
 
 ```bash
 git merge main
@@ -86,13 +88,19 @@ git merge main
 
 ## After You Make Changes
 
+Check changed files:
+
+```bash
+git status
+```
+
 Add your changes:
 
 ```bash
 git add .
 ```
 
-Commit with a clear message:
+Commit your changes:
 
 ```bash
 git commit -m "Describe your changes clearly"
@@ -139,6 +147,60 @@ Follow this every deployment:
 6. Open PR
 7. Merge into `main`
 8. Deploy from `main`
+
+---
+
+## If You Get Errors
+
+### Error: `fatal: not a git repository`
+
+You are not inside the repo folder.
+
+Run:
+
+```bash
+cd farmster
+```
+
+If you have not cloned the repo yet:
+
+```bash
+git clone https://github.com/aimimisman/farmster.git
+cd farmster
+```
+
+---
+
+### Error: `src refspec yourname does not match any`
+
+Usually this means your branch was not created from updated `main`, or Git cannot push the branch properly yet.
+
+Fix it with:
+
+```bash
+git checkout main
+git pull origin main
+git checkout yourname
+git push -u origin yourname
+```
+
+If your branch does not exist yet:
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b yourname
+git push -u origin yourname
+```
+
+Example:
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b aimi
+git push -u origin aimi
+```
 
 ---
 
