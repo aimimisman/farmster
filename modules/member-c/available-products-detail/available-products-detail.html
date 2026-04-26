@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmster - Products</title>
+  <link rel="stylesheet" href="available-products-detail.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>Available Products</h1>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <input type="text" id="searchInput" placeholder="Search products...">
+
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <option value="Fruit">Fruit</option>
+      <option value="Vegetable">Vegetable</option>
+      <option value="Meat">Meat</option>
+    </select>
+
+    <select id="priceFilter">
+      <option value="">All Prices</option>
+      <option value="low">Below RM5</option>
+      <option value="mid">RM5 - RM10</option>
+      <option value="high">Above RM10</option>
+    </select>
+  </div>
+
+  <!-- Product List -->
+  <div id="productList" class="grid"></div>
+
+  <!-- No Result -->
+  <p id="noResult" class="no-result"></p>
+
+  <!-- Product Detail -->
+  <div id="productDetail" class="detail-box"></div>
+
+</div>
+
+<script src="available-products-detail.js"></script>
+</body>
+</html>
