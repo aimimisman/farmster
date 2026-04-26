@@ -7,7 +7,7 @@ const products = [
     name: "Fresh Apple",
     category: "Fruit",
     price: 4,
-    image: "/assets/images/apple.jpg",
+    image: "https://aimimisman.github.io/farmster/assets/images/apple.jpg",
     description: "Fresh red apples from farm"
   },
   {
@@ -15,7 +15,7 @@ const products = [
     name: "Organic Carrot",
     category: "Vegetable",
     price: 6,
-    image: "/assets/images/carrot.jpg",
+    image: "https://aimimisman.github.io/farmster/assets/images/carrot.jpg",
     description: "Healthy organic carrots"
   },
   {
@@ -23,7 +23,7 @@ const products = [
     name: "Chicken",
     category: "Meat",
     price: 12,
-    image: "/assets/images/chicken.jpg",
+    image: "https://aimimisman.github.io/farmster/assets/images/chicken.jpg",
     description: "Fresh chicken meat"
   },
   {
@@ -31,7 +31,7 @@ const products = [
     name: "Banana",
     category: "Fruit",
     price: 3,
-    image: "/assets/images/banana.jpg",
+    image: "https://aimimisman.github.io/farmster/assets/images/banana.jpg",
     description: "Sweet bananas"
   }
 ];
