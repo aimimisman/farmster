@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farm Adoption Crowdfunding</title>
+  <link rel="stylesheet" href="farm-adoption-crowdfunding.css" />
+</head>
+<body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="icon-leaf" viewBox="0 0 24 24">
+      <path d="M20.7 3.3c-6.8.3-11.8 2.1-14.8 5.3-2.6 2.8-3.1 6.1-2.4 8.5.2.7 1.1.9 1.6.4l3.6-3.6c.3-.3.7-.3 1 0s.3.7 0 1l-3.5 3.5c-.5.5-.3 1.4.4 1.6 2.8.8 6.3.1 9-2.6 3.1-3.1 4.8-8 5.2-14.1 0-.4-.3-.7-.7-.7h-.4z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M9.2 16.6 4.9 12.3a1.2 1.2 0 0 0-1.7 1.7l5.1 5.1c.5.5 1.3.5 1.8 0L21 8.2a1.2 1.2 0 0 0-1.7-1.7L9.2 16.6z"/>
+    </symbol>
+    <symbol id="icon-camera" viewBox="0 0 24 24">
+      <path d="M8.3 5.5 9.5 3.8c.3-.5.8-.8 1.4-.8h2.2c.6 0 1.1.3 1.4.8l1.2 1.7h2.8c1.4 0 2.5 1.1 2.5 2.5v9.5c0 1.4-1.1 2.5-2.5 2.5h-13C4.1 20 3 18.9 3 17.5V8c0-1.4 1.1-2.5 2.5-2.5h2.8zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2.2a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6z"/>
+    </symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24">
+      <path d="M5 19h14a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1V5a1 1 0 1 1 2 0v14zm2-2V9a1.5 1.5 0 0 1 3 0v8H7zm5 0V5a1.5 1.5 0 0 1 3 0v12h-3zm5 0v-6a1.5 1.5 0 0 1 3 0v6h-3z"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <path d="M10.5 4a6.5 6.5 0 0 1 5.1 10.5l4 4a1.2 1.2 0 0 1-1.7 1.7l-4-4A6.5 6.5 0 1 1 10.5 4zm0 2.4a4.1 4.1 0 1 0 0 8.2 4.1 4.1 0 0 0 0-8.2z"/>
+    </symbol>
+    <symbol id="icon-handshake" viewBox="0 0 24 24">
+      <path d="M8.7 6.2 11 4.7c1.2-.8 2.8-.8 4 .1l1 .7h2.9c.6 0 1.1.5 1.1 1.1v5.1c0 .6-.5 1.1-1.1 1.1h-.5l-4.7 4.7a3 3 0 0 1-4.2 0l-4.7-4.7H4.1c-.6 0-1.1-.5-1.1-1.1V6.6c0-.6.5-1.1 1.1-1.1h2.7c.7 0 1.3.2 1.9.7zm2.4 1.5-1.3.8 3.1 3.1c.4.4 1 .4 1.4 0l.8-.8a1.1 1.1 0 1 1 1.6 1.6l-.8.8a3.3 3.3 0 0 1-4.6 0L8 9.9l-.8.6 4 4c.8.8 2 .8 2.8 0l4-4V7.7h-2.2c-.4 0-.9-.1-1.2-.4l-.8-.6c-.5-.4-1.3-.4-1.8-.1l-.9.6z"/>
+    </symbol>
+    <symbol id="icon-sprout" viewBox="0 0 24 24">
+      <path d="M12.9 21a1 1 0 0 1-2 0v-6.1C6.5 14.5 3 11 3 6.6V4.8c0-.5.4-.9.9-.9h1.8c4.2 0 7.7 3.2 8.2 7.3.9-1.4 2.5-2.3 4.3-2.3h1.9c.5 0 .9.4.9.9v1.1c0 3.4-2.8 6.2-6.2 6.2h-1.9V21zM5.2 6.2v.4a6 6 0 0 0 6 6h.4v-.4a6 6 0 0 0-6-6h-.4zm13.6 5h-.6a4 4 0 0 0-4 4h.6a4 4 0 0 0 4-4z"/>
+    </symbol>
+    <symbol id="icon-basket" viewBox="0 0 24 24">
+      <path d="M8.3 6.7 11 3.2a1.1 1.1 0 0 1 1.8 1.3L11 6.7h2l1.8-2.2a1.1 1.1 0 1 1 1.7 1.4l-.7.8H19a2 2 0 0 1 1.9 2.5l-2.1 8.2A3.4 3.4 0 0 1 15.5 20h-7a3.4 3.4 0 0 1-3.3-2.6L3.1 9.2A2 2 0 0 1 5 6.7h3.3zM6.9 17c.2.5.8.8 1.6.8h7c.8 0 1.4-.3 1.6-.8l2-8.1H4.9l2 8.1z"/>
+    </symbol>
+    <symbol id="icon-farmer" viewBox="0 0 24 24">
+      <path d="M7 8.5a5 5 0 0 1 10 0v.4l2.2.7a1 1 0 0 1-.6 1.9L17 11v.5a5 5 0 0 1-10 0V11l-1.6.5a1 1 0 0 1-.6-1.9L7 8.9v-.4zm2 .3h6v-.3a3 3 0 0 0-6 0v.3zm0 2.2v.5a3 3 0 1 0 6 0V11H9zm-4 9.1c.8-3 3.5-5.1 7-5.1s6.2 2.1 7 5.1a1 1 0 0 1-1 1.3H6a1 1 0 0 1-1-1.3z"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path d="M4 7a1.2 1.2 0 0 1 1.2-1.2h13.6a1.2 1.2 0 0 1 0 2.4H5.2A1.2 1.2 0 0 1 4 7zm0 5a1.2 1.2 0 0 1 1.2-1.2h13.6a1.2 1.2 0 0 1 0 2.4H5.2A1.2 1.2 0 0 1 4 12zm1.2 3.8a1.2 1.2 0 0 0 0 2.4h13.6a1.2 1.2 0 0 0 0-2.4H5.2z"/>
+    </symbol>
+  </svg>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="FarmFund Adopt Home">
+        <span class="brand-mark"><svg class="icon icon-lg"><use href="#icon-leaf"></use></svg></span>
+        <span>FarmFund Adopt</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#how">How It Works</a>
+        <a href="#projects">Explore Projects</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn btn-ghost" onclick="scrollToSection('projects')">Explore</button>
+        <button class="btn btn-primary" onclick="openContribution()">Adopt Now</button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu"><svg class="icon"><use href="#icon-menu"></use></svg></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="home">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><svg class="icon"><use href="#icon-sprout"></use></svg> Verified farm crowdfunding platform</div>
+          <h1>Support local growers. <span>Adopt a farm project.</span></h1>
+          <p>
+            Help food growers fund seeds, tools, irrigation, greenhouses, and harvest projects.
+            Track every milestone and see the real impact of your contribution.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="scrollToSection('projects')">Explore Projects</button>
+            <button class="btn btn-secondary" onclick="scrollToSection('how')">How It Works</button>
+          </div>
+
+          <div class="hero-note">
+            <span><svg class="icon"><use href="#icon-check"></use></svg> Verified growers</span>
+            <span><svg class="icon"><use href="#icon-camera"></use></svg> Photo updates</span>
+            <span><svg class="icon"><use href="#icon-chart"></use></svg> Transparent fund usage</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div class="hero-image"></div>
+            <div class="hero-card-content">
+              <div class="tag-row">
+                <span class="tag">Tomato Greenhouse</span>
+                <span class="tag orange">64% funded</span>
+              </div>
+              <h3 style="margin-top: 14px; color: var(--green-900);">Help build a pesticide-reduced tomato greenhouse</h3>
+              <div class="progress-wrap" style="margin-top: 14px;">
+                <div class="progress-top">
+                  <span>RM 6,450 raised</span>
+                  <span>RM 10,000 goal</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="--progress: 64%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-impact">
+            <strong>35,000kg</strong>
+            produced through completed projects.
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat-card">
+          <strong>RM 250k</strong>
+          <span>funded for growers</span>
+        </div>
+        <div class="stat-card">
+          <strong>120</strong>
+          <span>farmers supported</span>
+        </div>
+        <div class="stat-card">
+          <strong>48</strong>
+          <span>projects completed</span>
+        </div>
+        <div class="stat-card">
+          <strong>86%</strong>
+          <span>supporters received updates</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">How adoption works</h2>
+            <p class="section-subtitle">
+              A simple, transparent process designed for supporters, growers, and community food projects.
+            </p>
+          </div>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-icon"><svg class="icon icon-lg"><use href="#icon-search"></use></svg></div>
+            <h3>Choose a project</h3>
+            <p>Browse verified farm, food grower, and harvest projects by category, location, or impact.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><svg class="icon icon-lg"><use href="#icon-handshake"></use></svg></div>
+            <h3>Adopt or support</h3>
+            <p>Pick a package or enter a custom amount that fits your budget.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><svg class="icon icon-lg"><use href="#icon-camera"></use></svg></div>
+            <h3>Track progress</h3>
+            <p>Receive milestone updates, photos, grower notes, and funding usage reports.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><svg class="icon icon-lg"><use href="#icon-basket"></use></svg></div>
+            <h3>See your impact</h3>
+            <p>Understand how your support helped farmers, food supply, and local communities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="explore-wrap" id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Explore farm projects</h2>
+            <p class="section-subtitle">
+              Use filters to find growers and food projects you care about.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="openContribution()">Start Adoption</button>
+        </div>
+
+        <div class="filter-panel">
+          <div class="field">
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="search" placeholder="Search project, grower, or location..." />
+          </div>
+          <div class="field">
+            <label for="categoryFilter">Category</label>
+            <select id="categoryFilter">
+              <option value="all">All categories</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Fruits">Fruits</option>
+              <option value="Rice">Rice</option>
+              <option value="Organic">Organic</option>
+              <option value="Livestock">Livestock</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+              <option value="New">New</option>
+              <option value="Almost Funded">Almost Funded</option>
+              <option value="Active">Active</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="impactFilter">Impact</label>
+            <select id="impactFilter">
+              <option value="all">All impact</option>
+              <option value="Food Security">Food Security</option>
+              <option value="Farmer Income">Farmer Income</option>
+              <option value="Sustainability">Sustainability</option>
+              <option value="Community">Community</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sortFilter">Sort</label>
+            <select id="sortFilter">
+              <option value="urgent">Most urgent</option>
+              <option value="funded">Most funded</option>
+              <option value="newest">Newest</option>
+              <option value="goal">Closest to goal</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="project-grid" id="projectGrid"></div>
+      </div>
+    </section>
+
+    <section id="project-detail">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Featured project detail</h2>
+            <p class="section-subtitle">
+              Design the detail page to build trust, explain the story, and make contribution easy.
+            </p>
+          </div>
+        </div>
+
+        <div class="detail-layout">
+          <div>
+            <div class="large-project-image"></div>
+
+            <div class="panel detail-copy">
+              <div class="tag-row" style="margin-bottom: 16px;">
+                <span class="tag">Verified Grower</span>
+                <span class="tag orange">Sustainable Farming</span>
+                <span class="tag">Community Food Project</span>
+              </div>
+
+              <h3>Adopt a Tomato Greenhouse Project</h3>
+              <p>
+                Green Valley Farm is building a small greenhouse to grow pesticide-reduced tomatoes for nearby communities.
+                The funding will help cover greenhouse materials, seedlings, irrigation setup, soil improvement, and labor.
+              </p>
+              <p>
+                Supporters will receive photo updates during material purchase, planting, growth, and harvest.
+                At the end of the project, the grower will publish an impact report.
+              </p>
+            </div>
+
+            <div class="panel" style="margin-top: 18px;">
+              <h3>How funds will be used</h3>
+              <div class="funding-list">
+                <div class="funding-row"><span>Seeds and seedlings</span><strong>RM 1,500</strong></div>
+                <div class="funding-row"><span>Greenhouse materials</span><strong>RM 3,500</strong></div>
+                <div class="funding-row"><span>Irrigation setup</span><strong>RM 2,000</strong></div>
+                <div class="funding-row"><span>Soil and fertilizer</span><strong>RM 1,200</strong></div>
+                <div class="funding-row"><span>Labor and maintenance</span><strong>RM 1,800</strong></div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top: 18px;">
+              <h3>Project timeline</h3>
+              <div class="timeline">
+                <div class="timeline-item done">
+                  <div class="timeline-dot">✓</div>
+                  <div><strong>Project approved</strong><p class="meta">Grower identity and project plan verified.</p></div>
+                </div>
+                <div class="timeline-item done">
+                  <div class="timeline-dot">✓</div>
+                  <div><strong>Funding started</strong><p class="meta">Supporters can adopt the project.</p></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot">3</div>
+                  <div><strong>Materials purchased</strong><p class="meta">Greenhouse frame, seedlings, and irrigation parts.</p></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot">4</div>
+                  <div><strong>Planting begins</strong><p class="meta">Grower shares photos and progress notes.</p></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot">5</div>
+                  <div><strong>Harvest report</strong><p class="meta">Final report with impact and production numbers.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel sticky-contribute">
+            <h3>Adopt this project</h3>
+            <div class="progress-wrap">
+              <div class="progress-top">
+                <span>RM 6,450 raised</span>
+                <span>64%</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="--progress: 64%"></div></div>
+              <p class="meta">Goal: RM 10,000 · 12 days left · 86 supporters</p>
+            </div>
+
+            <div class="package-grid" id="packageGrid">
+              <div class="package-card active" data-amount="25" data-name="Seed Supporter">
+                <strong><span>Seed Supporter</span><span>RM 25</span></strong>
+                <p>Funds seeds and basic planting materials.</p>
+              </div>
+              <div class="package-card" data-amount="100" data-name="Farm Helper">
+                <strong><span>Farm Helper</span><span>RM 100</span></strong>
+                <p>Supports fertilizer, soil, and farm maintenance.</p>
+              </div>
+              <div class="package-card" data-amount="250" data-name="Harvest Partner">
+                <strong><span>Harvest Partner</span><span>RM 250</span></strong>
+                <p>Helps fund irrigation and greenhouse setup.</p>
+              </div>
+              <div class="package-card" data-amount="500" data-name="Full Row Adoption">
+                <strong><span>Full Row Adoption</span><span>RM 500</span></strong>
+                <p>Adopt one crop row and receive harvest updates.</p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="customAmount">Custom amount</label>
+              <input id="customAmount" type="number" min="1" placeholder="Enter amount in RM" />
+            </div>
+
+            <div class="impact-preview" id="impactPreview">
+              <h4>Your RM 25 impact</h4>
+              <ul>
+                <li>Supports planting materials</li>
+                <li>Helps prepare 10 tomato plants</li>
+                <li>Contributes to local food production</li>
+              </ul>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="openContribution()">Adopt This Project</button>
+            <button class="btn btn-ghost" style="width: 100%; margin-top: 10px;" onclick="shareProject()">Share Project</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Supporter dashboard preview</h2>
+            <p class="section-subtitle">
+              After adoption, users can track their funded projects, milestones, updates, receipts, and impact reports.
+            </p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <h3>My adopted projects</h3>
+            <div class="adoption-card">
+              <div class="tag-row">
+                <span class="tag">Active</span>
+                <span class="tag orange">Next update: May 5</span>
+              </div>
+              <h3>Tomato Greenhouse Project</h3>
+              <p class="meta">Contribution: RM 100 · Status: Planting Started</p>
+              <div class="progress-bar"><div class="progress-fill" style="--progress: 72%"></div></div>
+              <button class="btn btn-primary" onclick="showToast('Opening project updates')">View Updates</button>
+            </div>
+
+            <div class="adoption-card">
+              <div class="tag-row">
+                <span class="tag">Completed</span>
+                <span class="tag orange">Report ready</span>
+              </div>
+              <h3>Community Rice Seed Fund</h3>
+              <p class="meta">Contribution: RM 50 · Status: Harvest Completed</p>
+              <button class="btn btn-ghost" onclick="showToast('Downloading impact report')">View Impact Report</button>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>Latest grower updates</h3>
+
+            <div class="update-card">
+              <div class="update-thumb" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=500&q=80');"></div>
+              <div>
+                <strong>Seedlings have arrived</strong>
+                <p class="meta">Green Valley Farm · April 20</p>
+                <p class="meta">The tomato seedlings are ready and the team is preparing the greenhouse frame.</p>
+              </div>
+            </div>
+
+            <div class="update-card">
+              <div class="update-thumb" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=500&q=80');"></div>
+              <div>
+                <strong>50% funding milestone reached</strong>
+                <p class="meta">Green Valley Farm · April 12</p>
+                <p class="meta">Thank you to all supporters. The next milestone is material purchase.</p>
+              </div>
+            </div>
+
+            <div class="update-card">
+              <div class="update-thumb" style="background-image: url('https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=500&q=80');"></div>
+              <div>
+                <strong>Harvest report published</strong>
+                <p class="meta">Community Rice Seed Fund · March 28</p>
+                <p class="meta">The project supported 6 farmers and helped produce 1,200kg of rice.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Trust and safety FAQ</h2>
+            <p class="section-subtitle">
+              Clear answers reduce hesitation and make the adoption flow feel safer.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <details open>
+            <summary>How are growers verified?</summary>
+            <p>Growers submit identity, farm location, project details, and supporting photos before a project is approved.</p>
+          </details>
+          <details>
+            <summary>How are funds released?</summary>
+            <p>Funds can be released based on milestones such as material purchase, planting, and harvest reporting.</p>
+          </details>
+          <details>
+            <summary>What happens if a project is not funded?</summary>
+            <p>Supporters can be refunded or allowed to redirect funds to another verified project, depending on platform rules.</p>
+          </details>
+          <details>
+            <summary>Will supporters receive updates?</summary>
+            <p>Yes. Growers can post photo updates, milestone notes, and final impact reports through the dashboard.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grower-cta">
+        <div>
+          <h2>Are you a grower looking for support?</h2>
+          <p>Create a verified project page, explain your funding needs, and connect with supporters who care about local food production.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="showToast('Grower project form coming soon')">Create Grower Project</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <strong>FarmFund Adopt</strong> · Crowdfunding module front-end demo for farm and food grower project adoption.
+    </div>
+  </footer>
+
+  <div class="modal" id="contributionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="modalTitle">Complete your adoption</h3>
+        <button class="close-btn" onclick="closeContribution()" aria-label="Close modal">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="field">
+          <label for="modalAmount">Contribution amount</label>
+          <input id="modalAmount" type="number" min="1" value="25" />
+        </div>
+
+        <div class="field" style="margin-top: 14px;">
+          <label for="displayName">Display my name as</label>
+          <select id="displayName">
+            <option>Full name</option>
+            <option>First name only</option>
+            <option>Anonymous</option>
+          </select>
+        </div>
+
+        <div class="field" style="margin-top: 14px;">
+          <label for="supportMessage">Message for the grower</label>
+          <textarea id="supportMessage" rows="4" placeholder="Write an optional support message..."></textarea>
+        </div>
+
+        <div class="field" style="margin-top: 14px;">
+          <label for="paymentMethod">Payment method</label>
+          <select id="paymentMethod">
+            <option>Card</option>
+            <option>Online Banking</option>
+            <option>E-wallet</option>
+          </select>
+        </div>
+
+        <div class="checkout-summary" id="checkoutSummary">
+          <strong>Adopt a Tomato Greenhouse Project</strong>
+          <p class="meta">Your contribution helps fund planting materials and farm setup.</p>
+          <div class="progress-bar" style="margin-top: 12px;">
+            <div class="progress-fill" style="--progress: 64%"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" onclick="confirmContribution()">Confirm Contribution</button>
+        <button class="btn btn-ghost" style="width: 100%; margin-top: 10px;" onclick="closeContribution()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Action completed</div>
+  <script src="farm-adoption-crowdfunding.js"></script>
+</body>
+</html>
