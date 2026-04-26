@@ -113,12 +113,19 @@ function showDetail(id) {
   const p = products.find(product => product.id === id);
 
   productDetail.innerHTML = `
-    <h2>${p.name}</h2>
-    <img src="${p.image}" width="200">
-    <p>${p.description}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Price:</b> RM ${p.price}</p>
+    <div class="detail-card">
+      <img src="${p.image}" alt="${p.name}">
+
+      <div class="detail-content">
+        <h2>${p.name}</h2>
+        <p>${p.description}</p>
+        <p><b>Category:</b> ${p.category}</p>
+        <p class="detail-price">RM ${p.price}</p>
+      </div>
+    </div>
   `;
+
+  productDetail.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // ==========================

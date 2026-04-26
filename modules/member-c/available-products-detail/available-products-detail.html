@@ -2,44 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Farmster - Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmster - Available Products</title>
   <link rel="stylesheet" href="available-products-detail.css">
 </head>
 <body>
 
-<div class="container">
+  <header class="page-hero">
+    <div>
+      <span class="tagline">Product Discovery</span>
+      <h1>Available Products</h1>
+      <p>Browse fresh farm products, filter by category, and view product details easily.</p>
+    </div>
+  </header>
 
-  <h1>Available Products</h1>
+  <main class="container">
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <input type="text" id="searchInput" placeholder="Search products...">
+    <div class="section-header">
+      <p class="section-label">Product Listing</p>
+      <h2>Find Farm Products</h2>
+      <p>Search and filter available farm products by name, category, or price range.</p>
+    </div>
 
-    <select id="categoryFilter">
-      <option value="">All Categories</option>
-      <option value="Fruit">Fruit</option>
-      <option value="Vegetable">Vegetable</option>
-      <option value="Meat">Meat</option>
-    </select>
+    <div class="top-bar">
+      <input type="text" id="searchInput" placeholder="Search products...">
 
-    <select id="priceFilter">
-      <option value="">All Prices</option>
-      <option value="low">Below RM5</option>
-      <option value="mid">RM5 - RM10</option>
-      <option value="high">Above RM10</option>
-    </select>
-  </div>
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Fruit">Fruit</option>
+        <option value="Vegetable">Vegetable</option>
+        <option value="Meat">Meat</option>
+      </select>
 
-  <!-- Product List -->
-  <div id="productList" class="grid"></div>
+      <select id="priceFilter">
+        <option value="">All Prices</option>
+        <option value="low">Below RM5</option>
+        <option value="mid">RM5 - RM10</option>
+        <option value="high">Above RM10</option>
+      </select>
+    </div>
 
-  <!-- No Result -->
-  <p id="noResult" class="no-result"></p>
+    <div id="productList" class="grid"></div>
 
-  <!-- Product Detail -->
-  <div id="productDetail" class="detail-box"></div>
+    <p id="noResult" class="no-result"></p>
 
-</div>
+    <div id="productDetail" class="detail-box"></div>
+
+  </main>
 
 <script src="available-products-detail.js"></script>
 </body>
