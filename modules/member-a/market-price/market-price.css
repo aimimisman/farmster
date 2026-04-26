@@ -1,0 +1,60 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+/* HEADER */
+.header {
+    background: #2e7d32;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* MAIN CARD */
+#priceContainer {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* PRICE CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* TITLE */
+.card h2 {
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.card p {
+    margin: 8px 0;
+    font-size: 15px;
+}
+
+/* STATUS TEXT */
+.card h3 {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.compare-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.compare-row p {
+    margin: 0;
+}
