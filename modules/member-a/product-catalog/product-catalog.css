@@ -1,16 +1,122 @@
+.page-container {
+    max-width: 1400px;
+    position: relative;
+    margin: 0 auto;
+    padding: 0 10px; /* 👈 ini bagi gap kiri kanan */
+}
+
 body {
     font-family: Arial;
     margin: 0;
     background: #f5f5f5;
 }
 
-/* HEADER */
+/* HEADER
 .header {
     display: flex;
     justify-content: space-between;
     padding: 15px;
     background: #2e7d32;
     color: white;
+} */
+
+/* BANNER IMAGE ONLY */
+.banner {
+    margin-top: 12px;
+    height: 240px;
+    border-radius: 8px;
+
+    /* background-image: url("../../../assets/images/Agriculture-banner-image.jpg"); */
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 0%;
+    border: 0.5px solid rgba(0,0,0,0.1);
+}
+
+/* .banner {
+    margin-top: 12px;
+    height: 240px;
+    width: 100%;
+    border-radius: 12px;
+
+    background-image: url("../../../assets/images/Agriculture-banner-image.jpg");
+    background-size: cover;
+    background-position: center;
+} */
+
+/* ROW bawah banner */
+.farm-header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px; 
+
+    margin-top: 15px;
+    padding: 0 20px;
+}
+
+/* LOGO kiri */
+.farm-logo {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    border: 3px solid rgba(0,0,0,0.1); /* 👈 border bulat */
+    padding: 3px;
+
+    background: white;
+}
+
+.farm-logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* INFO kanan */
+.farm-info {
+    flex: 1;
+}
+
+/* TITLE ROW */
+.farm-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.farm-title-row h2 {
+    margin: 0;
+}
+
+/* VISIT BUTTON */
+.visit-btn {
+    padding: 8px 14px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.visit-btn:hover {
+    background: #256428;
+}
+
+/* LOCATION */
+.farm-location {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* DESCRIPTION */
+.farm-desc {
+    margin-top: 10px;
+    color: #444;
+    font-size: 14px;
 }
 
 .search {
@@ -18,16 +124,30 @@ body {
     padding: 5px;
 }
 
-/* TITLE */
-.title-section {
-    padding: 20px;
-}
 
-/* FILTER */
+
+/* FILTER
 .filter-bar {
     display: flex;
     gap: 10px;
-    padding: 0 20px 20px;
+    padding: 0 0 20px 0px;
+} */
+
+
+.title-section {
+    padding: 40px 0 5px 0;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.page-subtitle {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
 }
 
 /* GRID */
@@ -35,8 +155,10 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 15px;
-    padding: 20px;
+    padding: 20px 0 20px 0;
 }
+
+
 
 /* CARD */
 .card {
@@ -50,6 +172,48 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+/* GRID */
+.info-grid {
+    width:100%;
+    box-sizing: border-box;
+    display: grid;
+    padding: 20px 0 10px 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+    
+}
+
+/* CARD */
+.info-card {
+    background: rgb(220, 231, 226);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.info-card:hover {
+    transform: translateY(-3px);
+}
+
+/* LABEL (atas) */
+.info-card .label {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+}
+
+/* VALUE (bawah) */
+.info-card h4 {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
 
 .card img {
     width: 100%;
@@ -84,14 +248,14 @@ body {
     display: none;
 }
 
-/* DETAIL IMAGE */
+/* DETAIL IMAGE
 .detail-img {
     width: 100%;
     max-height: 250px;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
-}
+} */
 
 /* DESCRIPTION */
 .desc {
@@ -125,86 +289,16 @@ button {
 /* wrapper 2 column */
 .detail-wrapper {
     display: flex;
-    gap: 20px;
+    gap: 50px;
     align-items: flex-start;
 }
 
-/* gambar kiri */
-.detail-img {
-    width: 45%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* info kanan */
-.detail-info {
-    width: 55%;
-}
-
-/* text styling */
-.detail-info h2 {
-    margin-top: 0;
-}
-
-.desc {
-    margin-top: 10px;
-    color: #555;
-}
-
-/* responsive mobile */
-
-@media (max-width: 768px) {
-    .detail-wrapper {
-        flex-direction: column;
-    }
-
-    .detail-img,
-    .detail-info {
-        width: 100%;
-    }
-}
-
-/* bottom section
-
-.producer-section {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
-/* left info
-.producer-info {
-    width: 70%;
-}
-
-.producer-info h3 {
-    margin-bottom: 5px;
-} */
-
-/* right button
-.producer-action {
-    width: 30%;
-    text-align: right;
-}
 
 
 
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: flex-end;
-}
-
-/* compare button */
 .compare-btn {
     padding: 10px 15px;
-    background: #ff9800;
+    background: #13be4c;
     color: white;
     border: none;
     border-radius: 6px;
@@ -228,3 +322,25 @@ button {
 .chat-btn:hover {
     background: #125aa0;
 }
+
+
+/* maklumat view detail */
+
+.img-box {
+    width: 40%; /* sebelum 40% → sekarang lebih besar */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detail-info {
+    width: 60%;
+    
+}
+
+.detail-img {
+    width: 80%;
+    height: 350px; /* sebelum 220px → jadi lebih besar */
+    object-fit: cover;
+    border-radius: 10px;
+}
+

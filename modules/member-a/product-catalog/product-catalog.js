@@ -1,138 +1,259 @@
 console.log("JS FILE LOADED");
 
 // =======================
-// GET FARM FROM MARKETPLACE
+// CONFIG
 // =======================
 const selectedFarm = localStorage.getItem("selectedFarm");
 
-// tunggu DOM siap dulu (IMPORTANT)
+// Apps Script URL
+const url = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
+// =======================
+// STATE
+// =======================
+let allProducts = [];
+let currentPage = 1;
+const itemsPerPage = 8;
+
+// =======================
+// INIT
+// =======================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // show farm name
     const farmTitle = document.getElementById("farmTitle");
+
     if (farmTitle) {
-        farmTitle.innerText = "Farm: " + selectedFarm;
+        farmTitle.innerText = selectedFarm || "Farm";
     }
 
-    // =======================
-    // dummy product data
-    // =======================
-    const products = [
-        { name: "Tomato", price: "RM 5/kg", farm: "Kebun Hijau Segar", image: "../../../assets/images/tomato.jpg",category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily."},
-        { name: "Cucumber", price: "RM 4/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/timun.jpg", category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-        { name: "Sawi", price: "RM 12/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/sawi.jpg", category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily."  },
-        { name: "Okra", price: "RM 6/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/okra.jpg", category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-        { name: "Limau Kasturi", price: "RM 12/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/limaukasturi.jpg", category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-        { name: "Banana", price: "RM 6/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/pisangnipah.jpg" , category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-        { name: "Kangkung", price: "RM 12/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/kangkung.jpg" , category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-        { name: "Egg Plant", price: "RM 6/kg", farm: "Kebun Hijau Segar",image: "../../../assets/images/terung.jpg" , category: "Vegetable",quantity: "20 kg",
-        description: "Fresh organic tomatoes harvested daily." },
-    ];
+    loadProducts();
+});
 
-    const filtered = products.filter(p => p.farm === selectedFarm);
+
+// =======================
+// UPDATE INFO GRID
+// =======================
+function updateInfoGrid(products) {
+
+    const productCount = document.querySelector(".info-card:nth-child(2) h4");
+    const rating = document.querySelector(".info-card:nth-child(3) h4");
+    const followers = document.querySelector(".info-card:nth-child(4) h4");
+
+    if (productCount) productCount.innerText = products.length;
+    if (rating) rating.innerText = "4.8 ⭐";
+    if (followers) followers.innerText = "120";
+}
+
+
+// =======================
+// FETCH DATA
+// =======================
+function loadProducts() {
+
+    fetch(url + "?action=products")
+        .then(res => res.json())
+        .then(data => {
+
+            console.log("RAW DATA:", data);
+
+            const products = data.data; // ✔ ambil array sebenar
+
+            // FILTER BY FARM ID
+            // allProducts = products.filter(p => p.farmId === selectedFarm);
+            allProducts = selectedFarm
+             ? products.filter(p => p.farmId === selectedFarm)
+             : products;
+
+            console.log("FILTERED:", allProducts);
+
+            // UPDATE INFO GRID
+            updateInfoGrid(allProducts);
+
+            currentPage = 1;
+
+            renderProducts();
+            renderPagination();
+        })
+        .catch(err => {
+            console.error("Fetch error:", err);
+        });
+}
+
+
+// =======================
+// RENDER PRODUCTS
+// =======================
+function renderProducts() {
 
     const container = document.getElementById("productContainer");
+    container.innerHTML = "";
 
-    filtered.forEach(p => {
+    if (!allProducts.length) {
+        container.innerHTML = "<p>No products found for this farm</p>";
+        return;
+    }
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    const paginatedItems = allProducts.slice(start, end);
+
+    paginatedItems.forEach(p => {
+
         const card = document.createElement("div");
         card.className = "card";
 
         card.innerHTML = `
             <img src="${p.image}" class="product-img">
-            <h3>${p.name}</h3>
+            <h3>${p.productName}</h3>
             <p>${p.price}</p>
             <button class="detailBtn">View Detail</button>
         `;
 
-        card.querySelector(".detailBtn").addEventListener("click", function () {
+        // ONLY BUTTON CLICK (SAFE)
+        card.querySelector(".detailBtn").addEventListener("click", (e) => {
+            e.stopPropagation();
+
             viewProductDetail(p);
+
+            setTimeout(() => {
+                document.getElementById("productDetail")
+                    .scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 50);
         });
 
         container.appendChild(card);
     });
-});
+}
+
 
 // =======================
-// VIEW DETAIL
+// PAGINATION
+// =======================
+function renderPagination() {
+
+    const pagination = document.querySelector(".pagination");
+    pagination.innerHTML = "";
+
+    const pageCount = Math.ceil(allProducts.length / itemsPerPage);
+
+    // PREV
+    const prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.disabled = currentPage === 1;
+
+    prev.onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderProducts();
+            renderPagination();
+        }
+    };
+
+    pagination.appendChild(prev);
+
+    // PAGE NUMBERS
+    for (let i = 1; i <= pageCount; i++) {
+
+        const btn = document.createElement("button");
+        btn.innerText = i;
+
+        if (i === currentPage) {
+            btn.style.background = "#2e7d32";
+            btn.style.color = "white";
+        }
+
+        btn.onclick = () => {
+            currentPage = i;
+            renderProducts();
+            renderPagination();
+        };
+
+        pagination.appendChild(btn);
+    }
+
+    // NEXT
+    const next = document.createElement("button");
+    next.innerText = "Next";
+    next.disabled = currentPage === pageCount;
+
+    next.onclick = () => {
+        if (currentPage < pageCount) {
+            currentPage++;
+            renderProducts();
+            renderPagination();
+        }
+    };
+
+    pagination.appendChild(next);
+}
+
+
+// =======================
+// PRODUCT DETAIL
 // =======================
 function viewProductDetail(product) {
+
     const detail = document.getElementById("productDetail");
 
     detail.classList.remove("hidden");
 
     detail.innerHTML = `
-    <div class="detail-wrapper">
+        <div class="detail-wrapper">
 
-        <div class="img-box">
-            <img src="${product.image}" class="detail-img">
-        </div>
+            <div class="img-box">
+                <img src="${product.image}" class="detail-img">
+            </div>
 
-        <div class="detail-info">
+            <div class="detail-info">
 
-            <h2>${product.name}</h2>
+                <h1>${product.productName}</h1>
 
-            <p><b>Category:</b> ${product.category}</p>
-            <p><b>Quantity:</b> ${product.quantity}</p>
-            <p><b>Price:</b> ${product.price}</p>
+                <p><b>Category:</b> ${product.category}</p>
+                <p><b>Quantity:</b> ${product.quantity}</p>
+                <p><b>Price:</b> ${product.price}</p>
+                <p><b>Farm ID:</b> ${product.farmId}</p>
 
-            <p class="desc">${product.description}</p>
-        </div>
-    </div>
+                <p class="desc">${product.description}</p>
 
-    
-    <div class="producer-section">
-        <div class="producer-info">
-            <h3>About Producer</h3>
-            <p><b>Farm:</b> ${product.farm}</p>
-            <p>Local farmer producing fresh organic produce 🌱</p>
-        </div>
+                <div class="action-buttons">
 
-        <div class="action-buttons">
+                    <button class="compare-btn"
+                        onclick='goToMarketPrice(${JSON.stringify(product)})'>
+                        Compare Price
+                    </button>
 
-            <button class="compare-btn"
-                onclick='goToMarketPrice(${JSON.stringify(product)})'>
-                📊 Compare Price
-            </button>
+                    <button class="chat-btn"
+                        onclick="goToChat('${product.farmId}')">
+                        Chat Seller
+                    </button>
 
-            <button class="chat-btn"
-                onclick="goToChat('${product.farm}')">
-                💬 Chat Seller
-            </button>
+                </div>
+
+            </div>
 
         </div>
-    </div>
-`;
+    `;
 
-
-   
-
-
-    // 🔥 IMPORTANT FIX
     setTimeout(() => {
-        detail.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+        window.scrollTo({
+            top: detail.offsetTop,
+            behavior: "smooth"
+        });
+    }, 50);
 }
 
-// // =======================
-// // CLOSE DETAIL
-// // =======================
-// function closeDetail() {
-//     document.getElementById("productDetail").classList.add("hidden");
-// }
 
+// =======================
+// NAVIGATION
+// =======================
 function goToMarketPrice(product) {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
-    window.location.href = "../market-price/market-price.html";
+    localStorage.setItem("openPage", "comparison");
+    // window.location.href = "/modules/member-a/market-price/market-price.html";
+    window.location.href = "https://aimimisman.github.io/farmster/modules/member-a/market-price/market-price.html";
 }
 
-function goToChat(farmName) {
-    localStorage.setItem("selectedFarm", farmName);
+function goToChat(farmId) {
+    localStorage.setItem("selectedFarm", farmId);
     window.location.href = "../chat/chat.html";
 }

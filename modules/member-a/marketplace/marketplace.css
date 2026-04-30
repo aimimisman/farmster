@@ -1,7 +1,7 @@
 .page-container {
-    max-width: 1500px;
+    max-width: 1400px; 
     margin: 0 auto;      /* center */
-    padding: 0 20px;     /* kiri kanan spacing */
+    padding: 0 10px;     /* kiri kanan spacing */
 }
 
 .header {
@@ -13,6 +13,7 @@
     /* color: rgb(41, 40, 40); */
     border: 0.5px solid rgba(0,0,0,0.1);
 }
+
 
 .header-banner {
     background-image: url("../../../assets/images/Agriculture-banner-image.jpg"); 
@@ -170,6 +171,11 @@
     padding: 10px;
 }
 
+/* HOVER EFFECT */
+.card:hover {
+    transform: translateY(-5px);
+}
+
 button {
     /* width: 100%; */
     padding: 8px;
@@ -189,21 +195,21 @@ button {
     width: auto;
 }
 
-.pagination {
+.setupPagination {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     gap: 8px;
 }
 
-.pagination button {
+.setupPagination button {
     padding: 6px 12px;
     border: 1px solid #ccc;
     background: white;
     cursor: pointer;
 }
 
-.pagination button.active {
+.setupPagination button.active {
     background: #2f6f3e;
     color: white;
     border: none;
@@ -251,7 +257,7 @@ button {
     }
 }
 
-.footer {
+/* .footer {
     background: #2f6f3e;
     color: white;
     margin-top: 40px;
@@ -284,4 +290,12 @@ button {
     margin-top: 20px;
     font-size: 13px;
     opacity: 0.8;
-}
+} */
+
+ footer {
+      background-color: #1f4d2c;
+      color: white;
+      text-align: center;
+      padding: 28px 8%;
+      margin-top: 30px;
+    }

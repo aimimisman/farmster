@@ -1,18 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Market Price</title>
+    <title>Market Dashboard</title>
     <link rel="stylesheet" href="market-price.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-<div class="header">
-    <h2>Market Price Comparison</h2>
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2 class="logo">Market System</h2>
+
+        <button class="nav-btn active" onclick="showPage('marketplace')">
+            <i class="fa fa-store"></i> Market price
+        </button>
+
+        <button class="nav-btn" onclick="showPage('comparison')">
+            <i class="fa fa-chart-line"></i> Price Comparison
+        </button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+        <!-- ================= MARKETPLACE ================= -->
+        <div id="marketplace" class="page active">
+            <div class="market-header">
+                <h1>Market Price Overview</h1>
+                <p id="lastUpdated">Updated: -</p>
+            </div>
+
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <small>Total Products</small>
+                    <h2 id="totalProducts">0</h2>
+                </div>
+                
+                <div class="overview-card">
+                    <small>Average Price (Today)</small>
+                    <h2 id="avgPriceToday">RM0.00</h2>
+                </div>
+                
+                <div class="overview-card">
+                    <small>Price Change (% yesterday)</small>
+                    <h2 id="priceChange">0.00%</h2>
+                </div>
+            </div>
+
+    <h3 class="section-title">Today’s Market Prices</h3>
+
+    <div class="price-table-card">
+        <table class="price-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Average Price (RM)</th>
+                    <th>Change (% yesterday)</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody id="marketTableBody"></tbody>
+        </table>
+    </div>
 </div>
 
-<div id="priceContainer"></div>
+</div> <!-- price-table-card -->
 
-<script src="market-price.js"></script>
+
+
+
+        <!-- ================= PRICE COMPARISON ================= -->
+        <div id="comparison" class="page">
+
+            <h1>Price Comparison</h1>
+
+            <!-- ================= TOP SECTION ================= -->
+            <div class="selected-box">
+
+                <!-- IMAGE -->
+                <div class="selected-img">
+                    <img id="selectedImage" src="../assets/images/placeholder.png">
+                </div>
+
+                <!-- INFO -->
+                <div class="selected-info">
+                    <h2 id="selectedName">Product Name</h2>
+                    <p id="selectedCategory">Category: -</p>
+                    <p id="selectedFarm">Farm: -</p>
+                    <p id="selectedPrice">Price: -</p>
+                </div>
+
+            </div>
+
+
+            <!-- ================= AVG CARDS ================= -->
+            <div class="avg-container">
+
+                <div class="avg-card producer">
+                    <h4>Producer Avg Price</h4>
+                    <p id="avgProducer">-</p>
+                </div>
+
+                <div class="avg-card market">
+                    <h4>Market Avg Price</h4>
+                    <p id="avgMarket">-</p>
+                </div>
+
+            </div>
+
+
+            <!-- ================= DIFF CARD ================= -->
+            <div class="diff-card">
+                <h4>Price Difference</h4>
+                <p id="avgDiff">-</p>
+            </div>
+
+            <div class="producer-list">
+                <h3>Producer Prices</h3>
+                <div id="producerList"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>

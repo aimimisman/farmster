@@ -7,59 +7,101 @@
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="logo">FARM</div>
+<div class="page-container">
 
-    <input type="text" placeholder="Search product..." class="search">
+    <!-- BANNER -->
+    <div class="banner"></div>
 
-    <div class="user">👤</div>
-</div>
+    <!-- LOGO + INFO ROW -->
+    <div class="farm-header-row">
+        
+        <div class="farm-logo">
+            <img src="../../../assets/images/farm-logo.png" alt="farm logo">
+        </div>
+        
+        <!-- INFO -->
+        <div class="farm-info">
+            <div class="farm-title-row">
+                <h2 id="farmTitle">Farm Name</h2>
+                <button class="visit-btn">Visit Farm</button>
+            </div>
+            
+            <p class="farm-location">Kuantan, Pahang ⭐ 4.8 (120 reviews)</p>
+            <p class="farm-desc"> We are committed to providing fresh and high-quality produce using sustainable farming practices.</p>
+        </div>
+    </div>
 
-<!-- TITLE -->
-<div class="title-section">
-    <h2>Product Catalog</h2>
-    <p id="farmTitle">Farm Name</p>
-</div>
 
-<!-- FILTER -->
-<div class="filter-bar">
-    <select>
-        <option>All Category</option>
-        <option>Vegetables</option>
-        <option>Fruits</option>
-    </select>
-
-    <select>
-        <option>Price</option>
-        <option>Low to High</option>
-        <option>High to Low</option>
-    </select>
-
-    <select>
-        <option>Sort</option>
-        <option>Newest</option>
-        <option>Popular</option>
-    </select>
-</div>
-
-<!-- PRODUCT GRID -->
-<div class="product-grid" id="productContainer">
     
+    <!-- TITLE
+    <div class="title-section">
+        <h2>Product Catalog</h2>
+        <p id="farmTitle">Farm Name</p>
+    </div> -->
+    
+    <!-- FILTER
+    <div class="filter-bar">
+        <select>
+            <option>All Category</option>
+            <option>Vegetables</option>
+            <option>Fruits</option>
+        </select>
+        
+        <select>
+            <option>Price</option>
+            <option>Low to High</option>
+            <option>High to Low</option>
+        </select>
+        
+        <select>
+            <option>Sort</option>
+            <option>Newest</option>
+            <option>Popular</option>
+        </select>
+    </div> -->
+    
+    <div class="info-grid">
+    
+    <div class="info-card">
+        <p class="label">Joined</p>
+        <h4 id="joinedValue">-</h4>
+    </div>
+
+    <div class="info-card">
+        <p class="label">Products</p>
+        <h4 id="productCount">0</h4>
+    </div>
+
+    <div class="info-card">
+        <p class="label">Rating</p>
+        <h4 id="ratingValue">0 ⭐</h4>
+    </div>
+
+    <div class="info-card">
+        <p class="label">Followers</p>
+        <h4 id="followersValue">0</h4>
+    </div>
+
 </div>
 
-<!-- PAGINATION -->
-<div class="pagination">
-    <button>Prev</button>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>Next</button>
-</div>
+    <div class="title-section" id="productSection">
+        <h2 class="page-title">Product Catalog</h2>
+        <p class="page-subtitle">Browse fresh products from selected farm</p>
+    </div>
+    
+    <!-- PRODUCT GRID -->
+    <div class="product-grid" id="productContainer"></div>
+    
+    <!-- PAGINATION -->
+     <div class="pagination"></div>
+    
+    <!-- DETAIL PANEL / after tekan button view detail (bawah) -->
+    <div id="productDetail" class="product-detail hidden"></div>
 
-<!-- DETAIL PANEL / after tekan button view detail (bawah) -->
-<div id="productDetail" class="product-detail hidden"></div>
+</div>
 
 <script src="product-catalog.js"></script>
+
+
 </body>
 </html>
