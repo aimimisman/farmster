@@ -1,3 +1,287 @@
-.module-title {
-  color: #2f6f3e;
+.page-container {
+    max-width: 1500px;
+    margin: 0 auto;      /* center */
+    padding: 0 20px;     /* kiri kanan spacing */
+}
+
+.header {
+    display: flex;              
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    /* border-color: black;   */
+    /* color: rgb(41, 40, 40); */
+    border: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.header-banner {
+    background-image: url("../../../assets/images/Agriculture-banner-image.jpg"); 
+    background-size: cover;
+    background-position: center;
+    border-radius: 0%;
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    /* jarak antara banner dgn konten */
+    margin-bottom: 17px; 
+    margin-top: 15px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */ 
+}
+
+/* overlay gelap */
+.header-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+}
+
+/* INI KEY PART (tindih atas banner) */
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.banner-content h1 {
+    margin-bottom: 10px;
+    font-size: 40px;
+    font-style:initial;
+    /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+/* search box */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* wrapper kena ada width control */
+.input-wrapper {
+    position: relative;
+    flex: 1;              /* penting: bagi dia ikut ruang */
+    display: flex;
+    align-items: center;
+}
+
+/* ikon dalam input */
+.input-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+    pointer-events: none; /* supaya tak ganggu klik input */
+}
+
+/* input */
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 12px 12px 40px; /* kiri ruang untuk icon */
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.search-box input {
+    padding: 12px 15px;   /* naikkan height */
+    width: 500px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.search-box button {
+    padding: 12px 15px;   /* sama tinggi dengan input */
+    font-size: 16px;
+    border: none;
+    background: #2f6f3e;
+    color: white;
+    cursor: pointer;
+    border-radius: 18px;
+}
+
+/*kiri*/
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* MENU (tengah) */
+.menu {
+    display: flex;
+    gap: 25px;                 /* jarak antara menu */
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* hover effect menu */
+.menu div {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.menu div:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* USER ICON (kanan) */
+.user {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+ .card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction: column;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+button {
+    /* width: 100%; */
+    padding: 8px;
+    background: #2f6f3e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.button-group button {
+    flex: 1;
+    width: auto;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background: #2f6f3e;
+    color: white;
+    border: none;
+}
+
+/* GRID 5 SEBARIS */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 15px;
+}
+
+/* CARD */
+.category-card {
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.category-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* TEXT */
+.category-card p {
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+/* responsive mobile */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.footer {
+    background: #2f6f3e;
+    color: white;
+    margin-top: 40px;
+    padding: 30px 20px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    margin-bottom: 10px;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.footer-section p:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.8;
 }

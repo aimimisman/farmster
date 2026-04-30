@@ -1,0 +1,230 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #2e7d32;
+    color: white;
+}
+
+.search {
+    width: 300px;
+    padding: 5px;
+}
+
+/* TITLE */
+.title-section {
+    padding: 20px;
+}
+
+/* FILTER */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px 20px;
+}
+
+/* GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card h3 {
+    margin: 10px 0 5px;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 8px;
+    width: 100%;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* DETAIL (bawah grid) */
+.product-detail {
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* DETAIL IMAGE */
+.detail-img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* DESCRIPTION */
+.desc {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* BUTTON GLOBAL */
+button {
+    cursor: pointer;
+}
+
+/* PAGINATION */
+.pagination {
+    text-align: center;
+    padding: 20px;
+}
+
+.pagination button {
+    margin: 0 3px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background: white;
+}
+
+.pagination button:hover {
+    background: #2e7d32;
+    color: white;
+}
+
+/* wrapper 2 column */
+.detail-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* gambar kiri */
+.detail-img {
+    width: 45%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* info kanan */
+.detail-info {
+    width: 55%;
+}
+
+/* text styling */
+.detail-info h2 {
+    margin-top: 0;
+}
+
+.desc {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* responsive mobile */
+
+@media (max-width: 768px) {
+    .detail-wrapper {
+        flex-direction: column;
+    }
+
+    .detail-img,
+    .detail-info {
+        width: 100%;
+    }
+}
+
+/* bottom section
+
+.producer-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+/* left info
+.producer-info {
+    width: 70%;
+}
+
+.producer-info h3 {
+    margin-bottom: 5px;
+} */
+
+/* right button
+.producer-action {
+    width: 30%;
+    text-align: right;
+}
+
+
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+}
+
+/* compare button */
+.compare-btn {
+    padding: 10px 15px;
+    background: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.compare-btn:hover {
+    background: #e68900;
+}
+
+/* chat button */
+.chat-btn {
+    padding: 10px 15px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.chat-btn:hover {
+    background: #125aa0;
+}
