@@ -1,77 +1,103 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   console.log("Marketplace module loaded");
-// });
 
 // =======================
-// DATA (nanti boleh tukar API)
+// GLOBAL STATE
 // =======================
-const farms = [
-    {
-        name: "Kebun Hijau Segar",
-        location: "Johor",
-        desc: "Sayur organik berkualiti tinggi",
-        image: "images/farm1.jpg"
-    },
-    {
-        name: "Kebun Makmur Agro",
-        location: "Kluang",
-        desc: "Pengeluaran padi & sayur segar",
-        image: "images/farm2.jpg"
-    },
-    {
-        name: "Kebun Tropika Farm",
-        location: "Muar",
-        desc: "Buah tropika segar dari ladang",
-        image: "images/farm3.jpg"
-    },
-    {
-        name: "Kebun Organik Lestari",
-        location: "Batu Pahat",
-        desc: "Tanaman tanpa bahan kimia",
-        image: "images/farm4.jpg"
-    },
-        {
-        name: "Kebun Organik Lestari",
-        location: "Batu Pahat",
-        desc: "Tanaman tanpa bahan kimia",
-        image: "images/farm4.jpg"
-    },
-        {
-        name: "Kebun Organik Lestari",
-        location: "Batu Pahat",
-        desc: "Tanaman tanpa bahan kimia",
-        image: "images/farm4.jpg"
-    }
-];
+const url = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
+let farms = [];
+let currentPage = 1;
+const itemsPerPage = 20;
 
 // =======================
-// RENDER FUNCTION
+// FETCH DATA
 // =======================
-const container = document.getElementById("farmContainer");
+fetch(url + "?action=marketplace")
+  .then(res => res.json())
+  .then(response => {
+      console.log("DATA:", response);
 
-farms.forEach(farm => {
-    container.innerHTML += `
-        <div class="card">
-            <img src="${farm.image}">
+      if (response.status === "success") {
+          farms = response.data;
+      } else {
+          console.error("API Error:", response.message);
+          farms = [];
+      }
 
-            <div class="card-body">
-                <h4>${farm.name}</h4>
-                <p class="location">${farm.location}</p>
-                <p class="desc">${farm.desc}</p>
+      renderFarms();
+      setupPagination();
+  })
+  .catch(err => console.error(err));
 
-                <button onclick="viewFarm('${farm.name}', '${farm.location}', '${farm.desc}')">
-                    View Farm
-                </button>
-                <button onclick="goToProductCatalog('${farm.name}')">
-                    View Product
-                </button>
+
+// =======================
+// RENDER FARMS (WITH PAGINATION)
+// =======================
+function renderFarms() {
+    const container = document.getElementById("farmContainer");
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    const paginatedItems = farms.slice(start, end);
+
+    let html = "";
+
+    paginatedItems.forEach(farm => {
+        html += `
+            <div class="card">
+                <img src="${farm.image}" loading="lazy">
+
+                <div class="card-body">
+                    <h4>${farm.name}</h4>
+                    <p>${farm.location}</p>
+                    <p>${farm.description}</p>
+
+                    <div class="button-group">
+
+                        <button onclick="goToProductCatalog('${farm.farmId}')">
+                            View Product
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    `;
-});
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
 
 // =======================
-// CLICK FUNCTION
+// PAGINATION
+// =======================
+function setupPagination() {
+    const pageContainer = document.getElementById("setupPagination");
+    pageContainer.innerHTML = "";
+
+    const pageCount = Math.ceil(farms.length / itemsPerPage);
+
+    for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+
+        if (i === currentPage) {
+            btn.classList.add("active");
+        }
+
+        btn.onclick = () => {
+            currentPage = i;
+            renderFarms();
+            setupPagination();
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        pageContainer.appendChild(btn);
+    }
+}
+
+
+// =======================
+// CLICK FUNCTIONS
 // =======================
 function viewFarm(name, location, desc) {
     alert(
@@ -82,59 +108,13 @@ function viewFarm(name, location, desc) {
     );
 }
 
-function goToProductCatalog(farmName) {
-    // simpan data farm (optional tapi bagus)
-    localStorage.setItem("selectedFarm", farmName);
+function goToProductCatalog(farmId) {
+    localStorage.setItem("selectedFarm", farmId);
 
-    // redirect ke page product catalog
-    window.location.href = "/modules/member-a/product-catalog/product-catalog.html";
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/modules/member-a/product-catalog/product-catalog.html";
 }
 
-function displayFarms() {
-    const container = document.getElementById("farmContainer");
-    container.innerHTML = "";
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    const paginatedItems = products.slice(start, end);
-
-    paginatedItems.forEach(farm => {
-        container.innerHTML += `
-            <div class="card">
-                <h4>${farm.name}</h4>
-
-                <div class="button-group">
-                    <button onclick="viewFarm('${farm.name}')">View Farm</button>
-                    <button onclick="goToProductCatalog('${farm.name}')">View Product</button>
-                </div>
-            </div>
-        `;
-    });
-
-}
-
-setupPagination();
-
-function setupPagination() {
-    const pageContainer = document.getElementById("pagination");
-    pageContainer.innerHTML = "";
-
-    const pageCount = Math.ceil(products.length / itemsPerPage);
-
-    for (let i = 1; i <= pageCount; i++) {
-        const btn = document.createElement("button");
-        btn.innerText = i;
-
-        if (i === currentPage) {
-            btn.classList.add("active");
-        }
-
-        btn.addEventListener("click", () => {
-            currentPage = i;
-            displayFarms();
-        });
-
-        pageContainer.appendChild(btn);
-    }
-}
