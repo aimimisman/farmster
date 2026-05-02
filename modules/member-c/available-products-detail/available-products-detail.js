@@ -1,40 +1,14 @@
 // ==========================
+// BACKEND URL
+// ==========================
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
+
+// ==========================
 // STATE (DATA)
 // ==========================
-const products = [
-  {
-    id: 1,
-    name: "Fresh Apple",
-    category: "Fruit",
-    price: 4,
-    image: "https://aimimisman.github.io/farmster/assets/images/apple.jpg",
-    description: "Fresh red apples from farm"
-  },
-  {
-    id: 2,
-    name: "Organic Carrot",
-    category: "Vegetable",
-    price: 6,
-    image: "https://aimimisman.github.io/farmster/assets/images/carrot.jpg",
-    description: "Healthy organic carrots"
-  },
-  {
-    id: 3,
-    name: "Chicken",
-    category: "Meat",
-    price: 12,
-    image: "https://aimimisman.github.io/farmster/assets/images/chicken.jpg",
-    description: "Fresh chicken meat"
-  },
-  {
-    id: 4,
-    name: "Banana",
-    category: "Fruit",
-    price: 3,
-    image: "https://aimimisman.github.io/farmster/assets/images/banana.jpg",
-    description: "Sweet bananas"
-  }
-];
+let products = [];
+
+const DEFAULT_IMAGE = "https://aimimisman.github.io/farmster/assets/images/vegetables.jpg";
 
 // ==========================
 // ELEMENTS
@@ -44,8 +18,47 @@ const categoryFilter = document.getElementById("categoryFilter");
 const priceFilter = document.getElementById("priceFilter");
 
 const productList = document.getElementById("productList");
-const productDetail = document.getElementById("productDetail");
 const noResult = document.getElementById("noResult");
+
+// ==========================
+// LOAD PRODUCTS FROM BACKEND
+// ==========================
+async function loadProducts() {
+  productList.innerHTML = `
+    <div class="loading">
+      <p>🌱 Loading fresh farm products...</p>
+    </div>
+  `;
+  noResult.innerText = "";
+
+  try {
+    const response = await fetch(`${APPS_SCRIPT_URL}?action=products`);
+    const result = await response.json();
+
+    console.log("Backend result:", result);
+
+    // handle kalau backend return terus array
+    const data = result.data || result;
+
+    products = data.map(item => ({
+      id: item.productId,
+      name: item.productName,
+      category: item.category,
+      price: Number(item.price),
+      farmId: item.farmId,
+      quantity: item.quantity,
+      description: item.description,
+      image: item.image && item.image.trim() !== "" ? item.image : DEFAULT_IMAGE
+    }));
+
+    renderProducts(products);
+
+  } catch (error) {
+    console.error("Backend error:", error);
+    productList.innerHTML = "";
+    noResult.innerText = "Error connecting to backend.";
+  }
+}
 
 // ==========================
 // RENDER PRODUCTS
@@ -54,48 +67,54 @@ function renderProducts(data) {
   productList.innerHTML = "";
   noResult.innerText = "";
 
-  if (data.length === 0) {
-    noResult.innerText = "No products found 😢";
+  if (!data || data.length === 0) {
+    noResult.innerHTML = `
+      <div class="no-data">
+        <h3>No products found</h3>
+        <p>Try different filters or search keyword.</p>
+      </div>
+    `;
     return;
   }
 
   data.forEach(p => {
     productList.innerHTML += `
-    <div class="product-card" onclick="showDetail(${p.id})">
+      <div class="product-card" onclick="showDetail('${p.id}')">
 
         <div class="img-wrapper">
-        <img src="${p.image}" alt="${p.name}">
-        <span class="badge">${p.category}</span>
+          <img src="${p.image}" alt="${p.name}">
+          <span class="badge">${p.category}</span>
         </div>
 
         <div class="card-body">
-        <h3 class="title">${p.name}</h3>
-        <p class="price">RM ${p.price}</p>
+          <h3 class="title">${p.name}</h3>
+          <p class="price">RM ${p.price.toFixed(2)}</p>
+          <p class="stock">Available: ${p.quantity}</p>
         </div>
 
-    </div>
+      </div>
     `;
   });
 }
 
 // ==========================
-// FILTER LOGIC (SMART)
+// FILTER LOGIC
 // ==========================
 function applyFilter() {
   const keyword = searchInput.value.toLowerCase();
   const category = categoryFilter.value;
   const price = priceFilter.value;
 
-  let filtered = products.filter(p => {
+  const filtered = products.filter(p => {
+    const matchSearch =
+      p.name.toLowerCase().includes(keyword) ||
+      p.description.toLowerCase().includes(keyword);
 
-    // search (case insensitive)
-    let matchSearch = p.name.toLowerCase().includes(keyword);
+    const matchCategory =
+      category === "" || p.category === category;
 
-    // category filter
-    let matchCategory = category === "" || p.category === category;
-
-    // price filter
     let matchPrice = true;
+
     if (price === "low") matchPrice = p.price < 5;
     if (price === "mid") matchPrice = p.price >= 5 && p.price <= 10;
     if (price === "high") matchPrice = p.price > 10;
@@ -103,6 +122,7 @@ function applyFilter() {
     return matchSearch && matchCategory && matchPrice;
   });
 
+  productDetail.innerHTML = "";
   renderProducts(filtered);
 }
 
@@ -110,22 +130,37 @@ function applyFilter() {
 // SHOW PRODUCT DETAIL
 // ==========================
 function showDetail(id) {
-  const p = products.find(product => product.id === id);
+  const p = products.find(product => String(product.id) === String(id));
 
-  productDetail.innerHTML = `
-    <div class="detail-card">
+  if (!p) {
+    noResult.innerText = "Product not found.";
+    return;
+  }
+
+  const modal = document.getElementById("productModal");
+  const modalBody = document.getElementById("modalBody");
+
+  modalBody.innerHTML = `
+    <div class="modal-product">
       <img src="${p.image}" alt="${p.name}">
 
-      <div class="detail-content">
+      <div class="modal-info">
         <h2>${p.name}</h2>
         <p>${p.description}</p>
+        <p><b>Product ID:</b> ${p.id}</p>
+        <p><b>Farm ID:</b> ${p.farmId}</p>
         <p><b>Category:</b> ${p.category}</p>
-        <p class="detail-price">RM ${p.price}</p>
+        <p><b>Quantity:</b> ${p.quantity}</p>
+        <p class="modal-price">RM ${p.price.toFixed(2)}</p>
       </div>
     </div>
   `;
 
-  productDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+  modal.classList.add("show");
+}
+
+function closeModal() {
+  document.getElementById("productModal").classList.remove("show");
 }
 
 // ==========================
@@ -135,7 +170,13 @@ searchInput.addEventListener("input", applyFilter);
 categoryFilter.addEventListener("change", applyFilter);
 priceFilter.addEventListener("change", applyFilter);
 
+document.getElementById("productModal").addEventListener("click", function(e) {
+  if (e.target.id === "productModal") {
+    closeModal();
+  }
+});
+
 // ==========================
 // INITIAL LOAD
 // ==========================
-renderProducts(products);
+loadProducts();
