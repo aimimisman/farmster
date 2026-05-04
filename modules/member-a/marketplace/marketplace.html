@@ -3,60 +3,56 @@
 <head>
     <title>Marketplace Module</title>
     <link rel="stylesheet" href="marketplace.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
-
-<div class="page-container">
 
     <!-- HEADER -->
     <div class="header">
         <div class="logo">Marketplace</div>
 
         <div class="menu">
-            <div>Home</div>
-            <div>Aaa</div>
-            <div>bbb</div>
-            <div>bbb</div>
+            <div onclick="goHome()">Home</div>
+            <!-- <div>Producers</div> -->
+            <div onclick="goMarketPrice()">Market Price</div>
         </div>
 
-        <div class="user">👤</div>
+        <div class="user"></div>
     </div>
 
     <!-- BANNER -->
     <div class="header-banner">
         <div class="banner-content">
-            <h1>Find Fresh Farms & Products</h1>
+            <h1>Find Fresh Farms Here</h1>
 
             <div class="search-box">
                 <div class="input-wrapper">
                     <i class="fa fa-search"></i>
-                    <input type="text" placeholder="What are you looking for?">
+                    <input type="text" id="searchInput" placeholder="What are you looking for?">
+                    <div id="suggestionBox" class="suggestion-box"></div>
                 </div>
-
-                <button>
-                    <i class="fa fa-arrow-right"></i>
-                </button>
             </div>
         </div>
     </div>
 
     <!-- CONTENT -->
-    <div class="content">
-        <h3>Featured Producers</h3>
+    <div class="page-container">
+        <div class="content">
+            
+            <div class="title" id="title">Featured Producers</div>
 
-        <div class="card-grid" id="farmContainer"></div>
+            <div class="card-grid" id="farmContainer"></div>
 
-        <div class="setupPagination" id="setupPagination"></div>
+            <div class="setupPagination" id="setupPagination"></div>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Farm Marketplace Platform. Prepared for the Module Assignment Project.</p>
     </footer>
 
-</div>
-
-<script src="marketplace.js"></script>
+    <script src="marketplace.js?v=2"></script>
 </body>
 </html>

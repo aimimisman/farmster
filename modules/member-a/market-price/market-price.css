@@ -4,6 +4,8 @@ body {
     background: #f5f5f5;
 }
 
+
+
 /* ================= LAYOUT ================= */
 .layout {
     display: flex;
@@ -49,6 +51,7 @@ body {
 
     display: flex;
     justify-content: center;
+    padding: 25px 50px;
 }
 
 /* ================= PAGE ================= */
@@ -73,6 +76,7 @@ body {
 #comparison h1 {
     text-align: center;
 }
+
 
 /* ================= SELECTED PRODUCT ================= */
 .selected-box {
@@ -147,6 +151,8 @@ body {
     padding: 20px;
     border-radius: 12px;
     text-align: center;
+    max-width: 600px;
+    margin: 20px auto 0;
 }
 
 .diff-card p {
@@ -305,4 +311,143 @@ body {
     .avg-container {
         grid-template-columns: 1fr;
     }
+}
+
+.compare-card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+     width: 100%;
+    max-width: 100%;
+}
+
+.compare-inner {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.selected-box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.selected-img img {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.selected-info h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.selected-info p {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
+}
+
+.avg-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.avg-card {
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.avg-card h4 {
+    margin: 0 0 10px;
+    font-size: 13px;
+}
+
+.avg-card p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.avg-card small {
+    font-weight: bold;
+    color: #444;
+}
+
+.producer {
+    background: #f0fbf3;
+    border: 1px solid #bfe5c8;
+}
+
+.market {
+    background: #eef7ff;
+    border: 1px solid #b9dcff;
+}
+
+.diff-card {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.diff-card h4 {
+    margin: 0 0 8px;
+    color: #555;
+}
+
+.diff-card p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f4d2c;
+}
+
+.status-badge {
+    display: inline-block;
+    background: #e8f7ec;
+    color: #2e7d32;
+    border: 1px solid #bfe5c8;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.saving-text {
+    margin-top: 8px !important;
+    font-size: 13px !important;
+    color: #555 !important;
+    font-weight: normal !important;
+}
+
+@media (max-width: 600px) {
+    .avg-container {
+        grid-template-columns: 1fr;
+    }
+
+    .diff-card {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+.product-select {
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #222;
+    cursor: pointer;
 }

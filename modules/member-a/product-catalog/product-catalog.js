@@ -19,13 +19,19 @@ const itemsPerPage = 8;
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
 
-    const farmTitle = document.getElementById("farmTitle");
+    // ✅ ambil nama farm dari localStorage
+    const farmName = localStorage.getItem("selectedFarmName");
 
-    if (farmTitle) {
-        farmTitle.innerText = selectedFarm || "Farm";
+    const productTitle = document.getElementById("productTitle");
+
+    if (productTitle) {
+        productTitle.innerText = "Product From " + (farmName || "");
     }
 
+    // existing function
+    loadFarmInfo();
     loadProducts();
+
 });
 
 
@@ -79,6 +85,37 @@ function loadProducts() {
 }
 
 
+function loadFarmInfo() {
+    fetch(url + "?action=marketplace")
+        .then(res => res.json())
+        .then(data => {
+            const farms = data.data || [];
+
+            const farm = farms.find(f =>
+                String(f.farmId).trim() === String(selectedFarm).trim()
+            );
+
+            if (!farm) {
+                console.log("Farm not found");
+                return;
+            }
+
+            document.getElementById("farmTitle").innerText = farm.name || selectedFarm;
+            document.querySelector(".farm-location").innerText =
+                farm.location || "-";
+
+            document.querySelector(".farm-desc").innerText =
+                farm.description || "No description available.";
+
+            const farmLogo = document.querySelector(".farm-logo img");
+            if (farmLogo) {
+                farmLogo.src = farm.image || "../../../assets/images/farm-logo.png";
+            }
+        })
+        .catch(err => console.error("Farm info error:", err));
+}
+
+
 // =======================
 // RENDER PRODUCTS
 // =======================
@@ -103,9 +140,9 @@ function renderProducts() {
         card.className = "card";
 
         card.innerHTML = `
-            <img src="${p.image}" class="product-img">
+            <img src="${p.image || '../../../assets/images/placeholder.png'}" class="product-img">
             <h3>${p.productName}</h3>
-            <p>${p.price}</p>
+            <p>RM ${parseFloat(p.price).toFixed(2)} / ${p.unit || "kg"}</p>
             <button class="detailBtn">View Detail</button>
         `;
 
@@ -205,12 +242,15 @@ function viewProductDetail(product) {
             </div>
 
             <div class="detail-info">
-
-                <h1>${product.productName}</h1>
+            
+            <span class="close-btn" onclick="closeDetail()">✖</span>
+            
+            <h1>${product.productName}</h1>
+                
 
                 <p><b>Category:</b> ${product.category}</p>
                 <p><b>Quantity:</b> ${product.quantity}</p>
-                <p><b>Price:</b> ${product.price}</p>
+                <p><b>Price:</b> RM ${parseFloat(product.price).toFixed(2)} / ${product.unit || "kg"}</p>
                 <p><b>Farm ID:</b> ${product.farmId}</p>
 
                 <p class="desc">${product.description}</p>
@@ -236,24 +276,60 @@ function viewProductDetail(product) {
 
     setTimeout(() => {
         window.scrollTo({
-            top: detail.offsetTop,
+            top: 0,
             behavior: "smooth"
         });
     }, 50);
 }
 
+function closeDetail() {
+    const detail = document.getElementById("productDetail");
+    detail.classList.add("hidden");
+}
 
 // =======================
 // NAVIGATION
 // =======================
+
+// from kard item yang dipilih
+
 function goToMarketPrice(product) {
     localStorage.setItem("selectedProduct", JSON.stringify(product));
     localStorage.setItem("openPage", "comparison");
-    // window.location.href = "/modules/member-a/market-price/market-price.html";
-    window.location.href = "https://aimimisman.github.io/farmster/modules/member-a/market-price/market-price.html";
+
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/modules/member-a/market-price/market-price.html";
 }
 
 function goToChat(farmId) {
     localStorage.setItem("selectedFarm", farmId);
     window.location.href = "../chat/chat.html";
+}
+
+function goHome() {
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/index.html";
+}
+
+function goMarketplace() {
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/modules/member-a/marketplace/marketplace.html";
+}
+
+// from top menu
+function goMarketPrice() {
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/modules/member-a/market-price/market-price.html";
 }

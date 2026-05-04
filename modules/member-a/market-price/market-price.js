@@ -6,59 +6,128 @@ console.log("PRICE COMPARISON JS LOADED");
 const url = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
 
 let marketChart = null;
+let allProducts = [];
+let allFarms = [];
+let allMarketPrices = [];
 
 // =======================
 // INIT
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Load market dashboard
-    loadMarketOverview();
+    console.log("JS LOADED");
 
-    // Check selected product from product catalog
-    const product = JSON.parse(localStorage.getItem("selectedProduct"));
-    console.log("SELECTED PRODUCT:", product);
-
-    // Page control
+    const selectedProduct = JSON.parse(localStorage.getItem("selectedProduct"));
     const openPage = localStorage.getItem("openPage");
 
-    if (openPage === "comparison") {
+    loadMarketOverview();
+
+    // 🔥 KEY FIX
+    if (selectedProduct) {
+        showPage("comparison");
+    } else if (openPage === "comparison") {
         showPage("comparison");
         localStorage.removeItem("openPage");
     } else {
         showPage("marketplace");
     }
 
-    // Kalau ada product, render comparison
-    if (product) {
-        renderSelectedProduct(product);
-        fetchMarketData(product);
-        renderProducerList(product);
-    } else {
-        console.log("No selected product found");
-    }
+    loadComparisonData(selectedProduct);
 });
+
+function loadComparisonData(selectedProduct) {
+
+    Promise.all([
+        fetch(url + "?action=products").then(res => res.json()),
+        fetch(url + "?action=marketplace").then(res => res.json()),
+        fetch(url + "?action=marketprice").then(res => res.json())
+    ])
+    .then(([productsRes, farmsRes, marketRes]) => {
+
+        allProducts = productsRes.data || [];
+        allFarms = farmsRes.data || [];
+        allMarketPrices = marketRes.data || [];
+
+        populateProductDropdown(selectedProduct);
+
+        if (selectedProduct) {
+            updateComparison(selectedProduct.productId);
+        } else if (allProducts.length > 0) {
+            updateComparison(allProducts[0].productId);
+        }
+    })
+    .catch(err => console.error("Comparison data error:", err));
+}
+
+function populateProductDropdown(selectedProduct) {
+    const select = document.getElementById("productSelect");
+    if (!select) return;
+
+    select.innerHTML = "";
+
+    const uniqueProducts = [];
+    const seen = new Set();
+
+    allProducts.forEach(p => {
+        if (!seen.has(p.productId)) {
+            seen.add(p.productId);
+            uniqueProducts.push(p);
+        }
+    });
+
+    uniqueProducts.forEach(p => {
+        const option = document.createElement("option");
+        option.value = p.productId;
+        option.textContent = p.productName;
+        select.appendChild(option);
+    });
+
+    if (selectedProduct) {
+        select.value = selectedProduct.productId;
+    }
+
+    select.onchange = () => {
+        updateComparison(select.value);
+    };
+}
+
+function updateComparison(productId) {
+    const product = allProducts.find(p =>
+        String(p.productId).trim() === String(productId).trim()
+    );
+
+    if (!product) return;
+
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+
+    renderSelectedProduct(product);
+
+    const market = allMarketPrices.find(m =>
+        String(m.productId).trim() === String(product.productId).trim()
+    );
+
+    if (market) {
+        calculateComparison(product, market);
+    }
+
+    renderProducerListFromData(product);
+}
 
 
 // =======================
 // RENDER SELECTED PRODUCT
 // =======================
 function renderSelectedProduct(p) {
-
     document.getElementById("selectedImage").src =
-        p.image || "../assets/images/placeholder.png";
+        p.image || "https://via.placeholder.com/300x200?text=No+Image";
 
-    document.getElementById("selectedName").textContent =
-        p.productName || "-";
+    const productSelect = document.getElementById("productSelect");
+    if (productSelect) {
+        productSelect.value = p.productId;
+    }
 
-    document.getElementById("selectedCategory").textContent =
-        "Category: " + (p.category || "-");
-
-    document.getElementById("selectedFarm").textContent =
-        "Farm: " + (p.farmId || "-");
-
-    document.getElementById("selectedPrice").textContent =
-        "Price: RM " + (p.price || "-");
+    document.getElementById("selectedUnit").textContent =
+        "Unit: " + (p.unit || "kg");
 }
 
 
@@ -92,131 +161,89 @@ function fetchMarketData(product) {
 // COMPARE LOGIC
 // =======================
 function calculateComparison(product, market) {
-
     const farmPrice = parseFloat(product.price) || 0;
     const marketAvg = parseFloat(market.avgPrice) || 0;
     const diff = farmPrice - marketAvg;
+    const absDiff = Math.abs(diff);
+    const unit = product.unit || "kg";
 
     document.getElementById("avgProducer").textContent =
-        "RM " + farmPrice.toFixed(2);
+        "RM" + farmPrice.toFixed(2);
 
     document.getElementById("avgMarket").textContent =
-        "RM " + marketAvg.toFixed(2);
+        "RM" + marketAvg.toFixed(2);
+
+    document.getElementById("producerUnit").textContent =
+        "(" + unit + ")";
+
+    document.getElementById("marketUnit").textContent =
+        "(" + unit + ")";
 
     document.getElementById("avgDiff").textContent =
-        "RM " + diff.toFixed(2);
-}
+        "RM" + absDiff.toFixed(2);
 
+    const statusBadge = document.getElementById("statusBadge");
+    const savingText = document.getElementById("savingText");
+
+    if (diff < 0) {
+        const percent = marketAvg ? ((absDiff / marketAvg) * 100).toFixed(2) : "0.00";
+        statusBadge.textContent = "Cheaper than market";
+        savingText.textContent = "You're saving " + percent + "% compared to the market price.";
+    } else if (diff > 0) {
+        const percent = marketAvg ? ((absDiff / marketAvg) * 100).toFixed(2) : "0.00";
+        statusBadge.textContent = "Higher than market";
+        savingText.textContent = "This price is " + percent + "% higher than the market price.";
+    } else {
+        statusBadge.textContent = "Same as market";
+        savingText.textContent = "This price is the same as the market price.";
+    }
+}
 
 // =======================
 // PRODUCER LIST
 // =======================
-function renderProducerList(product) {
+function renderProducerListFromData(product) {
+    const filtered = allProducts.filter(p =>
+        String(p.productId).trim() === String(product.productId).trim()
+    );
 
-    Promise.all([
-        fetch(url + "?action=products").then(res => res.json()),
-        fetch(url + "?action=marketplace").then(res => res.json())
-    ])
-    .then(([productsRes, farmsRes]) => {
+    const container = document.getElementById("producerList");
+    if (!container) return;
 
-        const products = productsRes.data || [];
-        const farms = farmsRes.data || [];
+    container.innerHTML = "";
 
-        const filtered = products.filter(p =>
-            String(p.productId).trim() === String(product.productId).trim()
+    if (filtered.length === 0) {
+        container.innerHTML = "<p>No producer found</p>";
+        return;
+    }
+
+    filtered.forEach(item => {
+        const farm = allFarms.find(f =>
+            String(f.farmId).trim() === String(item.farmId).trim()
         );
 
-        const container = document.getElementById("producerList");
-        if (!container) return;
+        const farmName = farm ? farm.name : "Unknown Farm";
 
-        container.innerHTML = "";
+        const div = document.createElement("div");
+        div.className = "producer-item";
 
-        if (filtered.length === 0) {
-            container.innerHTML = "<p>No producer found</p>";
-            return;
-        }
+        div.innerHTML = `
+            <div class="producer-left">
+                <img src="${farm?.image || '../assets/images/placeholder.png'}">
 
-        filtered.forEach(item => {
-
-            const farm = farms.find(f =>
-                String(f.farmId).trim() === String(item.farmId).trim()
-            );
-
-            const farmName = farm ? farm.name : "Unknown Farm";
-
-            const div = document.createElement("div");
-            div.className = "producer-item";
-
-            div.innerHTML = `
-                <div class="producer-left">
-                    <img src="${farm?.image || '../assets/images/placeholder.png'}">
-
-                    <div>
-                        <div class="producer-name">${farmName}</div>
-                        <small>${item.farmId}</small>
-                    </div>
+                <div>
+                    <div class="producer-name">${farmName}</div>
+                    <small>${item.farmId}</small>
                 </div>
+            </div>
 
-                <div class="producer-price">
-                    RM ${parseFloat(item.price).toFixed(2)}
-                </div>
-            `;
+            <div class="producer-price">
+                RM ${parseFloat(item.price).toFixed(2)}
+            </div>
+        `;
 
-            container.appendChild(div);
-        });
-
-    })
-    .catch(err => console.error("Producer list error:", err));
-}
-
-
-// =======================
-// MARKET OVERVIEW
-// =======================
-function loadMarketOverview() {
-
-    Promise.all([
-        fetch(url + "?action=marketprice").then(res => res.json()),
-        fetch(url + "?action=products").then(res => res.json())
-    ])
-    .then(([marketRes, productRes]) => {
-
-        const marketData = marketRes.data || [];
-        const products = productRes.data || [];
-
-        if (!marketData.length) return;
-
-        renderMarketOverview(marketData);
-        renderMarketTable(marketData, products);
-        populateTrendDropdown(marketData, products);
-    })
-    .catch(err => console.error("Market overview error:", err));
-}
-
-
-function renderMarketOverview(data) {
-
-    const totalProducts = data.length;
-
-    const totalAvg = data.reduce((sum, item) => {
-        return sum + (parseFloat(item.avgPrice) || 0);
-    }, 0);
-
-    const avgPrice = totalAvg / totalProducts;
-
-    const totalChange = data.reduce((sum, item) => {
-        return sum + (parseFloat(item.changePercent) || 0);
-    }, 0);
-
-    const avgChange = totalChange / totalProducts;
-
-    document.getElementById("totalProducts").textContent = totalProducts;
-    document.getElementById("avgPriceToday").textContent = "RM" + avgPrice.toFixed(2);
-    document.getElementById("priceChange").textContent =
-        (avgChange >= 0 ? "+" : "") + avgChange.toFixed(2) + "%";
-
-    document.getElementById("lastUpdated").textContent =
-        "Updated: " + (data[0].lastUpdated || "-");
+        container.appendChild(div);
+    });
 }
 
 
@@ -368,4 +395,64 @@ function showPage(pageId) {
     } else {
         document.querySelectorAll(".nav-btn")[1].classList.add("active");
     }
+}
+
+function loadMarketOverview() {
+
+    Promise.all([
+        fetch(url + "?action=marketprice").then(res => res.json()),
+        fetch(url + "?action=products").then(res => res.json())
+    ])
+    .then(([marketRes, productRes]) => {
+
+        const marketData = marketRes.data || [];
+        const products = productRes.data || [];
+
+        if (!marketData.length) {
+            console.log("No market data");
+            return;
+        }
+
+        // ====== OVERVIEW CARDS ======
+        const totalProducts = marketData.length;
+
+        const avgPrice = marketData.reduce((sum, item) => {
+            return sum + (parseFloat(item.avgPrice) || 0);
+        }, 0) / totalProducts;
+
+        const avgChange = marketData.reduce((sum, item) => {
+            return sum + (parseFloat(item.changePercent) || 0);
+        }, 0) / totalProducts;
+
+        document.getElementById("totalProducts").textContent = totalProducts;
+        document.getElementById("avgPriceToday").textContent = "RM" + avgPrice.toFixed(2);
+        document.getElementById("priceChange").textContent =
+            (avgChange >= 0 ? "+" : "") + avgChange.toFixed(2) + "%";
+
+        document.getElementById("lastUpdated").textContent =
+            "Updated: " + (marketData[0].lastUpdated || "-");
+
+        // ====== TABLE ======
+        renderMarketTable(marketData, products);
+
+    })
+    .catch(err => console.error("Market overview error:", err));
+}
+
+
+
+function goHome() {
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/index.html";
+}
+
+function goMarketplace() {
+    const BASE_URL = window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+
+    window.location.href = BASE_URL + "/modules/member-a/marketplace/marketplace.html";
 }

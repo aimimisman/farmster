@@ -6,11 +6,23 @@
 </head>
 
 <body>
+<!-- HEADER -->
+    <div class="header">
+        <div class="logo">Product Catalog</div>
+
+        <div class="menu">
+            <div onclick="goHome()">Home</div>
+            <div onclick="goMarketplace()">Market Place</div>
+            <div onclick="goMarketPrice()">Market Price</div>
+        </div>
+
+        <div class="user"></div>
+    </div>
+
+<!-- BANNER -->
+<!-- <div class="banner"></div> -->
 
 <div class="page-container">
-
-    <!-- BANNER -->
-    <div class="banner"></div>
 
     <!-- LOGO + INFO ROW -->
     <div class="farm-header-row">
@@ -26,39 +38,10 @@
                 <button class="visit-btn">Visit Farm</button>
             </div>
             
-            <p class="farm-location">Kuantan, Pahang ⭐ 4.8 (120 reviews)</p>
-            <p class="farm-desc"> We are committed to providing fresh and high-quality produce using sustainable farming practices.</p>
+            <p class="farm-location"></p>
+            <p class="farm-desc"> </p>
         </div>
     </div>
-
-
-    
-    <!-- TITLE
-    <div class="title-section">
-        <h2>Product Catalog</h2>
-        <p id="farmTitle">Farm Name</p>
-    </div> -->
-    
-    <!-- FILTER
-    <div class="filter-bar">
-        <select>
-            <option>All Category</option>
-            <option>Vegetables</option>
-            <option>Fruits</option>
-        </select>
-        
-        <select>
-            <option>Price</option>
-            <option>Low to High</option>
-            <option>High to Low</option>
-        </select>
-        
-        <select>
-            <option>Sort</option>
-            <option>Newest</option>
-            <option>Popular</option>
-        </select>
-    </div> -->
     
     <div class="info-grid">
     
@@ -82,10 +65,10 @@
         <h4 id="followersValue">0</h4>
     </div>
 
-</div>
+    </div>
 
     <div class="title-section" id="productSection">
-        <h2 class="page-title">Product Catalog</h2>
+        <div class="page-title" id="productTitle">Product From</div> 
         <p class="page-subtitle">Browse fresh products from selected farm</p>
     </div>
     
