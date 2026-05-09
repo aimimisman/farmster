@@ -1,0 +1,86 @@
+/* Reset basic */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body background */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: lightyellow;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container */
+.profile-container {
+    background: white;
+    padding: 30px;
+    width: 320px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Title */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Profile image */
+.profile {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #4facfe;
+    margin-bottom: 15px;
+}
+
+/* Name */
+h3 {
+    margin: 10px 0 5px;
+    color: #222;
+}
+
+/* Email text */
+p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Edit button */
+.edit-btn {
+    background: #4facfe;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #007bff;
+}
+
+/* Logout button */
+.logout-btn {
+    background: #ff4d4d;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #cc0000;
+}
