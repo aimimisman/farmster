@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register | Farmster</title>
+
+<link rel="stylesheet" href="register.css">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* CARD */
+.container {
+    background:#f7faf5;
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+}
+
+/* TITLE */
+h2 {
+    margin: 0;
+    text-align: center;
+    color: #1f4d2c;
+}
+
+.subtitle {
+    text-align: center;
+    color: gray;
+    font-size: 13px;
+    margin-bottom: 20px;
+    
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}  
+ 
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+}
+input:focus {
+    border-color: #3cb371;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1f4d2c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #2e6b3f;
+}
+
+/* LINK */
+a {
+    color: #1f4d2c;
+    text-decoration: none;
+}
+
+
+</style>
+</head>
+
+<body>
+    
+<div class="container">
+
+    <h2>🌱 Join Farmster</h2>
+    <p class="subtitle">Start your journey in the Farmster Community </p>
+
+    <form id="registrationForm">
+
+        <label>Farmster Name</label>
+        <input type="text" id="name" placeholder="Example: Husin Lempoyang" required>
+
+        <label>First Name</label>
+        <input type="text" id="firstname" placeholder="Example: Husin" required>
+
+        <label>Last Name</label>
+        <input type="text" id="lastname" placeholder="Bin Abu Hasan" required>
+
+        <label>Contact Number</label>
+        <input type="text" id="contact" placeholder="Example: 08123456789" required>
+
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Example: husin.lempoyang@gmail.com" required>
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Must be at least 8 characters" minlength="8" required>
+
+        <button type="submit">SIGN UP</button>
+
+    </form>
+
+  <div class="login-link">
+    <a href="login.html">Already have an account? Login here</a>
+</div>
+</div>
+
+
+<script src="fetchdata.js"></script>
+
+
+
+</body>
+</html>

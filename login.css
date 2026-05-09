@@ -1,0 +1,43 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #e0f7e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background: #f7faf5;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: lightgreen;
+    border: none;
+    color: green;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: all 0.3s ease; /* smooth animation */
+}
+
+button:hover {
+    background: #32cd3249; /* darker green */
+    color: white;
+    transform: translateY(-2px); /* lift effect */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+button:active {
+    transform: translateY(0px); /* click effect */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+

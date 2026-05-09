@@ -1,0 +1,102 @@
+.navbar {
+    background: white;
+    padding: 14px 8%;
+    display: flex;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); 
+    justify-content:space-between;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+navbar isolate {
+    background: blue;
+}
+.navbar a:hover {.navbar {
+    background: white;
+    padding: 14px 8%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.navbar a {
+    color: #1f4d2c;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background: #1f4d2c;
+    color: white;
+}
+
+/* ❌ buang navbar isolate (tak perlu) */
+
+
+/* CARD IMAGE FIX */
+.card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1f4d2c;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    color: white;
+    padding: 28px 8%;
+    background-color: #1f4d2c;
+    margin-top: 30px;
+}
+    background: white;
+}
+.card img {
+    width: 50px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1f4d2c;
+    cursor: pointer;          /* penting: nampak clickable */
+    transition: 0.3s ease;    /* smooth hover effect */
+}
+
+/* hover effect bila mouse atas image */
+.card img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+footer {
+    text-align: center;
+    color: white;
+    padding: 28px 8%;
+    background-color: #1f4d2c;
+    margin-top: 30px;
+}
