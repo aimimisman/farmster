@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmster - Chat Messaging</title>
+  <link rel="stylesheet" href="chat-messaging.css">
+</head>
+<body>
+
+  <header class="page-hero">
+    <div>
+      <span class="tagline">Product Discovery</span>
+      <h1>Chat Messaging</h1>
+      <p>Browse fresh farm products, filter by category, and view product details easily.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="section-header">
+      <p class="section-label">Product Listing</p>
+      <h2>Find Farm Products</h2>
+      <p>Search and filter available farm products by name, category, or price range.</p>
+      <button class="floating-btn" onclick="openChat()" >Contact Farm</button>
+    </div>
+
+    <!-- POPUP CHAT -->
+    <div id="chat-popup" class="chat-popup">
+        <div class="phone">
+            
+            <div class="header">
+                <div class="profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div class="name">Aina</div>
+                        <div class="status">online</div>
+                    </div>
+                </div>
+                <span class="close-btn" onclick="closeChat()">✖</span>
+                </div>
+
+            <div id="chat-box" class="chat-box">
+                <div class="message received">
+                    Hi there!
+                    <span class="time">10:30</span>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="message-input" placeholder="Type a message">
+                <button class="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+
+        </div>
+    </div>
+
+    
+  </main>
+
+  </div>
+
+<script src="chat-messaging.js"></script>
+</body>
+</html>
