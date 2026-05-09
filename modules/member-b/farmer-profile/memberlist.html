@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Farmster Community</title>
+<html lang="en">
+    <hlink rel="stylesheet" href="memberlist.css">
+<style>
+
+/* RESET */
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(to right, #1f4d2c, #3cb371);
+}
+h2, p {
+  margin: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  display: flex;
+}
+
+ul li a {
+  display: block;
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+ul li a:hover {
+  background-color: white;
+  color:green; ;
+}
+/* HEADER (FIXED) */
+.header {
+    background: linear-gradient(rgba(20, 75, 38, 0.8), rgba(20, 75, 38, 0.8)),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef");
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+/* MAIN CONTAINER */
+.main-container {
+    background: #fff9c4;
+    margin: 30px;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1f4d2c;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+}
+
+/* TEXT */
+.name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.price {
+    color: #1f4d2c;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* TAG */
+.tag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-top: 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: white;
+}
+
+.organic {
+    background: #28a745;
+}
+
+.pesticide {
+    background: #dc3545;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    background: #1f4d2c;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+/* RESPONSIVE (NEW 🔥) */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>🌱 Farmster Community</h1>
+    <p>Fresh Products Direct From Farmers</p>
+</div>
+<!-- NAVIGATION BAR -->
+<div class="navbar">
+    <ul>
+        <li><a href="main.html">🏠 Home</a></li>
+        <li><a href="memberlist.html">👥 Community</a></li>
+        <li><a href="update.html">🧑‍🌾 Profile</a></li>
+        <li><a href="login.html">➕ Logout</a></li>
+    </ul>
+</div>
+<!-- MAIN -->
+<div class="main-container">
+<div class="container">
+
+    <!-- CARD 1 -->
+    <div class="card">
+        <a href="update.html?user=user1">
+        <img src="user1.jpg" alt="User 1">
+    </a>
+        <div class="name">Ahmad Grower</div>
+        <div class="location">Kuala Lumpur</div>
+        <div class="product">Sawi Segar</div>
+        <div class="price">RM 3.00 / ikat</div>
+        <div class="tag organic">Organic</div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card">
+     <a href="update.html?user=user2">
+     <img src="user2.jpg" alt="User 2">
+    </a>
+        <div class="name">Siti Farmer</div>
+        <div class="location">Penang</div>
+        <div class="product">Tomato</div>
+        <div class="price">RM 5.00 / kg</div>
+        <div class="tag pesticide">Pesticide</div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card">
+         <a href="update.html?user=user3">
+     <img src="user3.jpg" alt="User 3">
+     </a>
+        <div class="name">Ali Puteh</div>
+        <div class="location">Johor Bahru</div>
+        <div class="product">Telur Ayam</div>
+        <div class="price">RM 12.00 / tray</div>
+        <div class="tag organic">Organic</div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="card">
+        <a href="update.html?user=user4">
+            <img src="user4.jpg" alt="User 4">
+        </a>
+        <div class="name">Ella Garden</div>
+        <div class="location">Kuala Lumpur</div>
+        <div class="product">Cili Padi</div>
+        <div class="price">RM 4.00 / pack</div>
+        <div class="tag organic">Organic</div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="card">
+       <a href="update.html?user=user5">
+            <img src="user5.jpg" alt="User 5">
+        </a>
+        <div class="name">Husin Lempoyang</div>
+        <div class="location">Penang</div>
+        <div class="product">Halia/ Kunyit</div>
+        <div class="price">RM 3.00 / kg</div>        
+        <div class="tag organic">Organic</div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="card">
+       <a href="update.html?user=user6">
+        <img src="user6.jpg" alt="User 6">
+            </a>
+        <div class="name">Nur Farm</div>
+        <div class="location">Johor Bahru</div>
+        <div class="product">Bayam</div>
+        <div class="price">RM 3.50 / ikat</div>
+        <div class="tag organic">Organic</div>
+    </div>
+
+</div>
+
+</div>
+<script>
+let members = JSON.parse(localStorage.getItem("members")) || [];
+
+let container = document.getElementById("memberContainer");
+
+members.forEach(member => {
+    let card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <img src="${member.image}">
+        <h3>${member.name}</h3>
+        <p>${member.product}</p>
+        <p>RM ${member.price}</p>
+    `;
+
+    container.appendChild(card);
+});
+
+</script>
+<script>
+function getLocationAndSubmit() {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            let data = {
+                name: document.getElementById("name").value,
+                product: document.getElementById("product").value,
+                price: document.getElementById("price").value,
+                lat: latitude,
+                lng: longitude
+            };
+
+            fetch("https://script.google.comhttps://script.google.com/macros/s/AKfycbzqUldMhHQ2K8zupVkosC6_KMf7YgPgPVtBAy6oS7Ie_fdA_LVQcT80LRlN91aBbaub5w/exec/a/macros/graduate.utm.my/s/AKfycbz-rDX18_CWwjzSx-DHnfah76eot9G47KCsXp7CcoW9C_E9v0-9BO3lI-utsepmoweRJQ/exec", {
+                method: "POST",
+                body: JSON.stringify(data)
+            })
+            .then(res => res.text())
+            .then(res => {
+                alert("Saved with location!");
+                window.location.href = "memberlist.html";
+            });
+
+        });
+
+    } else {
+        alert("Browser tak support geolocation");
+    }
+}
+</script>
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Farm Marketplace Platform | Module Assignment Project</p>
+</footer>
+
+</body>
+</html>
