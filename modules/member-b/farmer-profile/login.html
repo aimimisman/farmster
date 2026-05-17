@@ -91,14 +91,31 @@
     </form>
 
     <div class="link">
-        <p>Don't have an account? <a href="register.html">Sign Up</a></p>
-        <p><a href="main.html">Go to Main Website</a></p>
-    </div>
+
+    <p>
+        Don't have an account?
+
+        <a id="registerLink">
+        Sign Up
+        </a>
+
+    </p>
+
+
+    <p>
+
+        <a id="mainLink">
+        Go to Main Website
+        </a>
+
+    </p>
+
+</div>
 
     <h6>© 2026 Farm Marketplace Platform | Module Assignment Project</h6>
 </div>
 
-<script>
+<!-- <script>
 function loginUser(e) {
     e.preventDefault();
 
@@ -116,6 +133,132 @@ function loginUser(e) {
         }
     });
 }
+</script> -->
+
+
+
+<script>
+
+const BASE_URL =
+window.location.hostname.includes("github.io")
+
+? "https://aimimisman.github.io/farmster"
+
+: "";
+
+document.getElementById(
+"registerLink"
+).href =
+
+BASE_URL +
+
+"/modules/member-b/farmer-profile/register.html";
+
+document.getElementById(
+"mainLink"
+).href =
+
+BASE_URL +
+
+"/index.html";
+
+
+function loginUser(e){
+
+    e.preventDefault();
+
+    const data = {
+
+        email:
+        document
+        .getElementById("email")
+        .value
+        .trim(),
+
+        password:
+        document
+        .getElementById("password")
+        .value
+        .trim()
+
+    };
+
+
+fetch(
+"https://script.google.com/macros/s/AKfycbxGwkquRFThhlRLUI0jhY-sdGj2G0j_Amab2kV9lo908zevKlsaC4lnRX9TC6Xt9btTvQ/exec?action=login",
+
+{
+
+method:"POST",
+
+body:JSON.stringify(data)
+
+})
+
+.then(res=>res.json())
+
+.then(res=>{
+
+    console.log(res);
+
+    alert(
+
+        res.data?.message ||
+
+        res.message ||
+
+        "Login successful"
+
+    );
+
+
+    if(
+
+      res.status==="success"
+
+      ||
+
+      res.data?.status==="success"
+
+    ){
+
+        localStorage.setItem(
+
+            "currentUser",
+
+            JSON.stringify(
+
+                res.data?.user
+
+                ||
+
+                res.user
+
+            )
+
+        );
+
+
+         window.location.href =
+
+        BASE_URL +
+
+        "/modules/member-b/farmer-profile/memberlist.html";
+
+    }
+
+})
+
+.catch(err=>{
+
+    console.error(err);
+
+    alert("Login failed");
+
+});
+
+}
+
 </script>
 
 </body>
