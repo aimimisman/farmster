@@ -45,8 +45,8 @@ navbar isolate {
 }
 
 .navbar a:hover {
-    background: #1f4d2c;
-    color: white;
+    background: #f1f3f2;
+    color: #1f4d2c;
 }
 
 /* ❌ buang navbar isolate (tak perlu) */
@@ -99,4 +99,10 @@ footer {
     padding: 28px 8%;
     background-color: #1f4d2c;
     margin-top: 30px;
+}
+
+button.tag {
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }

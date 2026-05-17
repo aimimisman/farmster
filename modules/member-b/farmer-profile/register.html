@@ -121,15 +121,68 @@ a {
 
     </form>
 
-  <div class="login-link">
+  <!-- <div class="login-link">
     <a href="login.html">Already have an account? Login here</a>
+</div> -->
+
+<div class="login-link">
+
+    <a id="loginLink">
+
+        Already have an account?
+        Login here
+
+    </a>
+
+    <br><br>
+
+    <a id="mainLink">
+
+        Back to Main Website
+
+    </a>
+
 </div>
 </div>
 
 
 <script src="fetchdata.js"></script>
 
+<script>
 
+const BASE_URL =
+
+window.location.hostname.includes("github.io")
+
+?
+
+"https://aimimisman.github.io/farmster"
+
+:
+
+"";
+
+
+
+document.getElementById(
+"loginLink"
+).href =
+
+BASE_URL +
+
+"/modules/member-b/farmer-profile/login.html";
+
+
+
+document.getElementById(
+"mainLink"
+).href =
+
+BASE_URL +
+
+"/index.html";
+
+</script>
 
 </body>
 </html>
