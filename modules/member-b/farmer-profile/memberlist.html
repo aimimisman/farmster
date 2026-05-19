@@ -547,7 +547,16 @@ function loadUsers() {
             user.farmsterName || "Farm name not set";
 
             const location =
-            user.location || "Location not set";
+
+[user.district, user.state]
+
+.filter(Boolean)
+
+.join(", ")
+
+||
+
+"Location not set";
 
             const certification =
             user.certification || "Certification not set";
