@@ -1,14 +1,15 @@
+console.log("NEW JS LOADED VERSION 10");
 // ==========================
 // BACKEND URL
 // ==========================
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
 
 // ==========================
-// STATE (DATA)
+// STATE
 // ==========================
 let products = [];
 
-const DEFAULT_IMAGE = "https://aimimisman.github.io/farmster/assets/images/vegetables.jpg";
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop";
 
 // ==========================
 // ELEMENTS
@@ -16,12 +17,30 @@ const DEFAULT_IMAGE = "https://aimimisman.github.io/farmster/assets/images/veget
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
 const priceFilter = document.getElementById("priceFilter");
-
 const productList = document.getElementById("productList");
 const noResult = document.getElementById("noResult");
 
 // ==========================
-// LOAD PRODUCTS FROM BACKEND
+// IMAGE VALIDATION
+// ==========================
+function getValidImage(url) {
+  if (!url) return DEFAULT_IMAGE;
+
+  url = String(url).trim();
+
+  if (
+    url.startsWith("http://") ||
+    url.startsWith("https://") ||
+    url.startsWith("/")
+  ) {
+    return url;
+  }
+
+  return DEFAULT_IMAGE;
+}
+
+// ==========================
+// LOAD PRODUCTS
 // ==========================
 async function loadProducts() {
   productList.innerHTML = `
@@ -37,7 +56,6 @@ async function loadProducts() {
 
     console.log("Backend result:", result);
 
-    // handle kalau backend return terus array
     const data = result.data || result;
 
     products = data.map(item => ({
@@ -47,9 +65,12 @@ async function loadProducts() {
       price: Number(item.price),
       farmId: item.farmId,
       quantity: item.quantity,
-      description: item.description,
-      image: item.image && item.image.trim() !== "" ? item.image : DEFAULT_IMAGE
+      unit: item.unit,
+      description: item.description || "",
+      image: getValidImage(item.image)
     }));
+
+    console.log("Mapped products:", products);
 
     renderProducts(products);
 
@@ -82,14 +103,18 @@ function renderProducts(data) {
       <div class="product-card" onclick="showDetail('${p.id}')">
 
         <div class="img-wrapper">
-          <img src="${p.image}" alt="${p.name}">
+          <img
+            src="${p.image}"
+            alt="${p.name}"
+            onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';"
+          >
           <span class="badge">${p.category}</span>
         </div>
 
         <div class="card-body">
           <h3 class="title">${p.name}</h3>
           <p class="price">RM ${p.price.toFixed(2)}</p>
-          <p class="stock">Available: ${p.quantity}</p>
+          <p class="stock">Available: ${p.quantity} ${p.unit || ""}</p>
         </div>
 
       </div>
@@ -98,7 +123,7 @@ function renderProducts(data) {
 }
 
 // ==========================
-// FILTER LOGIC
+// FILTER PRODUCTS
 // ==========================
 function applyFilter() {
   const keyword = searchInput.value.toLowerCase();
@@ -122,7 +147,6 @@ function applyFilter() {
     return matchSearch && matchCategory && matchPrice;
   });
 
-  productDetail.innerHTML = "";
   renderProducts(filtered);
 }
 
@@ -142,7 +166,11 @@ function showDetail(id) {
 
   modalBody.innerHTML = `
     <div class="modal-product">
-      <img src="${p.image}" alt="${p.name}">
+      <img
+        src="${p.image}"
+        alt="${p.name}"
+        onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';"
+      >
 
       <div class="modal-info">
         <h2>${p.name}</h2>
@@ -150,7 +178,7 @@ function showDetail(id) {
         <p><b>Product ID:</b> ${p.id}</p>
         <p><b>Farm ID:</b> ${p.farmId}</p>
         <p><b>Category:</b> ${p.category}</p>
-        <p><b>Quantity:</b> ${p.quantity}</p>
+        <p><b>Quantity:</b> ${p.quantity} ${p.unit || ""}</p>
         <p class="modal-price">RM ${p.price.toFixed(2)}</p>
       </div>
     </div>
