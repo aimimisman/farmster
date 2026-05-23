@@ -1,8 +1,9 @@
-console.log("NEW JS LOADED VERSION 10");
+console.log("NEW JS LOADED VERSION 11");
+
 // ==========================
 // BACKEND URL
 // ==========================
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuzeEMdC0knR4qw7-E705Varabmi6IChA62OOAyE0feiWchcrr3sknXOnmSc7KmGVjcw/exec";
 
 // ==========================
 // STATE
@@ -24,24 +25,16 @@ const noResult = document.getElementById("noResult");
 // IMAGE VALIDATION
 // ==========================
 function getValidImage(url) {
-
-  // default image kalau tiada gambar
-  if (!url || url === "") {
+  if (!url || String(url).trim() === "") {
     return DEFAULT_IMAGE;
   }
 
   url = String(url).trim();
 
-  // kalau backend already bagi full URL
-  if (
-    url.startsWith("http://") ||
-    url.startsWith("https://")
-  ) {
+  if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
 
-  // kalau backend simpan nama file sahaja
-  // contoh: tomato.jpg
   return `./uploads/${url}`;
 }
 
@@ -54,6 +47,7 @@ async function loadProducts() {
       <p>🌱 Loading fresh farm products...</p>
     </div>
   `;
+
   noResult.innerText = "";
 
   try {
@@ -64,17 +58,37 @@ async function loadProducts() {
 
     const data = result.data || result;
 
-    products = data.map(item => ({
-      id: item.productId,
-      name: item.productName,
-      category: item.category,
-      price: Number(item.price),
-      farmId: item.farmId,
-      quantity: item.quantity,
-      unit: item.unit,
-      description: item.description || "",
-      image: getValidImage(item.image)
-    }));
+    console.log("RAW FIRST PRODUCT:", data[0]);
+
+    products = data.map((item, index) => {
+      const possibleUnit = item.unit || item.description || "";
+      const possibleDescription =
+        item.description &&
+        item.description !== "kg" &&
+        item.description !== "gram" &&
+        item.description !== "pcs"
+          ? item.description
+          : item.image || "";
+
+      const possibleImage =
+        item.imageUrl ||
+        item.productImage ||
+        item.photo ||
+        item.picture ||
+        item.image;
+
+      return {
+        id: item.productId || `TEMP_${index}`,
+        name: item.productName || "No Name",
+        category: item.category || "Unknown",
+        price: Number(item.price) || 0,
+        farmId: item.farmId || "",
+        quantity: item.quantity || 0,
+        unit: possibleUnit,
+        description: possibleDescription,
+        image: getValidImage(possibleImage)
+      };
+    });
 
     console.log("Mapped products:", products);
 
@@ -104,9 +118,9 @@ function renderProducts(data) {
     return;
   }
 
-  data.forEach(p => {
+  data.forEach((p, index) => {
     productList.innerHTML += `
-      <div class="product-card" onclick="showDetail('${p.id}')">
+      <div class="product-card" onclick="showDetail(${index})">
 
         <div class="img-wrapper">
           <img
@@ -159,8 +173,8 @@ function applyFilter() {
 // ==========================
 // SHOW PRODUCT DETAIL
 // ==========================
-function showDetail(id) {
-  const p = products.find(product => String(product.id) === String(id));
+function showDetail(index) {
+  const p = products[index];
 
   if (!p) {
     noResult.innerText = "Product not found.";
