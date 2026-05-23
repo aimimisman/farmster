@@ -24,19 +24,25 @@ const noResult = document.getElementById("noResult");
 // IMAGE VALIDATION
 // ==========================
 function getValidImage(url) {
-  if (!url) return DEFAULT_IMAGE;
+
+  // default image kalau tiada gambar
+  if (!url || url === "") {
+    return DEFAULT_IMAGE;
+  }
 
   url = String(url).trim();
 
+  // kalau backend already bagi full URL
   if (
     url.startsWith("http://") ||
-    url.startsWith("https://") ||
-    url.startsWith("/")
+    url.startsWith("https://")
   ) {
     return url;
   }
 
-  return DEFAULT_IMAGE;
+  // kalau backend simpan nama file sahaja
+  // contoh: tomato.jpg
+  return `./uploads/${url}`;
 }
 
 // ==========================
