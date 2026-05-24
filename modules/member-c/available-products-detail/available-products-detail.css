@@ -310,6 +310,20 @@ body {
   margin-top: 12px;
 }
 
+.view-seller-btn {
+  margin-top: 8px;
+  background-color: #2f855a;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.view-seller-btn:hover {
+  background-color: #276749;
+}
+
 @keyframes popUp {
   from {
     opacity: 0;
