@@ -8,6 +8,16 @@ const productId = params.get("productId");
 const DEFAULT_PROFILE_IMAGE =
   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop";
 
+function normalizeObjectKeys(obj) {
+  const normalized = {};
+
+  Object.keys(obj).forEach(key => {
+    normalized[String(key).trim()] = obj[key];
+  });
+
+  return normalized;
+}
+
 function getValidImage(url) {
   if (!url || String(url).trim() === "") {
     return DEFAULT_PROFILE_IMAGE;
@@ -42,10 +52,16 @@ async function loadSellerDetail() {
     const productResponse = await fetch(`${APPS_SCRIPT_URL}?action=products`);
     const productResult = await productResponse.json();
 
-    const productData = productResult.data || productResult;
+    let productData = productResult.data || productResult;
+
+    if (!Array.isArray(productData)) {
+      productData = Object.values(productData);
+    }
+
+    productData = productData.map(item => normalizeObjectKeys(item));
 
     const product = productData.find(
-      item => String(item.productId).trim() === String(productId).trim()
+      item => String(item.productId || "").trim() === String(productId || "").trim()
     );
 
     if (!product) {
@@ -60,8 +76,6 @@ async function loadSellerDetail() {
     const profileResponse = await fetch(`${APPS_SCRIPT_URL}?action=profiles`);
     const profileResult = await profileResponse.json();
 
-    console.log("PROFILE RESULT:", profileResult);
-
     let profileData =
       profileResult.data ||
       profileResult.profiles ||
@@ -74,9 +88,16 @@ async function loadSellerDetail() {
       profileData = Object.values(profileData);
     }
 
+    profileData = profileData.map(item => normalizeObjectKeys(item));
+
     const seller = profileData.find(
-      item => String(item.farmId).trim() === String(product.farmId).trim()
+      item => String(item.farmId || "").trim() === String(product.farmId || "").trim()
     );
+
+    console.log("PRODUCT:", product);
+    console.log("SELLER:", seller);
+    console.log("PRODUCT FARM ID:", product.farmId);
+    console.log("PROFILE FARM IDS:", profileData.map(item => item.farmId));
 
     if (!seller) {
       sellerDetail.innerHTML = `
@@ -110,6 +131,13 @@ async function loadSellerDetail() {
           <p class="seller-price">
             ${seller.state || "-"}, ${seller.district || "-"}
           </p>
+
+          <div class="seller-info-list">
+            <div class="seller-info-item full">
+              <span>Farm Description</span>
+              <strong>${seller.description || "-"}</strong>
+            </div>
+          </div>
 
           <div class="info-grid">
 
@@ -147,14 +175,6 @@ async function loadSellerDetail() {
 
           <hr>
 
-          <h3>Description</h3>
-
-          <div class="seller-info-list">
-            <div class="seller-info-item full">
-              <span>Farm Description</span>
-              <strong>${seller.description || "-"}</strong>
-            </div>
-          </div>
 
         </div>
 
