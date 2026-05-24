@@ -1,0 +1,277 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Farmster Profile</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #fffacd, #00f2fe);
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.profile-container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.profile {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1f4d2c;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    font-size: 14px;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #1f4d2c;
+    color: white;
+}
+
+.logout-btn {
+    background: #ff4d4d;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="profile-container">
+
+        <h2>🌱 Farmster Profile</h2>
+
+        <img id="profileImage" src="profile.jpg" class="profile">
+
+        <h3 id="name">Loading...</h3>
+        <p id="email">Loading...</p>
+
+        <button class="btn edit-btn" onclick="editProfile()">Edit Profile</button>
+        <button class="btn logout-btn" onclick="logout()">Logout</button>
+
+    </div>
+</div>
+<script>
+if (user && users[user]) {
+    document.getElementById("name").innerText = users[user].name;
+    document.getElementById("email").innerText = users[user].email;
+    document.getElementById("profileImage").src = users[user].image;
+} else {
+    document.getElementById("name").innerText = "User tidak dijumpai";
+}
+</script>
+<script>
+const BASE_URL =
+window.location.hostname.includes("github.io")
+? "https://aimimisman.github.io/farmster"
+: "";
+
+const currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    alert("Please login first.");
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+} else {
+    const fullName =
+    `${currentUser.firstname || ""} ${currentUser.lastname || ""}`.trim();
+
+    document.getElementById("name").innerText =
+    fullName || currentUser.farmsterName || "User";
+
+    document.getElementById("email").innerText =
+    currentUser.email || "No email";
+
+    document.getElementById("profileImage").src =
+    currentUser.profileImage ||
+    "https://ui-avatars.com/api/?name=" +
+    encodeURIComponent(fullName || currentUser.farmsterName || "User");
+}
+
+function editProfile() {
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/update.html";
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Farmster Profile</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #fffacd, #00f2fe);
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.profile-container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.profile {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1f4d2c;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+p {
+    color: #555;
+    font-size: 14px;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #1f4d2c;
+    color: white;
+}
+
+.logout-btn {
+    background: #ff4d4d;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="profile-container">
+
+        <h2>🌱 Farmster Profile</h2>
+
+        <img id="profileImage" src="profile.jpg" class="profile">
+
+        <h3 id="name">Loading...</h3>
+        <p id="email">Loading...</p>
+
+        <button class="btn edit-btn" onclick="editProfile()">Edit Profile</button>
+        <button class="btn logout-btn" onclick="logout()">Logout</button>
+
+    </div>
+</div>
+<script>
+if (user && users[user]) {
+    document.getElementById("name").innerText = users[user].name;
+    document.getElementById("email").innerText = users[user].email;
+    document.getElementById("profileImage").src = users[user].image;
+} else {
+    document.getElementById("name").innerText = "User tidak dijumpai";
+}
+</script>
+<script>
+const BASE_URL =
+window.location.hostname.includes("github.io")
+? "https://aimimisman.github.io/farmster"
+: "";
+
+const currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    alert("Please login first.");
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+} else {
+    const fullName =
+    `${currentUser.firstname || ""} ${currentUser.lastname || ""}`.trim();
+
+    document.getElementById("name").innerText =
+    fullName || currentUser.farmsterName || "User";
+
+    document.getElementById("email").innerText =
+    currentUser.email || "No email";
+
+    document.getElementById("profileImage").src =
+    currentUser.profileImage ||
+    "https://ui-avatars.com/api/?name=" +
+    encodeURIComponent(fullName || currentUser.farmsterName || "User");
+}
+
+function editProfile() {
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/manage-farm.html";
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+}
+</script>
+
+</body>
+</html>

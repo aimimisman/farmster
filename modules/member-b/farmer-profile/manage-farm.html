@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Farm Profile | Farmster</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:
+    radial-gradient(circle at top left,#1b4332 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#2d6a4f 0%,transparent 30%),
+    #081c15;
+    color:white;
+    min-height:100vh;
+}
+
+/* NAVBAR */
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(16px);
+    background:rgba(8,28,21,0.75);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+ul{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    padding:18px;
+}
+
+ul li a{
+    color:#d8f3dc;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:14px;
+    transition:0.3s ease;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+}
+
+ul li a:hover{
+    background:#52b788;
+    color:#081c15;
+    transform:translateY(-2px);
+}
+
+/* HEADER - MODERN FORMAL */
+
+.header {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8, 28, 21, 0.92) 0%,
+            rgba(8, 28, 21, 0.82) 45%,
+            rgba(8, 28, 21, 0.45) 100%
+        ),
+        url("https://images.unsplash.com/photo-1500382017468-9049fed747ef");
+
+    background-size: cover;
+    background-position: center;
+    min-height: 360px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 80px 8%;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle premium line */
+.header::after {
+    content: "";
+    position: absolute;
+    left: 8%;
+    bottom: 55px;
+    width: 90px;
+    height: 5px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #52b788, #d8f3dc);
+}
+
+/* small label */
+.header::before {
+    content: "FARMSTER MANAGEMENT";
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+
+    margin-bottom: 16px;
+    padding: 8px 16px;
+
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+
+    color: #d8f3dc;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+}
+
+.header h1 {
+    position: relative;
+    z-index: 2;
+
+    max-width: 720px;
+    margin: 0;
+
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+
+    color: #ffffff;
+    text-align: left;
+    text-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+.header p {
+    position: relative;
+    z-index: 2;
+
+    max-width: 620px;
+    margin-top: 18px;
+
+    font-size: 18px;
+    line-height: 1.7;
+    color: #d8f3dc;
+    text-align: left;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .header {
+        min-height: 320px;
+        padding: 70px 24px;
+        align-items: flex-start;
+    }
+
+    .header::after {
+        left: 24px;
+        bottom: 40px;
+    }
+
+    .header h1 {
+        font-size: 38px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+}
+
+/* MAIN */
+
+.main-container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+}
+
+/* CARD */
+
+.card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+    border-radius:28px;
+    padding:28px;
+    box-shadow:
+    0 10px 40px rgba(0,0,0,0.35),
+    inset 0 1px 1px rgba(255,255,255,0.06);
+    transition:0.35s ease;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(82,183,136,0.5);
+}
+
+.card h2{
+    font-size:28px;
+    margin-bottom:24px;
+    color:#d8f3dc;
+}
+
+/* FORM */
+
+label{
+    display:block;
+    margin-bottom:8px;
+    margin-top:18px;
+    font-size:14px;
+    color:#b7e4c7;
+    font-weight:500;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:15px 18px;
+    border:none;
+    border-radius:16px;
+    background:rgba(255,255,255,0.07);
+    color:white;
+    font-size:15px;
+    outline:none;
+    transition:0.25s ease;
+    border:1px solid transparent;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#95d5b2;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#52b788;
+    background:rgba(255,255,255,0.1);
+    box-shadow:0 0 0 4px rgba(82,183,136,0.15);
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+/* MAP */
+
+#map{
+    height:320px;
+    border-radius:22px;
+    overflow:hidden;
+    margin-top:15px;
+    border:2px solid rgba(255,255,255,0.08);
+}
+
+/* BUTTON */
+
+button{
+    margin-top:22px;
+    width:100%;
+    border:none;
+    padding:15px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#52b788,#2d6a4f);
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s ease;
+    box-shadow:0 10px 25px rgba(82,183,136,0.3);
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(82,183,136,0.45);
+}
+
+/* PRODUCT BOX */
+
+.product-box{
+    margin-top:22px;
+    padding:22px;
+    border-radius:22px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.product-box:hover{
+    border-color:rgba(82,183,136,0.35);
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#95d5b2;
+    font-size:14px;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#081c15;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#2d6a4f;
+    border-radius:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .main-container{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:40px;
+    }
+
+    ul{
+        flex-wrap:wrap;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🧑‍🌾 Edit Farm Profile</h1>
+    <p>Update your farm information and products</p>
+</div>
+
+<div class="navbar">
+    <ul>
+        <li><a id="homeLink">🏠 Home</a></li>
+        <li><a id="communityLink">👥 Community</a></li>
+        <li><a id="profileLink">🧑‍🌾 Profile</a></li>
+        <li><a onclick="logoutUser()">➕ Logout</a></li>
+    </ul>
+</div>
+
+<div class="main-container">
+
+    <div class="card">
+        <h2>Farm Information</h2>
+
+        <label>Farm Name</label>
+        <input type="text" id="farmName">
+
+        <label>Location Coordinate</label>
+        <input type="text" id="location" readonly placeholder="Click on map to select location">
+
+        <div id="map"></div>
+
+        <label>State</label>
+        <input type="text" id="state" readonly placeholder="State will appear automatically">
+
+        <label>District / City</label>
+        <input type="text" id="district" readonly placeholder="District will appear automatically">
+
+        <label>Certification / Label</label>
+        <select id="certification">
+            <option value="">Certification not set</option>
+            <option value="Organic">Organic</option>
+            <option value="Pesticide-Free">Pesticide-Free</option>
+            <option value="Conventional">Conventional</option>
+            <option value="MyGAP Certified">MyGAP Certified</option>
+        </select>
+
+        <label>Description</label>
+        <textarea id="farmDescription"></textarea>
+
+        <label>Farm Image URL</label>
+        <input type="text" id="farmImage">
+
+        <button onclick="saveFarmProfile()">Save Farm Profile</button>
+    </div>
+
+    <div class="card">
+        <h2>My Products</h2>
+
+        <div id="productList">
+            Loading products...
+        </div>
+
+        <button onclick="addProductForm()">+ Add Product</button>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Farm Marketplace Platform | Module Assignment Project</p>
+</footer>
+
+<script>
+const BASE_URL =
+window.location.hostname.includes("github.io")
+? "https://aimimisman.github.io/farmster"
+: "";
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxGwkquRFThhlRLUI0jhY-sdGj2G0j_Amab2kV9lo908zevKlsaC4lnRX9TC6Xt9btTvQ/exec";
+
+document.getElementById("homeLink").href =
+BASE_URL + "/index.html";
+
+document.getElementById("communityLink").href =
+BASE_URL + "/modules/member-b/farmer-profile/memberlist.html";
+
+document.getElementById("profileLink").href =
+BASE_URL + "/modules/member-b/farmer-profile/update.html";
+
+const currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+    alert("Please login first.");
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+}
+
+function loadData() {
+    document.getElementById("farmName").value =
+    currentUser.farmsterName || "";
+
+    document.getElementById("location").value =
+    currentUser.location || "";
+
+    document.getElementById("state").value =
+    currentUser.state || "";
+
+    document.getElementById("district").value =
+    currentUser.district || "";
+
+    document.getElementById("certification").value =
+    currentUser.certification || "";
+
+    document.getElementById("farmDescription").value =
+    currentUser.description || "";
+
+    document.getElementById("farmImage").value =
+    currentUser.profileImage || "";
+
+    loadProducts();
+}
+
+function initMap() {
+    let defaultLat = 1.4927;
+    let defaultLng = 103.7414;
+
+    const savedLocation =
+    document.getElementById("location").value;
+
+    if (savedLocation) {
+        const split = savedLocation.split(",");
+
+        if (split.length === 2) {
+            const lat = parseFloat(split[0]);
+            const lng = parseFloat(split[1]);
+
+            if (!isNaN(lat) && !isNaN(lng)) {
+                defaultLat = lat;
+                defaultLng = lng;
+            }
+        }
+    }
+
+    const map =
+    L.map("map")
+    .setView([defaultLat, defaultLng], 10);
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        { maxZoom: 19 }
+    ).addTo(map);
+
+    let marker =
+    L.marker([defaultLat, defaultLng])
+    .addTo(map);
+
+    map.on("click", function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+
+        marker.setLatLng([lat, lng]);
+
+        document.getElementById("location").value =
+        `${lat}, ${lng}`;
+
+        getAddressFromCoordinate(lat, lng);
+    });
+}
+
+function getAddressFromCoordinate(lat, lng) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+    .then(res => res.json())
+    .then(data => {
+        const address = data.address || {};
+
+        document.getElementById("state").value =
+        address.state || "";
+
+        document.getElementById("district").value =
+        address.city ||
+        address.town ||
+        address.village ||
+        address.county ||
+        address.municipality ||
+        "";
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Location selected, but state/district could not be detected.");
+    });
+}
+
+function loadProducts() {
+    fetch(API_URL + "?action=products")
+    .then(res => res.json())
+    .then(res => {
+        const products = res.data || [];
+
+        const myProducts =
+        products.filter(product =>
+            String(product.farmId).trim() ===
+            String(currentUser.farmId).trim()
+        );
+
+        const container =
+        document.getElementById("productList");
+
+        container.innerHTML = "";
+
+        if (myProducts.length === 0) {
+            container.innerHTML =
+            "<p>No products yet.</p>";
+        }
+
+        myProducts.forEach(product => {
+            createProductForm(product);
+        });
+    });
+}
+
+function createProductForm(product = {}) {
+    const container =
+    document.getElementById("productList");
+
+    const box =
+    document.createElement("div");
+
+    box.className = "product-box";
+
+    box.innerHTML = `
+        <input type="hidden" class="productId" value="${product.productId || ""}">
+
+        <label>Product Name</label>
+        <input type="text" class="productName" value="${product.productName || ""}">
+
+        <label>Price</label>
+        <input type="number" class="priceInput" value="${product.price || ""}">
+
+        <label>Category</label>
+        <input type="text" class="categoryInput" value="${product.category || ""}">
+
+        <label>Quantity</label>
+        <input type="text" class="quantityInput" value="${product.quantity || ""}">
+
+        <label>Description</label>
+        <textarea class="descriptionInput">${product.description || ""}</textarea>
+
+        <label>Image URL</label>
+        <input type="text" class="imageInput" value="${product.image || ""}">
+
+        <button onclick="saveProduct(this)">Save Product</button>
+    `;
+
+    container.appendChild(box);
+}
+
+function addProductForm() {
+    createProductForm({});
+}
+
+function saveFarmProfile() {
+    const data = {
+        userId: currentUser.userId,
+        farmId: currentUser.farmId,
+        farmsterName: document.getElementById("farmName").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        state: document.getElementById("state").value.trim(),
+        district: document.getElementById("district").value.trim(),
+        certification: document.getElementById("certification").value,
+        description: document.getElementById("farmDescription").value.trim(),
+        profileImage: document.getElementById("farmImage").value.trim()
+    };
+
+    fetch(API_URL + "?action=updateprofile", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert(res.data?.message || res.message || "Profile updated");
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify({
+                ...currentUser,
+                ...data
+            })
+        );
+    });
+}
+
+function saveProduct(button) {
+    const box =
+    button.closest(".product-box");
+
+    const data = {
+        productId: box.querySelector(".productId").value,
+        farmId: currentUser.farmId,
+        productName: box.querySelector(".productName").value.trim(),
+        price: box.querySelector(".priceInput").value.trim(),
+        category: box.querySelector(".categoryInput").value.trim(),
+        quantity: box.querySelector(".quantityInput").value.trim(),
+        description: box.querySelector(".descriptionInput").value.trim(),
+        image: box.querySelector(".imageInput").value.trim()
+    };
+
+    fetch(API_URL + "?action=saveproduct", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert(res.data?.message || res.message || "Product saved");
+        loadProducts();
+    });
+}
+
+function logoutUser() {
+    localStorage.removeItem("currentUser");
+
+    window.location.href =
+    BASE_URL + "/modules/member-b/farmer-profile/login.html";
+}
+
+loadData();
+initMap();
+</script>
+
+</body>
+</html>
