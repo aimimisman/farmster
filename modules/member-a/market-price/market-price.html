@@ -34,7 +34,12 @@
 
         <div id="marketplace" class="page active">
             <div class="market-header">
-                <h1>Market Price Overview</h1>
+
+                <div>
+                    <h1>Market Price Overview</h1>
+                    <small class="dashboard-subtitle">Daily analytics & historical market monitoring</small>
+                </div>
+
                 <p id="lastUpdated">Updated: -</p>
             </div>
 
@@ -104,21 +109,60 @@
                 
             </div>
 
+            
             <h3 class="trend-title">Price Trend</h3>
+            
             <div class="trend-card">
-                
-                <p id="trendProductName">
-                    Select a product
-                </p>
+                <p id="trendProductName">Select a product</p>
                 <small id="trendDesc">Historical market average price</small>
-                <canvas id="priceTrendChart"></canvas>
-            </div>
+                <div class="trend-insight">Market prices are updated automatically through daily snapshots.</div>
+                <div class="trend-controls">
+                    <div>
+                        <label>View Range</label>
+                        <select id="trendRange" onchange="applyTrendRangeFilter()">
+                            <option value="7" selected>Last 7 Days</option>
+                            <option value="14">Last 14 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="all">All</option>
+                            <option value="custom">Custom Date</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>From</label>
+                        <input type="date" id="trendFromDate">
+                    </div>
+                    <div>
+                        <label>To</label>
+            <input type="date" id="trendToDate">
+        </div>
+        
+        <button onclick="applyTrendDateFilter()">Apply Filter</button>
+        <button onclick="resetTrendDateFilter()">Reset</button>
+        <button onclick="exportMarketReport()">Export Report</button>
+    </div>
+
+    <canvas id="priceTrendChart"></canvas>
+</div>
 
         </div>
 
         <div id="comparison" class="page">
 
-            <h1>Price Comparison</h1>
+            <div class="comparison-header">
+
+    <div>
+
+        <h1>
+        Price Comparison
+        </h1>
+
+        <small>
+        Compare producer prices with market averages
+        </small>
+
+    </div>
+
+</div>
 
             <div class="compare-filter">
                 <label>View another product</label>

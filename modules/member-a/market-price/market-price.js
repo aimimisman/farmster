@@ -12,6 +12,8 @@ let allMarketPrices = [];
 let showAllMarketRows = false;
 let latestMarketData = [];
 let latestProductData = [];
+let currentTrendProductId = null;
+let currentTrendHistory = [];
 
 
 // =======================
@@ -45,7 +47,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadComparisonData(selectedProduct);
+
+    document.body.style.opacity="0";
+
+setTimeout(()=>{
+
+document.body.style.transition=
+".4s";
+
+document.body.style.opacity="1";
+
+},100);
+
 });
+
 
 function loadComparisonData(selectedProduct) {
     Promise.all([
@@ -287,13 +302,17 @@ function renderMarketTable(data, products) {
 
         let changeClass = "trend-flat";
         let trendIcon = "—";
-
+        
         if (change > 0) {
             changeClass = "change-up";
             trendIcon = "↗";
-        } else if (change < 0) {
+        
+        }
+        
+        else if (change < 0) {
             changeClass = "change-down";
             trendIcon = "↘";
+        
         }
 
         tbody.innerHTML += `
@@ -311,9 +330,13 @@ function renderMarketTable(data, products) {
                 <td>${productName}</td>
                 <td>RM ${parseFloat(item.avgPrice || 0).toFixed(2)}</td>
                 <td class="${changeClass}">
-                    ${change >= 0 ? "+" : ""}${change.toFixed(2)}%
-                </td>
-                <td class="${changeClass}">${trendIcon}</td>
+${change > 0 ? "+" : ""}
+${change.toFixed(2)}%
+</td>
+
+<td class="${changeClass}">
+${trendIcon}
+</td>
             </tr>
         `;
     });
@@ -386,8 +409,57 @@ function loadMarketOverview() {
         document.getElementById("priceChange").textContent =
             (avgChange >= 0 ? "+" : "") + avgChange.toFixed(2) + "%";
 
-        document.getElementById("lastUpdated").textContent =
-            "Updated: " + (marketData[0].lastUpdated || "-");
+        const priceChange =
+document.getElementById(
+"priceChange"
+);
+
+priceChange.className="";
+
+if(avgChange>0){
+
+priceChange.classList
+.add("change-up");
+
+}
+
+else if(avgChange<0){
+
+priceChange.classList
+.add("change-down");
+
+}
+
+else{
+
+priceChange.classList
+.add("trend-flat");
+
+}    
+
+            const updatedDate =
+new Date(
+marketData[0].lastUpdated
+);
+
+document.getElementById(
+"lastUpdated"
+)
+
+.textContent =
+
+"Updated: " +
+
+updatedDate.toLocaleString(
+"en-MY",
+{
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+}
+);
 
         renderMarketTable(marketData, products);
 
@@ -397,128 +469,126 @@ function loadMarketOverview() {
 }
 
 function loadTrendChart(productId) {
+    currentTrendProductId = productId;
+
     const product = allProducts.find(
-        p=>String(p.productId).trim()===String(productId).trim());
+        p => String(p.productId).trim() === String(productId).trim()
+    );
 
-document.getElementById(
-"trendProductName"
-)
-
-.textContent =
-
-product
-? product.productName
-: "Unknown Product";
+    document.getElementById("trendProductName").textContent =
+        product ? product.productName : "Unknown Product";
 
     fetch(url + "?action=markethistory&productId=" + productId)
-    .then(res => res.json())
-    .then(res => {
-        const history =
-            res.data?.data || res.data || [];
-
-        const labels =
-            history.map(item =>
-                new Date(item.date).toLocaleDateString()
-            );
-
-        const prices =
-            history.map(item =>
-                parseFloat(item.avgPrice) || 0
-            );
-
-        const canvas =
-            document.getElementById("priceTrendChart");
-
-        if (!canvas) return;
-
-        if (marketChart) {
-            marketChart.destroy();
-        }
-
-        marketChart = new Chart(canvas, {
-            type: "line",
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "Average Market Price",
-                    data: prices,
-                    borderWidth: 2,
-                    tension: 0.35,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                }
-            }
-        });
-    })
-    .catch(err => console.error("Trend chart error:", err));
+        .then(res => res.json())
+        .then(res => {
+            currentTrendHistory = res.data?.data || res.data || [];
+            applyTrendRangeFilter();
+        })
+        .catch(err => console.error("Trend chart error:", err));
 }
 
-function updateMarketAnalysis(
-marketData,
-products
-){
+function renderTrendChart(history) {
+    const labels = history.map(item =>
+        new Date(item.date).toLocaleDateString()
+    );
 
-const highest =
-[...marketData]
+    const prices = history.map(item =>
+        parseFloat(item.avgPrice) || 0
+    );
 
-.sort(
+    const canvas = document.getElementById("priceTrendChart");
+    if (!canvas) return;
 
-(a,b)=>
+    if (marketChart) {
+        marketChart.destroy();
+    }
 
-parseFloat(b.avgPrice)
+    marketChart = new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Average Market Price",
+                data: prices,
+                borderWidth: 2,
+                tension: 0.35,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+}
 
--
+function applyTrendRangeFilter() {
+    const range = document.getElementById("trendRange").value;
 
-parseFloat(a.avgPrice)
+    if (!currentTrendHistory.length) return;
 
-)[0];
+    if (range === "all") {
+        renderTrendChart(currentTrendHistory);
+        return;
+    }
 
+    if (range === "custom") {
+        applyTrendDateFilter();
+        return;
+    }
 
-const lowest =
-[...marketData]
+    const days = parseInt(range);
+    const sortedHistory = [...currentTrendHistory].sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+    );
 
-.sort(
+    const filtered = sortedHistory.slice(-days);
 
-(a,b)=>
+    renderTrendChart(filtered);
+}
 
-parseFloat(a.avgPrice)
+function applyTrendDateFilter() {
+    document.getElementById("trendRange").value = "custom";
+    const fromDate = document.getElementById("trendFromDate").value;
+    const toDate = document.getElementById("trendToDate").value;
 
--
+    if (!currentTrendHistory.length) return;
 
-parseFloat(b.avgPrice)
+    let filtered = currentTrendHistory;
 
-)[0];
+    if (fromDate) {
+        filtered = filtered.filter(item =>
+            new Date(item.date) >= new Date(fromDate)
+        );
+    }
 
+    if (toDate) {
+        filtered = filtered.filter(item =>
+            new Date(item.date) <= new Date(toDate)
+        );
+    }
 
-const increase =
-[...marketData]
+    renderTrendChart(filtered);
+}
 
-.sort(
+function resetTrendDateFilter() {
+    
+    document.getElementById("trendFromDate").value = "";
+    document.getElementById("trendToDate").value = "";
+    document.getElementById("trendRange").value = "7";
 
-(a,b)=>
+    applyTrendRangeFilter();
+}
 
-parseFloat(
-b.changePercent
-)
-
--
-
-parseFloat(
-a.changePercent
-)
-
-)[0];
-
-
-const decrease =
-[...marketData]
+function updateMarketAnalysis(marketData,products){
+    const highest =[...marketData].sort((a,b)=>parseFloat(b.avgPrice)-parseFloat(a.avgPrice))[0];
+    const lowest =[...marketData].sort((a,b)=>parseFloat(a.avgPrice)-parseFloat(b.avgPrice))[0];
+    const increase =[...marketData].sort((a,b)=>parseFloat(b.changePercent)-parseFloat(a.changePercent))[0];
+    const decrease =[...marketData]
 
 .sort(
 
@@ -641,6 +711,93 @@ document.getElementById(
 decrease.changePercent
 +"%";
 
+// ===== Most Increased colour =====
+
+const increaseEl =
+document.getElementById(
+"increaseValue"
+);
+
+increaseEl.className="";
+
+if(
+parseFloat(
+increase.changePercent
+)>0
+){
+
+increaseEl.classList
+.add("change-up");
+
+}
+else{
+
+increaseEl.classList
+.add("trend-flat");
+
+}
+
+
+// ===== Most Decreased colour =====
+
+const decreaseEl =
+document.getElementById(
+"decreaseValue"
+);
+
+decreaseEl.className="";
+
+if(
+parseFloat(
+decrease.changePercent
+)<0
+){
+
+decreaseEl.classList
+.add("change-down");
+
+}
+else{
+
+decreaseEl.classList
+.add("trend-flat");
+
+}
+
+}
+
+function exportMarketReport() {
+    if (!latestMarketData.length) {
+        alert("No market data available to export.");
+        return;
+    }
+
+    let csv = "Product Name,Average Price,Change Percent,Trend,Last Updated\n";
+
+    latestMarketData.forEach(item => {
+        const product = latestProductData.find(p =>
+            String(p.productId || "").trim().toLowerCase() ===
+            String(item.productId || "").trim().toLowerCase()
+        );
+
+        const productName = product ? product.productName : item.productId;
+        const change = parseFloat(item.changePercent) || 0;
+
+        let trend = "Stable";
+        if (change > 0) trend = "Increased";
+        if (change < 0) trend = "Decreased";
+
+        csv += `"${productName}","${item.avgPrice}","${change.toFixed(2)}%","${trend}","${item.lastUpdated || "-"}"\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "market-analysis-report.csv";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
 }
 
 function goHome() {
