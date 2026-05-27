@@ -3,11 +3,10 @@
 <head>
     <title>Market Dashboard</title>
     <link rel="stylesheet" href="market-price.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    
 
 <div class="layout">
 
@@ -15,22 +14,20 @@
         <h2 class="logo">Market System</h2>
 
         <button class="nav-btn active" onclick="showPage('marketplace')">
-            <i class="fa fa-store"></i> Market price
+            Market price
         </button>
 
         <button class="nav-btn" onclick="showPage('comparison')">
-            <i class="fa fa-chart-line"></i> Price Comparison
+            Price Comparison
         </button>
 
         <button class="nav-btn" onclick="goHome()">
-        <i class="fa fa-home"></i> Home
+            Home
         </button>
 
         <button class="nav-btn" onclick="goMarketplace()">
-        <i class="fa fa-store"></i> Marketplace
+            Marketplace
         </button>
-
-    
     </div>
 
     <div class="content">
@@ -58,6 +55,34 @@
                 </div>
             </div>
 
+            <div class="analysis-summary">
+
+    <div class="summary-card">
+        <small>Highest Price</small>
+        <h3 id="highestProduct">-</h3>
+        <p id="highestPrice">RM0</p>
+    </div>
+
+    <div class="summary-card">
+        <small>Lowest Price</small>
+        <h3 id="lowestProduct">-</h3>
+        <p id="lowestPrice">RM0</p>
+    </div>
+
+    <div class="summary-card">
+        <small>Most Increased</small>
+        <h3 id="increaseProduct">-</h3>
+        <p id="increaseValue">0%</p>
+    </div>
+
+    <div class="summary-card">
+        <small>Most Decreased</small>
+        <h3 id="decreaseProduct">-</h3>
+        <p id="decreaseValue">0%</p>
+    </div>
+
+</div>
+
             <h3 class="section-title">Today’s Market Prices</h3>
 
             <div class="price-table-card">
@@ -72,67 +97,95 @@
                     </thead>
                     <tbody id="marketTableBody"></tbody>
                 </table>
+
+                <button id="viewAllBtn" class="view-all-btn" onclick="toggleMarketRows()"> 
+                    View All Products
+                </button>
+                
             </div>
+
+            <h3 class="trend-title">Price Trend</h3>
+            <div class="trend-card">
+                
+                <p id="trendProductName">
+                    Select a product
+                </p>
+                <small id="trendDesc">Historical market average price</small>
+                <canvas id="priceTrendChart"></canvas>
+            </div>
+
         </div>
 
         <div id="comparison" class="page">
 
-    <h1>Price Comparison</h1>
+            <h1>Price Comparison</h1>
 
-    <div class="compare-card">
-
-        <div class="compare-inner">
-
-            <div class="selected-box">
-                <div class="selected-img">
-                    <img id="selectedImage" src="../assets/images/placeholder.png">
-                </div>
-
-                <div class="selected-info">
-                    <select id="productSelect" class="product-select"></select>
-                    <p id="selectedUnit">Unit: -</p>
-                </div>
+            <div class="compare-filter">
+                <label>View another product</label>
+                <select id="compareProductDropdown" class="compare-dropdown">
+                    <option value="">Select product</option>
+                </select>
             </div>
 
-            <div class="avg-container">
-                <div class="avg-card producer">
-                    <h4>Producer Average Price</h4>
-                    <p id="avgProducer">-</p>
-                    <small id="producerUnit">-</small>
+            <div class="compare-card">
+
+                <div class="compare-inner">
+
+                    <div class="selected-box">
+                        <div class="selected-img">
+                            <img id="selectedImage" src="../assets/images/placeholder.png">
+                        </div>
+
+                        <div class="selected-info">
+                            <h2 id="selectedProductName">-</h2>
+                            <p id="selectedFarmerName">Selected Farmer: -</p>
+                            <p id="selectedUnit">Unit: -</p>
+                        </div>
+                    </div>
+
+                    <div class="avg-container">
+                        <div class="avg-card producer">
+                            <h4>Selected Farmer Price</h4>
+                            <!-- <small id="selectedFarmerCardName">-</small> -->
+                            <p id="avgProducer">-</p>
+                            <small id="producerUnit">-</small>
+                        </div>
+
+                        <div class="avg-card market">
+                            <h4>Market Average Price</h4>
+                            <p id="avgMarket">-</p>
+                            <small id="marketUnit">-</small>
+                        </div>
+                    </div>
+
+                    <div class="diff-card">
+                        <div>
+                            <h4>Difference</h4>
+                            <p id="avgDiff">-</p>
+                        </div>
+
+                        <div>
+                            <span id="statusBadge" class="status-badge">-</span>
+                            <p id="savingText" class="saving-text">-</p>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="avg-card market">
-                    <h4>Market Average Price</h4>
-                    <p id="avgMarket">-</p>
-                    <small id="marketUnit">-</small>
-                </div>
             </div>
 
-            <div class="diff-card">
-                <div>
-                    <h4>Difference</h4>
-                    <p id="avgDiff">-</p>
-                </div>
-
-                <div>
-                    <span id="statusBadge" class="status-badge">-</span>
-                    <p id="savingText" class="saving-text">-</p>
-                </div>
+            <div class="producer-list">
+                <h3>Producer Prices</h3>
+                <div id="producerList"></div>
             </div>
+
+        
 
         </div>
 
     </div>
-
-    <div class="producer-list">
-        <h3>Producer Prices</h3>
-        <div id="producerList"></div>
-    </div>
-
-</div>
-    </div>
 </div>
 
-<script src="market-price.js?v=2"></script>
+<script src="market-price.js?v=8"></script>
 </body>
 </html>

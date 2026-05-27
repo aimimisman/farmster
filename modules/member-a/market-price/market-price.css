@@ -223,6 +223,63 @@ body {
     margin-bottom: 28px;
 }
 
+.analysis-summary{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:16px;
+
+margin-bottom:30px;
+
+}
+
+
+.summary-card{
+
+background:white;
+
+padding:18px;
+
+border-radius:12px;
+
+border:1px solid #eee;
+
+box-shadow:
+0 2px 8px
+rgba(0,0,0,.05);
+
+}
+
+
+.summary-card small{
+
+color:#777;
+
+}
+
+
+.summary-card h3{
+
+margin:10px 0 4px;
+
+font-size:18px;
+
+}
+
+
+.summary-card p{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#2e7d32;
+
+}
+
 .overview-card {
     background: white;
     padding: 20px;
@@ -450,4 +507,92 @@ body {
     background: transparent;
     color: #222;
     cursor: pointer;
+}
+
+.compare-filter{
+    background:white;
+    padding:15px 18px;
+    border-radius:12px;
+    margin:0 auto 18px;
+    max-width:760px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.compare-filter label{
+    display:block;
+    font-size:13px;
+    color:#555;
+    margin-bottom:8px;
+}
+
+.compare-dropdown{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.producer-item{
+    cursor:pointer;
+    transition:0.2s ease;
+}
+
+.producer-item:hover{
+    background:#f0fbf3;
+    transform:translateY(-2px);
+}
+
+.trend-title{
+    margin-top:30px;
+    margin-bottom:12px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.trend-card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+#priceTrendChart{
+    width:100%;
+    height:280px;
+}
+
+#trendProductName{
+
+font-size:16px;
+font-weight:600;
+
+margin:8px 0 10px;
+
+}
+
+#trendDesc{
+
+display:block;
+
+color:#777;
+
+margin-bottom:14px;
+
+}
+
+.view-all-btn{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#e8f5e9;
+    color:#2e7d32;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.view-all-btn:hover{
+    background:#d7f0db;
 }

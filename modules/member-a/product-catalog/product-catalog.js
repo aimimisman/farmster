@@ -6,9 +6,9 @@ console.log("JS FILE LOADED");
 const selectedFarm = localStorage.getItem("selectedFarm");
 
 // Apps Script URL
-const url = "https://script.google.com/macros/s/AKfycbxbGh0dJIUUQPPyr3g_nD3SZEaqBSfJevDyIOgcr2rRVygpq5y6T3Amni995cqh_dbzeA/exec";
-// =======================
-// STATE
+const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+// =======================  
+ // STATE
 // =======================
 let allProducts = [];
 let currentPage = 1;
@@ -86,33 +86,164 @@ function loadProducts() {
 
 
 function loadFarmInfo() {
-    fetch(url + "?action=marketplace")
-        .then(res => res.json())
-        .then(data => {
-            const farms = data.data || [];
 
-            const farm = farms.find(f =>
-                String(f.farmId).trim() === String(selectedFarm).trim()
-            );
+Promise.all([
 
-            if (!farm) {
-                console.log("Farm not found");
-                return;
-            }
+fetch(
+url +
+"?action=marketplace"
+).then(res=>res.json()),
 
-            document.getElementById("farmTitle").innerText = farm.name || selectedFarm;
-            document.querySelector(".farm-location").innerText =
-                farm.location || "-";
+fetch(
+url +
+"?action=dataprofile"
+).then(res=>res.json())
 
-            document.querySelector(".farm-desc").innerText =
-                farm.description || "No description available.";
+])
 
-            const farmLogo = document.querySelector(".farm-logo img");
-            if (farmLogo) {
-                farmLogo.src = farm.image || "../../../assets/images/farm-logo.png";
-            }
-        })
-        .catch(err => console.error("Farm info error:", err));
+.then(([marketRes,profileRes])=>{
+
+const farms =
+marketRes.data || [];
+
+const profiles =
+profileRes.data || [];
+
+
+const farm =
+
+farms.find(f=>
+
+String(f.farmId).trim()
+
+===
+
+String(selectedFarm).trim()
+
+);
+
+
+if(!farm){
+
+console.log(
+"Farm not found"
+);
+
+return;
+
+}
+
+
+/* existing */
+
+document.getElementById(
+"farmTitle"
+).innerText =
+
+farm.name ||
+selectedFarm;
+
+
+document.querySelector(
+".farm-location"
+).innerText =
+
+farm.location ||
+"-";
+
+
+document.querySelector(
+".farm-desc"
+).innerText =
+
+farm.description ||
+
+"No description available";
+
+
+const farmLogo =
+document.querySelector(
+".farm-logo img"
+);
+
+if(farmLogo){
+
+farmLogo.src =
+
+farm.image ||
+
+"../../../assets/images/farm-logo.png";
+
+}
+
+
+/* NEW : JOIN DATE */
+
+const farmer =
+
+profiles.find(
+
+p=>
+
+String(
+p.farmId
+).trim()
+
+===
+
+String(
+selectedFarm
+).trim()
+
+);
+
+
+if(
+farmer &&
+farmer.createdAt
+){
+
+const joinedDate =
+
+new Date(
+farmer.createdAt
+)
+
+.toLocaleDateString(
+"en-GB",
+{
+day:"numeric",
+month:"short",
+year:"numeric"
+}
+);
+
+
+/*
+Joined card
+*/
+
+document.querySelector(
+".info-card:nth-child(1) h4"
+)
+
+.innerText =
+
+joinedDate;
+
+}
+
+})
+
+.catch(err=>
+
+console.error(
+"Farm info error:",
+err
+)
+
+);
+
 }
 
 
@@ -140,7 +271,7 @@ function renderProducts() {
         card.className = "card";
 
         card.innerHTML = `
-            <img src="${p.image || '../../../assets/images/placeholder.png'}" class="product-img">
+            <img src="${p.image || '../../../assets/images/placeholder.png'}" class="product-img"  onerror="this.src='../../../assets/images/placeholder.png'">
             <h3>${p.productName}</h3>
             <p>RM ${parseFloat(p.price).toFixed(2)} / ${p.unit || "kg"}</p>
             <button class="detailBtn">View Detail</button>
