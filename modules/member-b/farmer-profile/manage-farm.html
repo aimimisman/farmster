@@ -253,7 +253,17 @@ select:focus{
 textarea{
     min-height:110px;
     resize:vertical;
+
+    }
+
+.product-error {
+    display: none;
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
 }
+
+
 
 /* MAP */
 
@@ -422,7 +432,9 @@ window.location.hostname.includes("github.io")
 : "";
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbxGwkquRFThhlRLUI0jhY-sdGj2G0j_Amab2kV9lo908zevKlsaC4lnRX9TC6Xt9btTvQ/exec";
+"https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+
+let allProducts = [];
 
 document.getElementById("homeLink").href =
 BASE_URL + "/index.html";
@@ -467,6 +479,620 @@ function loadData() {
     loadProducts();
 }
 
+function loadProducts() {
+    fetch(API_URL + "?action=products")
+    .then(res => res.json())
+    .then(res => {
+        allProducts = res.data || [];
+
+        const myProducts = allProducts.filter(product =>
+            String(product.farmId).trim() ===
+            String(currentUser.farmId).trim()
+        );
+
+        const container =
+        document.getElementById("productList");
+
+        container.innerHTML = "";
+
+        if (myProducts.length === 0) {
+            container.innerHTML = "<p>No products yet.</p>";
+        }
+
+        myProducts.forEach(product => {
+            createProductForm(product);
+        });
+    })
+    .catch(err => {
+        console.error(err);
+        document.getElementById("productList").innerHTML =
+        "<p>Failed to load products.</p>";
+    });
+}
+
+function normalizeText(text) {
+    return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s]/gu, "")
+        .replace(/\s+/g, " ");
+}
+
+function getUniqueProducts() {
+    const seen = new Set();
+    const uniqueProducts = [];
+
+    allProducts.forEach(product => {
+        const productName =
+        String(product.productName || "").trim();
+
+        const productId =
+        String(product.productId || "").trim();
+
+        if (!productName || !productId) return;
+
+        const key =
+        normalizeText(productName);
+
+        if (!seen.has(key)) {
+            seen.add(key);
+            uniqueProducts.push(product);
+        }
+    });
+
+    return uniqueProducts;
+}
+
+function getProductOptions(selectedProductId = "") {
+    const uniqueProducts =
+    getUniqueProducts();
+
+    let options =
+    `<option value="">Select existing product</option>`;
+
+    uniqueProducts.forEach(product => {
+        const productId =
+        String(product.productId || "").trim();
+
+        const productName =
+        String(product.productName || "").trim();
+
+        const selected =
+        String(selectedProductId).trim() === productId
+        ? "selected"
+        : "";
+
+        options += `
+            <option value="${productId}" data-name="${productName}" ${selected}>
+                ${productName} (${productId})
+            </option>
+        `;
+    });
+
+    options +=
+    `<option value="NEW_PRODUCT">+ Add New Product</option>`;
+
+    return options;
+}
+
+function createProductForm(product = {}) {
+
+    const container =
+    document.getElementById("productList");
+
+    const box =
+    document.createElement("div");
+
+    box.className = "product-box";
+
+    box.innerHTML = `
+
+        <input
+        type="hidden"
+        class="productId"
+        value="${product.productId || ""}">
+
+        <label>Product Name</label>
+
+        <select
+        class="productNameSelect"
+        onchange="handleProductSelection(this)">
+
+            ${getProductOptions(
+                product.productId || ""
+            )}
+
+        </select>
+
+        <input
+        type="text"
+
+        class="newProductName"
+
+        placeholder="Enter new product name"
+
+        style="display:none;"
+
+        oninput=
+        "validateNewProductName(this)"
+        >
+
+        <small class="product-error"></small>
+
+
+        <label>Price</label>
+
+        <input
+        type="number"
+        class="priceInput"
+
+        value=
+        "${product.price || ""}">
+
+
+        <label>Category</label>
+
+        <input
+        type="text"
+        class="categoryInput"
+
+        value=
+        "${product.category || ""}">
+
+
+        <label>Quantity</label>
+
+        <input
+        type="text"
+        class="quantityInput"
+
+        value=
+        "${product.quantity || ""}">
+
+
+        <label>Description</label>
+
+        <textarea
+        class="descriptionInput">
+
+        ${product.description || ""}
+
+        </textarea>
+
+
+        <label>Unit</label>
+
+        <input
+        type="text"
+
+        class="unitInput"
+
+        value=
+        "${product.unit || ""}"
+
+        placeholder=
+        "kg / bunch / pack">
+
+
+        <label>Image URL</label>
+
+        <input
+        type="text"
+
+        class="imageInput"
+
+        value=
+        "${product.image || ""}">
+
+
+        <button
+        onclick="saveProduct(this)">
+
+        ${product.productId
+        ? "Update Product"
+        : "Save Product"}
+
+        </button>
+
+
+        ${product.productId
+        ?
+
+        `<button
+        onclick="removeProduct(this)">
+
+        Remove Product
+
+        </button>`
+
+        :
+
+        ""
+
+        }
+
+    `;
+
+    container.appendChild(box);
+
+}
+
+function addProductForm() {
+    createProductForm({});
+}
+
+function handleProductSelection(select) {
+    const box =
+    select.closest(".product-box");
+
+    const productIdInput =
+    box.querySelector(".productId");
+
+    const newProductInput =
+    box.querySelector(".newProductName");
+
+    const errorText =
+    box.querySelector(".product-error");
+
+    if (select.value === "NEW_PRODUCT") {
+        productIdInput.value = "";
+        newProductInput.style.display = "block";
+        newProductInput.value = "";
+        newProductInput.style.border = "1px solid #ccc";
+        errorText.style.display = "none";
+        errorText.textContent = "";
+    } else {
+        productIdInput.value = select.value;
+        newProductInput.style.display = "none";
+        newProductInput.value = "";
+        newProductInput.style.border = "1px solid #ccc";
+        errorText.style.display = "none";
+        errorText.textContent = "";
+    }
+}
+
+function isDuplicateProductName(productName) {
+    const inputName =
+    normalizeText(productName);
+
+    return allProducts.some(product =>
+        normalizeText(product.productName) === inputName
+    );
+}
+
+function validateNewProductName(input) {
+    const box =
+    input.closest(".product-box");
+
+    const errorText =
+    box.querySelector(".product-error");
+
+    const value =
+    input.value.trim();
+
+    const clean =
+    normalizeText(value);
+
+    if (!value || clean.length < 2) {
+        input.style.border = "1px solid #ccc";
+        errorText.style.display = "none";
+        errorText.textContent = "";
+        return false;
+    }
+
+    if (isDuplicateProductName(value)) {
+        input.style.border = "2px solid red";
+        errorText.style.display = "block";
+        errorText.textContent =
+        "Product already exists. Use existing product.";
+        return true;
+    }
+
+    input.style.border = "1px solid #ccc";
+    errorText.style.display = "none";
+    errorText.textContent = "";
+    return false;
+}
+
+function saveProduct(button){
+
+const box =
+button.closest(
+".product-box"
+);
+
+const productSelect =
+box.querySelector(
+".productNameSelect"
+);
+
+const newProductInput =
+box.querySelector(
+".newProductName"
+);
+
+const errorText =
+box.querySelector(
+".product-error"
+);
+
+let productName="";
+let productId="";
+
+
+if(
+productSelect.value
+==="NEW_PRODUCT"
+){
+
+productName =
+newProductInput.value
+.trim();
+
+productId="";
+
+}else{
+
+productId =
+productSelect.value;
+
+productName =
+
+productSelect.options[
+productSelect.selectedIndex
+]
+
+?.dataset.name
+
+|| "";
+
+}
+
+
+const data={
+
+productId:
+productId,
+
+farmId:
+currentUser.farmId,
+
+productName:
+productName,
+
+price:
+
+box.querySelector(
+".priceInput"
+)
+
+.value.trim(),
+
+category:
+
+box.querySelector(
+".categoryInput"
+)
+
+.value.trim(),
+
+quantity:
+
+box.querySelector(
+".quantityInput"
+)
+
+.value.trim(),
+
+description:
+
+box.querySelector(
+".descriptionInput"
+)
+
+.value.trim(),
+
+unit:
+
+box.querySelector(
+".unitInput"
+)
+
+.value.trim(),
+
+image:
+
+box.querySelector(
+".imageInput"
+)
+
+.value.trim(),
+
+
+lastUpdated:
+
+new Date()
+
+.toISOString()
+
+};
+
+
+fetch(
+
+API_URL+
+
+"?action=saveproduct",
+
+{
+
+method:"POST",
+
+body:
+JSON.stringify(
+data
+)
+
+}
+
+)
+
+.then(res=>
+res.json()
+)
+
+.then(res=>{
+
+alert(
+
+res.message ||
+
+"Product saved"
+
+);
+
+loadProducts();
+
+})
+
+.catch(err=>{
+
+console.error(
+err
+);
+
+alert(
+
+"Failed"
+
+);
+
+});
+
+}
+
+function removeProduct(button){
+
+const box =
+button.closest(
+".product-box"
+);
+
+const productId =
+box.querySelector(
+".productId"
+)
+.value;
+
+if(
+!productId
+){
+
+alert(
+"Product ID not found."
+);
+
+return;
+
+}
+
+if(
+!confirm(
+"Remove product?"
+)
+)
+return;
+
+fetch(
+API_URL+
+"?action=deleteproduct",
+{
+method:
+"POST",
+
+body:
+JSON.stringify({
+productId:
+productId,
+
+farmId:
+currentUser.farmId
+})
+}
+)
+
+.then(res=>
+res.json()
+)
+
+.then(res=>{
+
+if(
+res.status === "error"
+){
+
+alert(
+res.message ||
+"Failed to remove product."
+);
+
+return;
+
+}
+
+alert(
+res.message ||
+"Product removed successfully"
+);
+
+loadProducts();
+
+})
+
+.catch(err=>{
+
+console.error(
+err
+);
+
+alert(
+"Failed to remove product."
+);
+
+});
+
+}
+function saveFarmProfile() {
+    const data = {
+        userId: currentUser.userId,
+        farmId: currentUser.farmId,
+        farmsterName: document.getElementById("farmName").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        state: document.getElementById("state").value.trim(),
+        district: document.getElementById("district").value.trim(),
+        certification: document.getElementById("certification").value,
+        description: document.getElementById("farmDescription").value.trim(),
+        profileImage: document.getElementById("farmImage").value.trim()
+    };
+
+    fetch(API_URL + "?action=updateprofile", {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        alert(res.data?.message || res.message || "Profile updated");
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify({
+                ...currentUser,
+                ...data
+            })
+        );
+    });
+}
+
 function initMap() {
     let defaultLat = 1.4927;
     let defaultLng = 103.7414;
@@ -489,8 +1115,7 @@ function initMap() {
     }
 
     const map =
-    L.map("map")
-    .setView([defaultLat, defaultLng], 10);
+    L.map("map").setView([defaultLat, defaultLng], 10);
 
     L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -498,8 +1123,7 @@ function initMap() {
     ).addTo(map);
 
     let marker =
-    L.marker([defaultLat, defaultLng])
-    .addTo(map);
+    L.marker([defaultLat, defaultLng]).addTo(map);
 
     map.on("click", function(e) {
         const lat = e.latlng.lat.toFixed(6);
@@ -534,131 +1158,6 @@ function getAddressFromCoordinate(lat, lng) {
     .catch(err => {
         console.error(err);
         alert("Location selected, but state/district could not be detected.");
-    });
-}
-
-function loadProducts() {
-    fetch(API_URL + "?action=products")
-    .then(res => res.json())
-    .then(res => {
-        const products = res.data || [];
-
-        const myProducts =
-        products.filter(product =>
-            String(product.farmId).trim() ===
-            String(currentUser.farmId).trim()
-        );
-
-        const container =
-        document.getElementById("productList");
-
-        container.innerHTML = "";
-
-        if (myProducts.length === 0) {
-            container.innerHTML =
-            "<p>No products yet.</p>";
-        }
-
-        myProducts.forEach(product => {
-            createProductForm(product);
-        });
-    });
-}
-
-function createProductForm(product = {}) {
-    const container =
-    document.getElementById("productList");
-
-    const box =
-    document.createElement("div");
-
-    box.className = "product-box";
-
-    box.innerHTML = `
-        <input type="hidden" class="productId" value="${product.productId || ""}">
-
-        <label>Product Name</label>
-        <input type="text" class="productName" value="${product.productName || ""}">
-
-        <label>Price</label>
-        <input type="number" class="priceInput" value="${product.price || ""}">
-
-        <label>Category</label>
-        <input type="text" class="categoryInput" value="${product.category || ""}">
-
-        <label>Quantity</label>
-        <input type="text" class="quantityInput" value="${product.quantity || ""}">
-
-        <label>Description</label>
-        <textarea class="descriptionInput">${product.description || ""}</textarea>
-
-        <label>Image URL</label>
-        <input type="text" class="imageInput" value="${product.image || ""}">
-
-        <button onclick="saveProduct(this)">Save Product</button>
-    `;
-
-    container.appendChild(box);
-}
-
-function addProductForm() {
-    createProductForm({});
-}
-
-function saveFarmProfile() {
-    const data = {
-        userId: currentUser.userId,
-        farmId: currentUser.farmId,
-        farmsterName: document.getElementById("farmName").value.trim(),
-        location: document.getElementById("location").value.trim(),
-        state: document.getElementById("state").value.trim(),
-        district: document.getElementById("district").value.trim(),
-        certification: document.getElementById("certification").value,
-        description: document.getElementById("farmDescription").value.trim(),
-        profileImage: document.getElementById("farmImage").value.trim()
-    };
-
-    fetch(API_URL + "?action=updateprofile", {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(res => {
-        alert(res.data?.message || res.message || "Profile updated");
-
-        localStorage.setItem(
-            "currentUser",
-            JSON.stringify({
-                ...currentUser,
-                ...data
-            })
-        );
-    });
-}
-
-function saveProduct(button) {
-    const box =
-    button.closest(".product-box");
-
-    const data = {
-        productId: box.querySelector(".productId").value,
-        farmId: currentUser.farmId,
-        productName: box.querySelector(".productName").value.trim(),
-        price: box.querySelector(".priceInput").value.trim(),
-        category: box.querySelector(".categoryInput").value.trim(),
-        quantity: box.querySelector(".quantityInput").value.trim(),
-        description: box.querySelector(".descriptionInput").value.trim(),
-        image: box.querySelector(".imageInput").value.trim()
-    };
-
-    fetch(API_URL + "?action=saveproduct", {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(res => {
-        alert(res.data?.message || res.message || "Product saved");
-        loadProducts();
     });
 }
 
