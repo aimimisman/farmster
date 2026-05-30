@@ -270,12 +270,26 @@ function renderProducts() {
         const card = document.createElement("div");
         card.className = "card";
 
-        card.innerHTML = `
-            <img src="${p.image || '../../../assets/images/placeholder.png'}" class="product-img"  onerror="this.src='../../../assets/images/placeholder.png'">
-            <h3>${p.productName}</h3>
-            <p>RM ${parseFloat(p.price).toFixed(2)} / ${p.unit || "kg"}</p>
-            <button class="detailBtn">View Detail</button>
-        `;
+        const imageUrl =
+    p.image && p.image.trim() !== ""
+    ? p.image
+    : "https://via.placeholder.com/300x200?text=No+Image";
+
+card.innerHTML = `
+    <img src="${imageUrl}"
+         class="product-img"
+         onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=No+Image';">
+
+    <h3>${p.productName}</h3>
+
+    <p>
+        <b>Price:</b>
+        RM ${parseFloat(p.price || 0).toFixed(2)}
+        ${p.unit ? '/ ' + p.unit : ''}
+    </p>
+
+    <button class="detailBtn">View Detail</button>
+`;
 
         // ONLY BUTTON CLICK (SAFE)
         card.querySelector(".detailBtn").addEventListener("click", (e) => {
@@ -369,7 +383,9 @@ function viewProductDetail(product) {
         <div class="detail-wrapper">
 
             <div class="img-box">
-                <img src="${product.image}" class="detail-img">
+                <img src="${product.image || 'https://via.placeholder.com/400x300?text=No+Image'}"
+     class="detail-img"
+     onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image';">
             </div>
 
             <div class="detail-info">
@@ -381,7 +397,7 @@ function viewProductDetail(product) {
 
                 <p><b>Category:</b> ${product.category}</p>
                 <p><b>Quantity:</b> ${product.quantity}</p>
-                <p><b>Price:</b> RM ${parseFloat(product.price).toFixed(2)} / ${product.unit || "kg"}</p>
+                <p><b>Price:</b> RM ${parseFloat(product.price).toFixed(2)} ${product.unit ? '/ ' + product.unit : ''}</p>
                 <p><b>Farm ID:</b> ${product.farmId}</p>
 
                 <p class="desc">${product.description}</p>

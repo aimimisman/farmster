@@ -14,6 +14,7 @@ let latestMarketData = [];
 let latestProductData = [];
 let currentTrendProductId = null;
 let currentTrendHistory = [];
+let selectedProducerKey = "";
 
 
 // =======================
@@ -76,7 +77,9 @@ function loadComparisonData(selectedProduct) {
         populateCompareDropdown();
 
         if (selectedProduct) {
-            updateComparison(selectedProduct.productId);
+            updateComparisonBySelectedProducer(selectedProduct);
+        
+
         } else if (allProducts.length > 0) {
             updateComparison(allProducts[0].productId);
         }
@@ -228,6 +231,9 @@ function renderProducerListFromData(product) {
         return;
     }
 
+    selectedProducerKey =
+    String(product.productId).trim() + "_" + String(product.farmId).trim();
+
     filtered.forEach(item => {
         const farm = allFarms.find(f =>
             String(f.farmId || "").trim().toLowerCase() ===
@@ -239,6 +245,12 @@ function renderProducerListFromData(product) {
         const div = document.createElement("div");
         div.className = "producer-item";
         div.style.cursor = "pointer";
+
+        const itemKey = String(item.productId).trim() + "_" + String(item.farmId).trim();
+        
+        if (itemKey === selectedProducerKey) {
+            div.classList.add("selected-producer");
+        }
 
         div.onclick = function () {
             updateComparisonBySelectedProducer(item);
@@ -274,7 +286,32 @@ function updateComparisonBySelectedProducer(product) {
         calculateComparison(product, market);
     }
 
+    renderProducerListFromData(product);
+    loadTrendChart(product.productId);
+
     localStorage.setItem("selectedProduct", JSON.stringify(product));
+}
+
+function scrollToMarketPrice() {
+
+    showPage("marketplace");
+
+    setTimeout(() => {
+
+        const section =
+        document.querySelector(".section-title");
+
+        if(section){
+
+            section.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    }, 200);
+
 }
 
 function renderMarketTable(data, products) {
