@@ -620,34 +620,73 @@ function createProductForm(product = {}) {
         <small class="product-error"></small>
 
 
-        <label>Price</label>
+        <div style="display:flex; gap:12px; margin-top:18px;">
 
+    <div style="flex:2;">
+        <label>Price (RM)</label>
         <input
         type="number"
         class="priceInput"
+        value="${product.price || ""}">
+    </div>
 
-        value=
-        "${product.price || ""}">
+    <div style="flex:1;">
+        <label>Unit</label>
+
+        <select class="unitInput">
+            <option value="">Select Unit</option>
+
+            <option value="kg" ${product.unit==="kg"?"selected":""}>kg</option>
+            <option value="g" ${product.unit==="g"?"selected":""}>g</option>
+
+            <option value="ton" ${product.unit==="ton"?"selected":""}>ton</option>
+
+            <option value="bundle" ${product.unit==="bundle"?"selected":""}>bundle</option>
+
+            <option value="pack" ${product.unit==="pack"?"selected":""}>pack</option>
+
+            <option value="box" ${product.unit==="box"?"selected":""}>box</option>
+
+            <option value="tray" ${product.unit==="tray"?"selected":""}>tray</option>
+
+            <option value="basket" ${product.unit==="basket"?"selected":""}>basket</option>
+
+            <option value="piece" ${product.unit==="piece"?"selected":""}>piece</option>
+
+            <option value="bottle" ${product.unit==="bottle"?"selected":""}>bottle</option>
+
+            <option value="litre" ${product.unit==="litre"?"selected":""}>litre</option>
+        </select>
+    </div>
+
+</div>
 
 
         <label>Category</label>
 
+<select class="categoryInput">
+    <option value="">Select Category</option>
+    <option value="Vegetables" ${product.category==="Vegetables"?"selected":""}>Vegetables</option>
+    <option value="Fruits" ${product.category==="Fruits"?"selected":""}>Fruits</option>
+    <option value="Herbs & Spices" ${product.category==="Herbs & Spices"?"selected":""}>Herbs & Spices</option>
+    <option value="Grains & Cereals" ${product.category==="Grains & Cereals"?"selected":""}>Grains & Cereals</option>
+    <option value="Legumes" ${product.category==="Legumes"?"selected":""}>Legumes</option>
+    <option value="Root Crops" ${product.category==="Root Crops"?"selected":""}>Root Crops</option>
+    <option value="Dairy Products" ${product.category==="Dairy Products"?"selected":""}>Dairy Products</option>
+    <option value="Livestock Products" ${product.category==="Livestock Products"?"selected":""}>Livestock Products</option>
+    <option value="Organic Products" ${product.category==="Organic Products"?"selected":""}>Organic Products</option>
+</select>
+
+
+        <label>Quantity Available</label>
+        
         <input
-        type="text"
-        class="categoryInput"
-
-        value=
-        "${product.category || ""}">
-
-
-        <label>Quantity</label>
-
-        <input
-        type="text"
+        type="number"
         class="quantityInput"
-
-        value=
-        "${product.quantity || ""}">
+        value="${product.quantity || ""}"
+        min="0"
+        step="0.01"
+        placeholder="e.g. 3.5">
 
 
         <label>Description</label>
@@ -658,21 +697,6 @@ function createProductForm(product = {}) {
         ${product.description || ""}
 
         </textarea>
-
-
-        <label>Unit</label>
-
-        <input
-        type="text"
-
-        class="unitInput"
-
-        value=
-        "${product.unit || ""}"
-
-        placeholder=
-        "kg / bunch / pack">
-
 
         <label>Image URL</label>
 
@@ -848,72 +872,47 @@ productSelect.selectedIndex
 
 }
 
+const quantityValue =
+parseFloat(
+box.querySelector(".quantityInput").value
+);
+
+if (
+isNaN(quantityValue) ||
+quantityValue < 0
+) {
+    alert("Please enter a valid quantity.");
+    return;
+}
 
 const data={
 
-productId:
-productId,
+productId: productId,
 
-farmId:
-currentUser.farmId,
+farmId: currentUser.farmId,
 
-productName:
-productName,
+productName: productName,
 
 price:
-
-box.querySelector(
-".priceInput"
-)
-
-.value.trim(),
+box.querySelector(".priceInput").value.trim(),
 
 category:
-
-box.querySelector(
-".categoryInput"
-)
-
-.value.trim(),
+box.querySelector(".categoryInput").value.trim(),
 
 quantity:
-
-box.querySelector(
-".quantityInput"
-)
-
-.value.trim(),
+quantityValue,
 
 description:
-
-box.querySelector(
-".descriptionInput"
-)
-
-.value.trim(),
+box.querySelector(".descriptionInput").value.trim(),
 
 unit:
-
-box.querySelector(
-".unitInput"
-)
-
-.value.trim(),
+box.querySelector(".unitInput").value.trim(),
 
 image:
-
-box.querySelector(
-".imageInput"
-)
-
-.value.trim(),
-
+box.querySelector(".imageInput").value.trim(),
 
 lastUpdated:
-
-new Date()
-
-.toISOString()
+new Date().toISOString()
 
 };
 
