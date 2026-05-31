@@ -4,6 +4,7 @@ const sellerDetail = document.getElementById("sellerDetail");
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("productId");
+const farmId = params.get("farmId");
 
 const DEFAULT_PROFILE_IMAGE =
   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop";
@@ -52,7 +53,7 @@ async function loadSellerDetail() {
     const productResponse = await fetch(`${APPS_SCRIPT_URL}?action=products`);
     const productResult = await productResponse.json();
 
-    let productData = productResult.data || productResult;
+    let productData = productResult.data || productResult.result || productResult.products || productResult;
 
     if (!Array.isArray(productData)) {
       productData = Object.values(productData);
@@ -60,9 +61,16 @@ async function loadSellerDetail() {
 
     productData = productData.map(item => normalizeObjectKeys(item));
 
-    const product = productData.find(
-      item => String(item.productId || "").trim() === String(productId || "").trim()
-    );
+    const product = productData.find(item => {
+      const sameProduct =
+        String(item.productId || "").trim() === String(productId || "").trim();
+
+      const sameFarm =
+        !farmId ||
+        String(item.farmId || "").trim() === String(farmId || "").trim();
+
+      return sameProduct && sameFarm;
+    });
 
     if (!product) {
       sellerDetail.innerHTML = `
@@ -82,6 +90,7 @@ async function loadSellerDetail() {
       profileResult.DataProfile ||
       profileResult.records ||
       profileResult.rows ||
+      profileResult.result ||
       [];
 
     if (!Array.isArray(profileData)) {
@@ -94,10 +103,10 @@ async function loadSellerDetail() {
       item => String(item.farmId || "").trim() === String(product.farmId || "").trim()
     );
 
+    console.log("URL PRODUCT ID:", productId);
+    console.log("URL FARM ID:", farmId);
     console.log("PRODUCT:", product);
     console.log("SELLER:", seller);
-    console.log("PRODUCT FARM ID:", product.farmId);
-    console.log("PROFILE FARM IDS:", profileData.map(item => item.farmId));
 
     if (!seller) {
       sellerDetail.innerHTML = `
@@ -174,8 +183,6 @@ async function loadSellerDetail() {
           </div>
 
           <hr>
-
-
         </div>
 
       </div>
