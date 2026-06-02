@@ -94,6 +94,29 @@ body {
     max-width: 760px;
 }
 
+/* SLIDES */
+.banner-slide {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    text-align: center;
+
+    opacity: 0;
+    transform: scale(1.05);
+    transition: all 0.8s ease;
+}
+
+/* ACTIVE SLIDE */
+.banner-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
 /* ================= SEARCH ================= */
 .search-box button {
     display: none;
@@ -198,34 +221,50 @@ body {
 }
 
 /* ================= BUTTON ================= */
-button {
+.card-body button {
     padding: 8px;
     background: #2f6f3e;
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+       margin-top: 12px;
+}
+
+.card-body h4 {
+    text-transform: uppercase;
 }
 
 /* ================= PAGINATION ================= */
-.setupPagination {
-    margin-top: 20px;
+.pagination {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    align-items: center;
+
+    flex-wrap: nowrap;   
+    overflow-x: auto;    
+
+    gap: 6px;
+    padding: 20px 0;
 }
 
-.setupPagination button {
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-    color: #333;
+.pagination button {
+    width: auto;      
+    padding: 4px 8px;
+    min-width: 28px;
+    font-size: 12px;
 }
 
-.setupPagination button.active {
+.pagination button:hover {
     background: #2f6f3e;
     color: white;
-    border: none;
+    border-color: #2f6f3e;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 /* ================= FOOTER ================= */
@@ -295,4 +334,142 @@ mark {
     padding: 40px;
     color: #777;
     font-size: 18px;
+}
+
+
+/* badge*/
+
+.image-wrapper{
+    position: relative;
+}
+
+
+.badge.cert {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: white;
+    z-index: 10;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.badge-cert-organic {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+}
+
+.badge-cert-pesticide {
+    background: linear-gradient(135deg, #009688, #26a69a);
+}
+
+.badge-cert-conventional {
+    background: linear-gradient(135deg, #757575, #9e9e9e);
+}
+
+.badge-cert-mygap {
+    background: linear-gradient(135deg, #1565c0, #1e88e5);
+}
+
+.badge-cert-default {
+    background: rgba(0,0,0,0.6);
+}
+
+
+/* IMAGE */
+.image-wrapper img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.fa-location-dot {
+    color: #db1e1e;
+    margin-right: 6px;
+}
+
+
+.fa-box{
+    color: #172e2744;
+    margin-right: 6px;
+}
+
+.farm-location,
+.product-count {
+    color: #000;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* ================= infooo ================= */
+
+.title2{
+    font-size: 20px;
+    font-weight: 600;
+    color: #2f6f3e;
+    margin-bottom: 30px;
+    margin-top: 15px;
+
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 row style lebih balance */
+    gap: 15px;
+}
+
+.info {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.info:hover {
+    transform: translateY(-3px);
+    background: #f7fff7;
+}
+
+.info-body {
+    padding: 18px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 🌧️ Rain */
+.info.rainy{
+    background: linear-gradient(135deg, #d0e8ff, #ffffff);
+    border-left: 5px solid #2196f3;
+}
+
+/* ☀️ Sunny */
+.info.sunny{
+    background: linear-gradient(135deg, #fff3cd, #ffffff);
+    border-left: 5px solid #ff9800;
+}
+
+/* ☁️ Cloudy */
+.info.cloudy{
+    background: linear-gradient(135deg, #e0e0e0, #ffffff);
+    border-left: 5px solid #607d8b;
 }

@@ -5,21 +5,21 @@ console.log("JS FILE LOADED");
 // =======================
 const selectedFarm = localStorage.getItem("selectedFarm");
 
-// Apps Script URL
 const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+
 // =======================  
- // STATE
+// STATE
 // =======================
 let allProducts = [];
 let currentPage = 1;
 const itemsPerPage = 8;
+let currentFarmer = null;
 
 // =======================
 // INIT
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ✅ ambil nama farm dari localStorage
     const farmName = localStorage.getItem("selectedFarmName");
 
     const productTitle = document.getElementById("productTitle");
@@ -28,30 +28,49 @@ document.addEventListener("DOMContentLoaded", () => {
         productTitle.innerText = "Product From " + (farmName || "");
     }
 
-    // existing function
     loadFarmInfo();
     loadProducts();
-
 });
-
 
 // =======================
 // UPDATE INFO GRID
 // =======================
 function updateInfoGrid(products) {
 
-    const productCount = document.querySelector(".info-card:nth-child(2) h4");
-    const rating = document.querySelector(".info-card:nth-child(3) h4");
-    const followers = document.querySelector(".info-card:nth-child(4) h4");
+    const productCount = document.getElementById("productCount");
+    const rating = document.getElementById("ratingValue");
+    const followers = document.getElementById("followersValue");
+    const joined = document.getElementById("joinedValue");
 
     if (productCount) productCount.innerText = products.length;
     if (rating) rating.innerText = "4.8 ⭐";
     if (followers) followers.innerText = "120";
+
+    // 🔥 SAFE JOIN DATE
+    if (joined) {
+
+        const raw = currentFarmer?.createdAt;
+
+        if (raw) {
+            const d = new Date(raw);
+
+            if (!isNaN(d.getTime())) {
+                joined.innerText = d.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                });
+            } else {
+                joined.innerText = "-";
+            }
+        } else {
+            joined.innerText = "-";
+        }
+    }
 }
 
-
 // =======================
-// FETCH DATA
+// FETCH PRODUCTS
 // =======================
 function loadProducts() {
 
@@ -59,193 +78,69 @@ function loadProducts() {
         .then(res => res.json())
         .then(data => {
 
-            console.log("RAW DATA:", data);
+            const products = data.data || [];
 
-            const products = data.data; // ✔ ambil array sebenar
-
-            // FILTER BY FARM ID
-            // allProducts = products.filter(p => p.farmId === selectedFarm);
             allProducts = selectedFarm
-             ? products.filter(p => p.farmId === selectedFarm)
-             : products;
+                ? products.filter(p => p.farmId === selectedFarm)
+                : products;
 
-            console.log("FILTERED:", allProducts);
-
-            // UPDATE INFO GRID
             updateInfoGrid(allProducts);
 
             currentPage = 1;
-
             renderProducts();
             renderPagination();
         })
-        .catch(err => {
-            console.error("Fetch error:", err);
-        });
+        .catch(err => console.error(err));
 }
 
-
+// =======================
+// FARM INFO
+// =======================
 function loadFarmInfo() {
 
-Promise.all([
+    Promise.all([
+        fetch(url + "?action=marketplace").then(res => res.json()),
+        fetch(url + "?action=dataprofile").then(res => res.json())
+    ])
 
-fetch(
-url +
-"?action=marketplace"
-).then(res=>res.json()),
+    .then(([marketRes, profileRes]) => {
 
-fetch(
-url +
-"?action=dataprofile"
-).then(res=>res.json())
+        const farms = marketRes.data || [];
+        const profiles = profileRes.data || [];
 
-])
+        const farm = farms.find(f =>
+            String(f.farmId || "").trim() === String(selectedFarm || "").trim()
+        );
 
-.then(([marketRes,profileRes])=>{
+        if (!farm) return;
 
-const farms =
-marketRes.data || [];
+        document.getElementById("farmTitle").innerText = farm.name || "-";
+        document.querySelector(".farm-location").innerHTML = `📍 ${farm.location || "-"}`;
+        document.querySelector(".farm-desc").innerHTML = `📝 ${farm.description || "-"}`;
 
-const profiles =
-profileRes.data || [];
+        const farmLogo = document.querySelector(".farm-logo img");
+        if (farmLogo) farmLogo.src = farm.image || "";
 
+        // 🔥 SET FARMER FIRST
+        currentFarmer = profiles.find(p =>
+            String(p.farmId || "").trim() === String(selectedFarm || "").trim()
+        );
 
-const farm =
+        const contactEl = document.querySelector(".contact-no");
+        const ownerEl = document.querySelector(".owner-name");
 
-farms.find(f=>
+        if (currentFarmer) {
+            if (contactEl) contactEl.innerText = "📞 " + (currentFarmer.contact || "-");
+            if (ownerEl) ownerEl.innerText = "👨‍🌾 " + `${currentFarmer.firstname || ""} ${currentFarmer.lastname || ""}`;
+        }
 
-String(f.farmId).trim()
+        // 🔥 NOW SAFE TO UPDATE GRID
+        updateInfoGrid(allProducts);
+        
 
-===
-
-String(selectedFarm).trim()
-
-);
-
-
-if(!farm){
-
-console.log(
-"Farm not found"
-);
-
-return;
-
+    })
+    .catch(err => console.error(err));
 }
-
-
-/* existing */
-
-document.getElementById(
-"farmTitle"
-).innerText =
-
-farm.name ||
-selectedFarm;
-
-
-document.querySelector(
-".farm-location"
-).innerText =
-
-farm.location ||
-"-";
-
-
-document.querySelector(
-".farm-desc"
-).innerText =
-
-farm.description ||
-
-"No description available";
-
-
-const farmLogo =
-document.querySelector(
-".farm-logo img"
-);
-
-if(farmLogo){
-
-farmLogo.src =
-
-farm.image ||
-
-"../../../assets/images/farm-logo.png";
-
-}
-
-
-/* NEW : JOIN DATE */
-
-const farmer =
-
-profiles.find(
-
-p=>
-
-String(
-p.farmId
-).trim()
-
-===
-
-String(
-selectedFarm
-).trim()
-
-);
-
-
-if(
-farmer &&
-farmer.createdAt
-){
-
-const joinedDate =
-
-new Date(
-farmer.createdAt
-)
-
-.toLocaleDateString(
-"en-GB",
-{
-day:"numeric",
-month:"short",
-year:"numeric"
-}
-);
-
-
-/*
-Joined card
-*/
-
-document.querySelector(
-".info-card:nth-child(1) h4"
-)
-
-.innerText =
-
-joinedDate;
-
-}
-
-})
-
-.catch(err=>
-
-console.error(
-"Farm info error:",
-err
-)
-
-);
-
-}
-
 
 // =======================
 // RENDER PRODUCTS

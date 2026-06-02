@@ -23,19 +23,31 @@
     </div>
 
     <!-- BANNER -->
-    <div class="header-banner">
-        <div class="banner-content">
-            <h1>Find Fresh Farms Here</h1>
+   <div class="header-banner">
 
-            <div class="search-box">
-                <div class="input-wrapper">
-                    <i class="fa fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="What are you looking for?">
-                    <div id="suggestionBox" class="suggestion-box"></div>
-                </div>
+    <div class="banner-slide active">
+        <h1>🌾 Find Fresh Farms Here</h1>
+    </div>
+
+    <div class="banner-slide">
+        <h1>🚜 Direct from Local Farmers</h1>
+    </div>
+
+    <div class="banner-slide">
+        <h1>🍅 Fresh Harvest Daily</h1>
+    </div>
+
+    <div class="banner-content">
+        <div class="search-box">
+            <div class="input-wrapper">
+                <i class="fa fa-search"></i>
+                <input type="text" id="searchInput" placeholder="What are you looking for?">
+                <div id="suggestionBox" class="suggestion-box"></div>
             </div>
         </div>
     </div>
+
+</div>
 
     <!-- CONTENT -->
     <div class="page-container">
@@ -45,8 +57,41 @@
 
             <div class="card-grid" id="farmContainer"></div>
 
-            <div class="setupPagination" id="setupPagination"></div>
+            <!-- PAGINATION -->
+             <div class="pagination"></div>
         </div>
+
+        <div class="content2">
+            <div class="title2">🌱 Farming Knowledge</div>
+            <div class="info-grid" id="info-knowledge">
+                <div class="info">
+                    <div class="info-body">
+                        <h4>💡 Farming Tip</h4>
+                        <p id="tipBox"></p>
+                        <div class="slider-controls">
+                            <button onclick="prevTip()">⬅</button>
+                            <button onclick="nextTip()">➡</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info" id="seasonCard">
+        <div class="info-body">
+        <h4>🌦️ Weather-Based Farming Guide</h4>
+        <p id="seasonGuide"></p>
+        </div>
+        </div>
+
+        <div class="info">
+            <div class="info-body">
+                <h4>🌱 Did You Know</h4><p id="funFact"></p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
     </div>
 
     <footer>
