@@ -237,6 +237,24 @@ select{
     border:1px solid transparent;
 }
 
+/* Fix dropdown text visibility */
+
+select {
+    background: rgba(255,255,255,0.07);
+    color: white;
+}
+
+select option {
+    background: white;
+    color: #081c15;
+}
+
+/* bila option dipilih */
+select option:checked {
+    background: #52b788;
+    color: #081c15;
+}
+
 input::placeholder,
 textarea::placeholder{
     color:#95d5b2;

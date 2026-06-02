@@ -70,8 +70,8 @@ body {
 }
 
 .farm-logo {
-    width: 95px;
-    height: 95px;
+    width: 120px;
+    height: 120px;
     flex-shrink: 0;
     border-radius: 50%;
     border: 4px solid #eaf5ee;
@@ -117,18 +117,16 @@ body {
     background: #256428;
 }
 
-.farm-location {
+.farm-location, .farm-desc, .contact-no, .owner-name {
     color: #666;
-    font-size: 14px;
+    font-size: 15px;
     margin: 8px 0 0;
+    line-height: 1.4;
+    font-family: Arial, sans-serif;
 }
 
-.farm-desc {
-    margin: 10px 0 0;
-    color: #444;
-    font-size: 14px;
-    line-height: 1.5;
-}
+
+    
 
 /* ================= INFO GRID ================= */
 .info-grid {
