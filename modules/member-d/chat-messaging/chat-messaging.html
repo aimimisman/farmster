@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Farmster - Chat Messaging</title>
   <link rel="stylesheet" href="chat-messaging.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -22,44 +24,81 @@
       <p class="section-label">Product Listing</p>
       <h2>Find Farm Products</h2>
       <p>Search and filter available farm products by name, category, or price range.</p>
+      
       <button class="floating-btn" onclick="openChat()" >Contact Farm</button>
+      
     </div>
 
     <!-- POPUP CHAT -->
-    <div id="chat-popup" class="chat-popup">
-        <div class="phone">
-            
-            <div class="header">
-                <div class="profile">
-                    <div class="avatar">A</div>
-                    <div>
-                        <div class="name">Aina</div>
-                        <div class="status">online</div>
-                    </div>
-                </div>
-                <span class="close-btn" onclick="closeChat()">✖</span>
-                </div>
+    <div id="chat-popup" class="chat-popup" style="display:none;">
+      
+      <div class="phone">
 
-            <div id="chat-box" class="chat-box">
-                <div class="message received">
-                    Hi there!
-                    <span class="time">10:30</span>
-                </div>
+        <!-- ================= CHAT LIST VIEW ================= -->
+        <div id="chat-list-view">
+          <div class="header">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="chat-title">Messages</div>
+              <i class="bi bi-chat-left-fill"></i>
             </div>
 
-            <div class="input-container">
-                <input type="text" id="message-input" placeholder="Type a message">
-                <button class="send-btn" onclick="sendMessage()">➤</button>
+            <!-- SEARCH -->
+            <div class="search-box d-flex align-items-center" id="search-bar">
+              <i class="bi bi-search me-2 text-secondary"></i>
+              <input type="text" placeholder="Search Direct Messages">
             </div>
+
+          </div>
+          <!-- LOADING -->
+          <div id="loading-spinner-list" class="loading-container" style="display:flex;">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          
+          <!-- CHAT LIST -->
+          <div id="chat-list"></div>
 
         </div>
+
+        <!-- ================= CHAT VIEW ================= -->
+        <div id="chat-view" style="display:none;">
+
+          <!-- CHAT HEADER -->
+          <div class="header">
+            <div id="chat-header"></div>
+          </div>
+
+          <!-- LOADING -->
+          <div id="loading-spinner-chat" class="loading-container" style="display:flex;">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+      
+          <!-- CHAT BOX -->
+          <div id="chat-box" class="chat-box">
+          </div>
+
+          <!-- INPUT -->
+          <div class="input-container">
+            <input type="text" id="message-input" placeholder="Type a message">
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+          </div>
+
+        </div>
+
+      </div>
     </div>
+
+   
 
     
   </main>
 
-  </div>
 
 <script src="chat-messaging.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
