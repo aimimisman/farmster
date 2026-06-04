@@ -7,6 +7,19 @@ let farms = [];
 let currentPage = 1;
 const itemsPerPage = 12;
 
+const loading = document.getElementById("loading");
+const farmContainer = document.getElementById("farmContainer");
+
+function showLoading() {
+    loading.style.display = "block";
+    farmContainer.style.display = "none";
+}
+
+function hideLoading() {
+    loading.style.display = "none";
+    farmContainer.style.display = "grid";
+}
+
 // =======================
 // DOM ELEMENTS
 // =======================
@@ -59,23 +72,49 @@ const gardeningTips = [
 ];
 
 const funFacts = [
-  "Tomato is actually a fruit, not a vegetable 🍅",
-  "Bananas are technically berries 🍌",
-  "Strawberries have seeds on the outside 🍓",
-  "Bees pollinate 1/3 of our food 🐝",
-  "Healthy soil has billions of microorganisms 🧪",
-  "Overwatering kills plants faster than underwatering 💧"
+{
+    text: "Tomato is actually a fruit, not a vegetable",
+    icon: "🍅"
+},
+{
+    text: "Bananas are technically berries",
+    icon: "🍌"
+},
+{
+    text: "Strawberries have seeds on the outside",
+    icon: "🍓"
+},
+{
+    text: "Bees pollinate 1/3 of our food",
+    icon: "🐝"
+},
+{
+    text: "Healthy soil has billions of microorganisms",
+    icon: "🧪"
+},
+{
+    text: "Overwatering kills plants faster than underwatering",
+    icon: "💧"
+}
 ];
 
 // =======================
 // FUN FACT ROTATION
 // =======================
 function showFunFact() {
+
   const el = document.getElementById("funFact");
+
   if (!el) return;
 
   const randomIndex = Math.floor(Math.random() * funFacts.length);
-  el.textContent = funFacts[randomIndex];
+
+  const fact = funFacts[randomIndex];
+
+  el.innerHTML = `
+      <div class="fact-text">${fact.text}</div>
+      <div class="fact-icon">${fact.icon}</div>
+  `;
 }
 
 showFunFact();
@@ -84,6 +123,9 @@ setInterval(showFunFact, 5000);
 // =======================
 // FETCH DATA
 // =======================
+
+showLoading();
+
 fetch(url + "?action=marketplace")
   .then(res => res.json())
   .then(response => {
@@ -96,8 +138,13 @@ fetch(url + "?action=marketplace")
 
     renderFarms();
     renderPagination();
+
+    hideLoading();
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    console.error(err);
+    hideLoading();
+  });
 
 // =======================
 // RENDER FARMS
@@ -238,46 +285,62 @@ renderTip();
 function showSeasonGuide() {
 
   const card = document.querySelector("#seasonCard");
-  const text = document.getElementById("seasonGuide");
 
-  if (!card || !text) return;
+  const bigTemp = document.getElementById("weatherBigTemp");
+  const status = document.getElementById("weatherStatus");
+  const guide = document.getElementById("weatherGuide");
+  const tempTop = document.getElementById("weatherTemp");
+  const icon = document.getElementById("weatherIcon");
 
-  text.innerHTML = "⏳ Loading weather...";
+  if (!card) return;
 
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=Johor&units=metric&appid=cd26066e766bec7d60d9d9f1023f713e`)
-.then(res => res.json())
-.then(data => {
+  .then(res => res.json())
+  .then(data => {
 
-  const weather = data.weather?.[0]?.main;
-  const temp = data.main?.temp; // 🔥 SUHU
+    const weather = data.weather?.[0]?.main;
+    const temp = data.main?.temp;
 
-  let className = "";
-  let content = "";
+    bigTemp.textContent = Math.round(temp);
+    tempTop.textContent = `${Math.round(temp)}°`;
+    status.textContent = weather;
 
-  if (weather === "Rain") {
-    className = "rainy";
-    content = `<b>🌧️ Rainy(${temp}°C )<br><br></b>Reduce watering & check drainage`;
-  }
-  else if (weather === "Clear") {
-    className = "sunny";
-    content = `<b>☀️ Sunny(${temp}°C )<br><br></b>Water early morning & use mulch`;
-  }
-  else {
-    className = "cloudy";
-    content = `<b>☁️ Cloudy (${temp}°C )<br><br></b>Monitor soil moisture`;
-  }
+    if (weather === "Rain") {
 
-  card.className = "info " + className;
-  text.innerHTML = content;
+      icon.innerHTML = "🌧️";
+      guide.textContent = "Reduce watering & improve drainage";
 
-})
-.catch(() => {
-  text.innerHTML = "⚠️ Weather unavailable";
-});
+      card.style.background =
+      "linear-gradient(180deg, #4b79a1, #283e51)";
+    }
+    else if (weather === "Clear") {
+
+      icon.innerHTML = "☀️";
+      guide.textContent = "Water crops early morning";
+
+      card.style.background =
+      "linear-gradient(180deg, #f6d365, #fda085)";
+    }
+    else {
+
+      icon.innerHTML = "☁️";
+      guide.textContent = "Monitor soil moisture regularly";
+
+      card.style.background =
+      "linear-gradient(180deg, #757f9a, #d7dde8)";
+    }
+
+  })
+  .catch(() => {
+
+    bigTemp.textContent = "--";
+    status.textContent = "Unavailable";
+    guide.textContent = "Weather unavailable";
+    icon.innerHTML = "⚠️";
+  });
 }
 
 showSeasonGuide();
-
 
 // =======================
 // SEARCH (REALTIME)
