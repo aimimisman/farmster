@@ -7,6 +7,7 @@ localStorage.setItem("currentUser", sampleUserId);
 
 const userId = localStorage.getItem("currentUser"); //my user id
 console.log("User ID:", userId);
+fetchReviews();
 
 
 
@@ -104,4 +105,114 @@ function storeReview() {
 
   })
   .catch(err => console.error("Send error:", err));
+}
+
+//calculate total reviews
+function calculateTotalReview(totalReviews){
+  document.getElementById("totalReviews").textContent = `Based on ${totalReviews} customer reviews`;
+}
+
+//calculate average stars
+function calculateTotalAverageStars(averageRating){
+  const roundedRating = Math.round(averageRating);
+  const averageStars =
+      "★".repeat(roundedRating) +
+      "☆".repeat(5 - roundedRating);
+
+      console.log("Average Stars:", averageStars);
+
+  document.getElementById("stars").innerHTML = averageStars;
+}
+
+//fetch review
+function fetchReviews() {
+
+    const reviewList = document.getElementById("review-list");
+    const moreReviewsBtn = document.getElementById("moreReviewsBtn");
+
+    let html = "";
+    let hiddenHtml = "";
+
+  fetch(url + "?action=getReview&userId=" + userId + "&t=" + Date.now())
+  .then(res => res.json())
+  .then(response => {
+      console.log("Review List:", response);
+
+      document.getElementById("farmName").textContent = response.data[0].farmerName;
+      const totalReviews = response.data.length;
+      calculateTotalReview(totalReviews);
+
+      //calculate average rating
+      const averageRating = response.data.reduce((sum, review) => sum + review.rating, 0) / totalReviews; 
+      document.getElementById("review-average").textContent = `${averageRating}`;
+      calculateTotalAverageStars(averageRating);
+
+      // loop reviews
+      response.data.forEach((review, index) => {
+
+         const stars =
+        "★".repeat(review.rating) +
+        "☆".repeat(5 - review.rating);
+
+        const reviewHtml = `
+            <div class="review-item">
+                <div class="review-name">
+                    ${review.userId}
+                </div>
+
+                <div class="review-stars">
+                    ${stars}
+                </div>
+
+                <p>${review.comment}</p>
+
+                <small>${review.timeAgo}</small>
+            </div>
+        `;
+
+        if (index < 5) {
+            html += reviewHtml;
+        } else {
+            hiddenHtml += reviewHtml;
+        }
+        
+
+        
+
+       
+
+      });
+
+       reviewList.innerHTML = html;
+
+      if (hiddenHtml) {
+
+          reviewList.innerHTML += `
+              <div id="hiddenReviews" style="display:none;">
+                  ${hiddenHtml}
+              </div>
+          `;
+
+          moreReviewsBtn.addEventListener("click", () => {
+
+              const hiddenReviews = document.getElementById("hiddenReviews");
+
+              if (hiddenReviews.style.display === "none") {
+                  hiddenReviews.style.display = "block";
+                  moreReviewsBtn.textContent = "Show Less";
+              } else {
+                  hiddenReviews.style.display = "none";
+                  moreReviewsBtn.textContent = "More Reviews";
+              }
+          });
+
+      } else {
+          moreReviewsBtn.style.display = "none";
+      }
+   
+
+    })
+    .catch(err => console.error(err));
+
+
 }

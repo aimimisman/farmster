@@ -197,8 +197,15 @@ body{
 }
 
 .btn-review{
-    background:#2f8a3f;
     color:white;
+    flex: 1;
+    border: none;
+    background: linear-gradient(
+        90deg,
+        #1f4d2c,
+        #3f8c46
+    );
+   
 }
 
 

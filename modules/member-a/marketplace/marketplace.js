@@ -410,7 +410,9 @@ function goToProductCatalog(farmId, farmName) {
     ? "https://aimimisman.github.io/farmster"
     : "";
 
-  window.location.href = BASE_URL + "/modules/member-a/product-catalog/product-catalog.html";
+  // window.location.href = BASE_URL + "/modules/member-a/product-catalog/product-catalog.html";
+
+  window.location.href =  "../product-catalog/product-catalog.html";
 }
 
 function goHome() {
