@@ -91,14 +91,14 @@ body {
 
 /* Optional: make it float nicely */
 .phone {
-  width: 320px;
-  height: 500px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  width: min(380px, 95vw);
+  height: min(700px, 85vh);
+  background: #efeae2;
   border-radius: 12px;
   overflow: hidden;
-  background: #efeae2;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
 }
 
 /* Close button */

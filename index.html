@@ -411,6 +411,34 @@
         margin-top: 30px;
       }
 
+      /* Ellyana Update - Notification Icon in Navbar */
+      .notification-icon {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      
+
+      #notification-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        background: #1f4d2c;
+        color: #f5fbf2;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+      /* End Notification Icon Styles */
+
+
       @media (max-width: 850px) {
         header h1 {
           font-size: 36px;
@@ -495,7 +523,12 @@
         <a href="#modules">Modules</a>
         <a href="#features">Features</a>
         <a href="#team">Team</a>
-        <a ><i class="bi bi-bell-fill" id="notificationIcon"></i></a>
+        <a >
+          <div class="notification-icon">
+            <i class="bi bi-bell-fill" id="notificationIcon"></i>
+            <span id="notification-count"></span>
+          </div>
+        </a>
       </div>
     </nav>
 
@@ -606,7 +639,7 @@
           <p>Chat / Messaging and Notification modules.</p>
           <a
             class="module-link"
-            href="modules/member-d/chat-messaging/chat-messaging.html"
+            href="https://aimimisman.github.io/farmster/modules/member-d/chat-messaging/chat-messaging.html"
             target="_blank"
             >Open Nur Ellyana's Modules</a
           >
@@ -913,6 +946,8 @@
   <script src="modules/member-d/notification/notification.js"></script>
 
   <script>
+   
+    
     document
       .getElementById("notificationIcon")
       .addEventListener("click", async () => {
@@ -932,6 +967,11 @@
 
         modal.show();
       });
+
+    loadUnreadCount();
+
+    
+
   </script>
 
   </body>

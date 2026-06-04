@@ -8,9 +8,11 @@ console.log("Current User:", localStorage.getItem("currentUser"));
 
 let allChats = [];
 var userchatId = ""; // global variable to store current chatId for sending messages
+var receiverId = ""; // global variable to store receiverId for sending messages
 
 
 const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+const notyUrl = "https://script.google.com/macros/s/AKfycbwbwa6dOTGj1jQyvPhnJj0ChOEG33at4c97DQ2g6XY0qiJgcahmZzpkw3jwim4sTIqk/exec";
 
 
 const userId = localStorage.getItem("currentUser"); //my user id
@@ -40,6 +42,7 @@ function loadChatList() {
 
         div.className = "profile ms-3";
         div.onclick = function () {
+          receiverId = chat.userId; // set receiverId when opening chat
           openChatHistory(chat.chatId, chat.userName);
         };
 
@@ -87,6 +90,7 @@ function loadMessages(chatId) {
       console.log("RAW DATA:", response);
 
       const box = document.getElementById("chat-box");
+      
       box.innerHTML = "";
 
       response.data.forEach(msg => {
@@ -111,6 +115,7 @@ function loadMessages(chatId) {
       });
 
       box.scrollTop = box.scrollHeight;
+      
 
       return response.status;
 
@@ -137,7 +142,7 @@ async function openChatHistory(chatId,userName) {
   document.getElementById("chat-list-view").style.display = "none";
 
   // show chat view
-  document.getElementById("chat-view").style.display = "block";
+  document.getElementById("chat-view").style.display = "flex";
 
   // set name
   document.getElementById("chat-header").innerHTML = `
@@ -187,7 +192,7 @@ function backToChatList(){
 
   document.getElementById("chat-view").style.display = "none";
 
-  document.getElementById("chat-list-view").style.display = "block";
+  document.getElementById("chat-list-view").style.display = "flex";
 
 }
 
@@ -217,9 +222,33 @@ function sendMessage() {
 
     console.log("Sent:", response);
 
-    input.value = "";
+    // After sending the message, we can also trigger a notification for the recipient
+    fetch(
+      notyUrl +
+      "?action=storeNotification" +
+      "&receiverId=" + encodeURIComponent(receiverId) +
+      "&senderId=" + encodeURIComponent(userId) +
+      "&type=chat" +
+      "&message=You have one unread message from " +
+      "&is_read=false"
+    )
+    .then(res => res.json())
+    .then(response => {
 
-    loadMessages(userchatId);
+      console.log("Notification stored:", response);
+
+      input.value = "";
+
+      loadMessages(userchatId);
+
+    })
+    .catch(err => console.error("Notification error:", err));
+    // end
+
+
+    // input.value = "";
+
+    // loadMessages(userchatId);
 
   })
   .catch(err => console.error("Send error:", err));

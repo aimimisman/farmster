@@ -404,6 +404,7 @@ function showSuggestions(keyword) {
 function goToProductCatalog(farmId, farmName) {
   localStorage.setItem("selectedFarm", farmId);
   localStorage.setItem("selectedFarmName", farmName);
+  
 
   const BASE_URL = window.location.hostname.includes("github.io")
     ? "https://aimimisman.github.io/farmster"

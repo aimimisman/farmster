@@ -1,0 +1,309 @@
+body{
+    background:#f5f7f6;
+    font-family:Arial, sans-serif;
+}
+
+/* HERO */
+.farm-hero{
+    background:linear-gradient(rgba(20,75,38,.85),rgba(20,75,38,.85)),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80");
+    background-size:cover;
+    background-position:center;
+
+    color:white;
+    padding:80px 30px;
+}
+
+.farm-hero h1{
+    font-weight:700;
+}
+
+.farm-hero p{
+    opacity:.9;
+}
+
+/* RATING CARD */
+
+.farm-rating-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-top:-35px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.farm-rating-card:hover{
+    transform:translateY(-4px);
+}
+
+.rating-score{
+    font-size:48px;
+    font-weight:bold;
+    color:#1f4d2c;
+}
+
+.rating-stars{
+    color:#ffc107;
+    font-size:20px;
+}
+
+.rating-count{
+    color:#6c757d;
+}
+
+.rating-right{
+    text-align:center;
+    color:#198754;
+}
+
+.rating-right i{
+    font-size:28px;
+}
+
+/* PRODUCTS */
+
+.products-section{
+    margin-top:40px;
+}
+
+.product-card{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+
+    height:100%;
+}
+
+.product-card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+/* REVIEW SECTION */
+
+#farmReviewsSection{
+
+    margin-top:60px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+
+    scroll-margin-top:40px;
+}
+
+.review-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.review-summary{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.review-summary h1{
+    font-size:70px;
+    color:#198754;
+    font-weight:bold;
+}
+
+.review-summary .stars{
+    color:#ffc107;
+    font-size:26px;
+}
+
+.review-item{
+    border-bottom:1px solid #eee;
+    padding:18px 0;
+}
+
+.review-item:last-child{
+    border-bottom:none;
+}
+
+.review-name{
+    font-weight:bold;
+}
+
+.review-stars{
+    color:#ffc107;
+}
+
+/* HIGHLIGHT */
+
+.review-highlight{
+    animation:flashHighlight 2s ease;
+}
+
+@keyframes flashHighlight{
+
+    0%{
+        background:#fff8cf;
+    }
+
+    100%{
+        background:white;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .farm-rating-card{
+        flex-direction:column;
+        text-align:center;
+        gap:15px;
+    }
+
+    .review-header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+}
+
+.review-cta{
+    border:2px dashed #a6d8aa;
+    border-radius:15px;
+    padding:20px;
+    margin-top:25px;
+}
+
+.btn-review{
+    background:#2f8a3f;
+    color:white;
+}
+
+
+#reviewModal {
+    border-radius: 24px;
+  border: none;
+  overflow: hidden;
+}
+
+#reviewModal .modal-content{
+    border-radius:20px;
+    padding:20px;
+}
+
+.star-rating {
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    color: #ccc;
+    transition: 0.2s;
+}
+
+.star.active {
+    color: gold;
+}
+
+.star:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Footer */
+
+.review-footer{
+  border-top: 1px solid #eee;
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.cancel-btn{
+  border: 1px solid #ddd;
+  background: white;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.submit-btn{
+  flex: 1;
+  border: none;
+  background: linear-gradient(
+    70deg,
+    #1f4d2c,
+    #3f8c46
+    
+  );
+
+  color: white;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+/* loading animation */
+
+.loading-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    height:100%;
+    padding:30px;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#075e54;
+
+    animation:bounce 0.6s infinite alternate;
+}
+
+.dot:nth-child(2){
+    animation-delay:0.2s;
+}
+
+.dot:nth-child(3){
+    animation-delay:0.4s;
+}
+
+@keyframes bounce{
+    from{
+        transform:translateY(0);
+        opacity:0.5;
+    }
+
+    to{
+        transform:translateY(-10px);
+        opacity:1;
+    }
+}
+
+/* end loading animation */
