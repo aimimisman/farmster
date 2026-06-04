@@ -4,6 +4,7 @@
     <title>Marketplace Module</title>
     <link rel="stylesheet" href="marketplace.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
@@ -57,6 +58,12 @@
 
             <div class="card-grid" id="farmContainer"></div>
 
+            <!-- LOADING -->
+             <div id="loading" class="loading-container">
+                <div class="loader"></div>
+                <p>Loading farms...</p>
+            </div>
+
             <!-- PAGINATION -->
              <div class="pagination"></div>
         </div>
@@ -74,24 +81,18 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="info" id="seasonCard">
-        <div class="info-body">
-        <h4>🌦️ Weather-Based Farming Guide</h4>
-        <p id="seasonGuide"></p>
-        </div>
-        </div>
 
-        <div class="info">
-            <div class="info-body">
-                <h4>🌱 Did You Know</h4><p id="funFact"></p>
+                <div class="weather-card" id="seasonCard"><div class="weather-top"><span>Johor</span><span id="weatherTemp">--°</span></div>
+                    <div class="weather-icon" id="weatherIcon">☀️</div>
+                    <div class="weather-main"><h1 id="weatherBigTemp">25</h1><p id="weatherStatus">Sunny</p></div>
+                    <div class="weather-bottom"><span id="weatherGuide">Loading...</span></div>
+                </div>
+                
+                <div class="info">
+                    <div class="info-body"><h4>🌱 Did You Know</h4><p id="funFact"></p></div>
+                </div>
             </div>
         </div>
-
-    </div>
-
-</div>
-
     </div>
 
     <footer>

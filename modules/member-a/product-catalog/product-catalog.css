@@ -334,6 +334,29 @@ body {
     background: #125aa0;
 }
 
+/* LOADING */
+.loading-container {
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #2f6f3e;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* ================= PAGINATION ================= */
 .pagination {
     text-align: center;
@@ -353,71 +376,134 @@ body {
     color: white;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px) {
-    .page-container {
-        padding: 0 35px;
+/* ================= MOBILE ================= */
+@media screen and (max-width: 768px) {
+
+    body{
+        overflow-x:hidden;
     }
 
-    .header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+    .page-container{
+        padding:0 12px;
     }
 
-    .menu {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-}
-
-@media (max-width: 600px) {
-    .page-container {
-        padding: 0 20px;
+    /* HEADER */
+    .header{
+        flex-direction:column;
+        gap:10px;
+        padding:12px;
+        text-align:center;
+        width:100%;
+        margin-left:0;
     }
 
-    .header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+    .menu{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:10px;
+        font-size:14px;
     }
 
-    .menu {
-        gap: 12px;
-        font-size: 14px;
-        flex-wrap: wrap;
-        justify-content: center;
+    /* FARM PROFILE */
+    .farm-header-row{
+        flex-direction:column;
+        text-align:center;
+        padding:18px;
+        gap:15px;
     }
 
-    .farm-header-row {
-        flex-direction: column;
-        text-align: center;
+    .farm-logo{
+        width:90px;
+        height:90px;
     }
 
-    .farm-title-row {
-        flex-direction: column;
+    .farm-title-row{
+        flex-direction:column;
+        gap:10px;
     }
 
-    .product-grid {
-        grid-template-columns: 1fr;
+    .farm-title-row h2{
+        font-size:20px;
     }
 
-    .info-grid {
-        grid-template-columns: 1fr;
+    .visit-btn{
+        width:100%;
     }
 
-    .detail-wrapper {
-        flex-direction: column;
+    /* INFO GRID */
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .info-card{
+        height:70px;
+    }
+
+    /* PRODUCT GRID */
+    .product-grid{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .card{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    .card img{
+        height:200px;
+    }
+
+    /* DETAIL SECTION */
+    .product-detail{
+        padding:15px;
+    }
+
+    .detail-wrapper{
+        flex-direction:column;
+        gap:20px;
     }
 
     .img-box,
-    .detail-info {
-        width: 100%;
+    .detail-info{
+        width:100%;
     }
 
-    .detail-img {
-        width: 100%;
-        height: 250px;
+    .img-box{
+        justify-content:center;
+    }
+
+    .detail-img{
+        width:100%;
+        height:250px;
+    }
+
+    .detail-info h1{
+        font-size:22px;
+    }
+
+    /* BUTTONS */
+    .action-buttons{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .compare-btn,
+    .chat-btn{
+        width:100%;
+    }
+
+    /* PAGINATION */
+    .pagination{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:5px;
+    }
+
+    .pagination button{
+        min-width:40px;
     }
 }

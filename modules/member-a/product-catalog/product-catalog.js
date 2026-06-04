@@ -15,6 +15,19 @@ let currentPage = 1;
 const itemsPerPage = 8;
 let currentFarmer = null;
 
+const loading = document.getElementById("loading");
+const productContainer = document.getElementById("productContainer");
+
+function showLoading() {
+    loading.style.display = "block";
+    productContainer.style.display = "none";
+}
+
+function hideLoading() {
+    loading.style.display = "none";
+    productContainer.style.display = "grid";
+}
+
 // =======================
 // INIT
 // =======================
@@ -72,6 +85,9 @@ function updateInfoGrid(products) {
 // =======================
 // FETCH PRODUCTS
 // =======================
+
+showLoading();
+
 function loadProducts() {
 
     fetch(url + "?action=products")
@@ -89,8 +105,13 @@ function loadProducts() {
             currentPage = 1;
             renderProducts();
             renderPagination();
+
+            hideLoading(); // 
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            hideLoading(); // 
+        });
 }
 
 // =======================
