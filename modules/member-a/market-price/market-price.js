@@ -116,6 +116,14 @@ function populateCompareDropdown() {
     };
 }
 
+function toggleSidebar() {
+    document.querySelector(".sidebar")
+        .classList.toggle("show");
+
+    document.querySelector(".overlay")
+        .classList.toggle("show");
+}
+
 function updateComparison(productId) {
     const product = allProducts.find(p =>
         String(p.productId || "").trim().toLowerCase() ===
