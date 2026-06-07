@@ -6,6 +6,7 @@ let products = [];
 let profiles = [];
 let groupedProducts = [];
 
+
 const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop";
 
 const searchInput = document.getElementById("searchInput");
@@ -108,6 +109,14 @@ async function loadProducts() {
     groupedProducts = groupProductsByName(products);
 
     renderProducts(groupedProducts);
+    
+    // DAYAH TAMBAH 
+    window.productsReady = true;
+    if (window.pendingProductId) {
+    showDetailById(window.pendingProductId);
+    window.pendingProductId = null;
+    }
+    // SAMPAI SINI
 
   } catch (error) {
     console.error("Backend error:", error);
@@ -482,3 +491,16 @@ document
   });
 
 loadProducts();
+
+ // SORRY AISYAH DAYAH TAMBAH NI YE
+document.addEventListener("DOMContentLoaded", () => {
+  const productId = localStorage.getItem("openProductModal");
+
+  if (!productId) return;
+
+  // simpan sementara
+  window.pendingProductId = productId;
+
+  localStorage.removeItem("openProductModal");
+});
+

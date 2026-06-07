@@ -365,8 +365,8 @@ color:#2e7d32;
     color: #777;
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px) {
+/* ================= RESPONSIVE =================*/
+/* @media (max-width: 900px) {
 
     .layout {
         flex-direction: column;
@@ -389,7 +389,7 @@ color:#2e7d32;
     .avg-container {
         grid-template-columns: 1fr;
     }
-}
+} */
 
 .compare-card {
     background: white;
@@ -434,7 +434,7 @@ color:#2e7d32;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
-}
+} 
 
 .avg-card {
     padding: 20px;
@@ -551,7 +551,7 @@ border:
     font-weight: normal !important;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .avg-container {
         grid-template-columns: 1fr;
     }
@@ -561,7 +561,7 @@ border:
         gap: 15px;
         text-align: center;
     }
-}
+} */
 
 .product-select {
     font-size: 22px;
@@ -1072,4 +1072,178 @@ font-size:14px;
 
 .see-market-link:hover{
     opacity: 0.8;
+}
+
+.menu-toggle{
+    display:none;
+}
+
+/* ================= MOBILE ================= */
+
+@media screen and (max-width:768px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    /* ===== Layout ===== */
+
+    .layout{
+        display:block;
+    }
+
+    /* ===== Sidebar ===== */
+
+    .sidebar{
+        position:fixed;
+        top:0;
+        left:-280px;
+        width:250px;
+        height:100vh;
+
+        z-index:1000;
+
+        overflow-y:auto;
+
+        transition:0.3s ease;
+    }
+
+    .sidebar.show{
+        left:0;
+    }
+
+    /* ===== Overlay ===== */
+
+    .overlay{
+        display:none;
+    }
+
+    .overlay.show{
+        display:block;
+
+        position:fixed;
+        top:0;
+        left:0;
+
+        width:100%;
+        height:100%;
+
+        background:rgba(0,0,0,0.4);
+
+        z-index:999;
+    }
+
+    /* ===== Menu Button ===== */
+
+    .menu-toggle{
+        display:block;
+
+        position:fixed;
+        top:15px;
+        left:15px;
+
+        z-index:1100;
+
+        border:none;
+        border-radius:10px;
+
+        background:#2e7d32;
+        color:white;
+
+        padding:10px 12px;
+
+        font-size:18px;
+        cursor:pointer;
+
+        box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* ===== Content ===== */
+
+    .content{
+        width:100%;
+        padding:70px 15px 20px;
+        box-sizing:border-box;
+    }
+
+    .page{
+        width:100%;
+    }
+
+    /* ===== Headers ===== */
+
+    .market-header,
+    .comparison-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .comparison-header h1{
+        font-size:24px;
+    }
+
+    .market-header h1{
+        font-size:22px;
+    }
+
+    /* ===== Dashboard Cards ===== */
+
+    .overview-cards{
+        grid-template-columns:1fr;
+    }
+
+    .analysis-summary{
+        grid-template-columns:1fr;
+    }
+
+    /* ===== Compare Card ===== */
+
+    .compare-card{
+        padding:20px;
+        border-radius:16px;
+    }
+
+    .selected-box{
+        flex-direction:column;
+        text-align:center;
+        align-items:center;
+        gap:12px;
+    }
+
+    .selected-img img{
+        width:90px;
+        height:90px;
+    }
+
+    .selected-info h2{
+        font-size:20px;
+    }
+
+    /* ===== Average Cards ===== */
+
+    
+
+    #priceTrendChart{
+        height:250px;
+    }
+
+    /* ===== Table ===== */
+
+    .price-table-card{
+        overflow-x:auto;
+        padding:12px;
+    }
+
+    .price-table{
+        min-width:700px;
+    }
+
+    /* ===== Last Updated ===== */
+
+    #lastUpdated{
+        width:100%;
+        box-sizing:border-box;
+        text-align:center;
+    }
 }

@@ -2,7 +2,7 @@
 // GLOBAL STATE
 // =======================
 const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
-
+const productUrl ="https://script.google.com/macros/s/AKfycbzuzeEMdC0knR4qw7-E705Varabmi6IChA62OOAyE0feiWchcrr3sknXOnmSc7KmGVjcw/exec";
 let farms = [];
 let currentPage = 1;
 const itemsPerPage = 12;
@@ -31,7 +31,9 @@ function hideLoading() {
 // =======================
 document.addEventListener("DOMContentLoaded", function () {
 
-    let currentBanner = 0;
+  loadAvailableProductsPreview();
+  
+  let currentBanner = 0;
 
     const slides = document.querySelectorAll(".banner-slide");
 
@@ -145,6 +147,118 @@ fetch(url + "?action=marketplace")
     console.error(err);
     hideLoading();
   });
+
+// =======================
+// AVAILABLE PRODUK
+// =======================
+
+ async function loadAvailableProductsPreview() {
+
+    const container =
+    document.getElementById("availableProductsPreview");
+
+    if (!container) return;
+
+    try {
+
+        const response =
+        await fetch(productUrl + "?action=products");
+
+        const result =
+        await response.json();
+
+        let products =
+            result.data ||
+            result.result ||
+            result.products ||
+            result.records ||
+            result.rows ||
+            result;
+
+        if (!Array.isArray(products)) {
+            products = Object.values(products);
+        }
+
+        const uniqueProducts = [];
+
+        products.forEach(product => {
+
+            const exists = uniqueProducts.find(
+                p => p.productName === product.productName
+            );
+
+            if (!exists) {
+                uniqueProducts.push(product);
+            }
+
+        });
+
+        container.innerHTML = "";
+
+        uniqueProducts.slice(0, 6).forEach(product => {
+
+            const image =
+                product.imageUrl ||
+                product.productImage ||
+                product.image ||
+                "../../../assets/images/placeholder.png";
+
+            container.innerHTML += `
+                <div class="product-preview-card"
+                     onclick="goAvailableProducts()">
+
+                    <img src="${image}"
+                         alt="${product.productName}">
+
+                    <div class="product-preview-content">
+                        <h4>${product.productName}</h4>
+                        <p>${product.category}</p>
+                    </div>
+
+                </div>
+            `;
+        });
+
+        container.innerHTML += `
+    <div class="view-more-card"
+         onclick="goAvailableProducts()">
+
+        <div class="view-more-content">
+
+            <div class="view-icon">
+                →
+            </div>
+
+            <h3>View More</h3>
+
+            <p>Browse all products</p>
+
+        </div>
+
+    </div>
+`;
+
+    }
+    catch(error) {
+
+        console.error(error);
+
+    }
+} 
+
+// =======================
+// SKROLL PRODUK
+// =======================
+
+function scrollProducts(amount) {
+
+    document
+        .getElementById("availableProductsPreview")
+        .scrollBy({
+            left: amount,
+            behavior: "smooth"
+        });
+}
 
 // =======================
 // RENDER FARMS
@@ -461,6 +575,7 @@ function showSuggestions(keyword) {
     suggestionBox.style.display = "block";
 }
 
+
 // =======================
 // NAVIGATION (UNCHANGED)
 // =======================
@@ -489,4 +604,30 @@ function goMarketPrice() {
     : "";
 
   window.location.href = BASE_URL + "/modules/member-a/market-price/market-price.html";
+}
+
+function goAvailableProducts() {
+
+    const BASE_URL =
+    window.location.hostname.includes("github.io")
+    ? "https://aimimisman.github.io/farmster"
+    : "";
+
+    window.location.href =
+    BASE_URL +
+    "/modules/member-c/available-products-detail/available-products-detail.html";
+}
+
+function openAvailableProduct(productId) {
+
+  localStorage.setItem("openProductModal", productId);
+
+  const BASE_URL =
+    window.location.hostname.includes("github.io")
+      ? "https://aimimisman.github.io/farmster"
+      : "";
+
+  window.location.href =
+    BASE_URL +
+    "/modules/member-c/available-products-detail/available-products-detail.html";
 }
