@@ -631,3 +631,11 @@ function openAvailableProduct(productId) {
     BASE_URL +
     "/modules/member-c/available-products-detail/available-products-detail.html";
 }
+
+function goLogin(){
+  const BASE_URL = window.location.hostname.includes("github.io")
+    ? "https://aimimisman.github.io/farmster"
+    : "";
+
+  window.location.href = BASE_URL + "/modules/member-b/farmer-profile/login.html";
+}

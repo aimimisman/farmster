@@ -385,6 +385,7 @@ footer{
     <ul>
         <li><a id="homeLink">🏠 Home</a></li>
         <li><a id="communityLink">👥 Community</a></li>
+        <li><a id="crowdfundingLink">💰 Crowdfunding</a></li>
         <li><a id="profileLink">🧑‍🌾 Profile</a></li>
         <li><a onclick="logoutUser()">➕ Logout</a></li>
     </ul>
@@ -463,6 +464,9 @@ BASE_URL + "/modules/member-b/farmer-profile/memberlist.html";
 document.getElementById("profileLink").href =
 BASE_URL + "/modules/member-b/farmer-profile/update.html";
 
+document.getElementById("crowdfundingLink").href =
+BASE_URL + "/modules/member-e/farm-adoption-crowdfunding/farm-adoption-crowdfunding.html";
+
 const currentUser =
 JSON.parse(localStorage.getItem("currentUser"));
 
@@ -498,6 +502,8 @@ function loadData() {
 }
 
 function loadProducts() {
+
+
     fetch(API_URL + "?action=products")
     .then(res => res.json())
     .then(res => {

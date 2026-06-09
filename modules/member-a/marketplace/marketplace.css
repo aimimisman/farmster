@@ -63,6 +63,17 @@ body {
     color: #2f6f3e;
 }
 
+.user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.user:hover {
+    color: #2e7d32;
+}
+
 
 /* ================= BANNER ================= */
 .header-banner {
