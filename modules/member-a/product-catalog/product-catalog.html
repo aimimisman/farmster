@@ -3,7 +3,6 @@
 <head>
     <title>Product Catalog</title>
     <link rel="stylesheet" href="product-catalog.css">
-    <link rel="stylesheet" href="/modules/member-d/review-rating/review_rating.css">
 </head>
 
 <body>
@@ -96,21 +95,12 @@
     <!-- DETAIL PANEL / after tekan button view detail (bawah) -->
     <div id="productDetail" class="product-detail hidden"></div>
 
-    <!-- Review and Rating by Ell -->
-    <div id="reviewRating"></div>
 
 </div>
 
 <script src="product-catalog.js"></script>
-<script src="/modules/member-d/review-rating/review_rating.js"></script>
 
-<script>
-fetch("/modules/member-d/review-rating/review_rating.html")
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("reviewRating").innerHTML = data;
-    });
-</script>
+
 
 
 </body>
