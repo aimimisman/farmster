@@ -4,6 +4,7 @@
     <title>Marketplace Module</title>
     <link rel="stylesheet" href="marketplace.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
@@ -17,9 +18,13 @@
             <div onclick="goHome()">Home</div>
             <!-- <div>Producers</div> -->
             <div onclick="goMarketPrice()">Market Price</div>
+            
         </div>
 
-        <div class="user"></div>
+        <div class="user" onclick="goLogin()">
+    <i class="fa-solid fa-right-to-bracket"></i>
+    <span>Login</span>
+</div>
     </div>
 
     <!-- BANNER -->
@@ -49,13 +54,46 @@
 
 </div>
 
+
     <!-- CONTENT -->
     <div class="page-container">
+
+        <!-- AVAILABLE PRODUCTS PREVIEW -->
+         
+        <section class="available-products-section">
+            <div class="section-header-products">
+                <h2>🥬 Available Products</h2>
+            </div>
+            
+            <div class="product-slider-wrapper">
+                <button class="slider-btn left" onclick="scrollProducts(-300)">❮</button>
+                <div id="availableProductsPreview"
+             class="product-preview-grid">
+        </div>
+
+        <button class="slider-btn right"
+                onclick="scrollProducts(300)">
+            ❯
+        </button>
+
+    </div>
+
+</section>
+
+<div class="section-wrapper">
+  <section class="feature-section">
+
         <div class="content">
             
             <div class="title" id="title">Featured Producers</div>
 
             <div class="card-grid" id="farmContainer"></div>
+
+            <!-- LOADING -->
+             <div id="loading" class="loading-container">
+                <div class="loader"></div>
+                <p>Loading farms...</p>
+            </div>
 
             <!-- PAGINATION -->
              <div class="pagination"></div>
@@ -74,24 +112,19 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="info" id="seasonCard">
-        <div class="info-body">
-        <h4>🌦️ Weather-Based Farming Guide</h4>
-        <p id="seasonGuide"></p>
-        </div>
-        </div>
 
-        <div class="info">
-            <div class="info-body">
-                <h4>🌱 Did You Know</h4><p id="funFact"></p>
+                <div class="weather-card" id="seasonCard"><div class="weather-top"><span>Johor</span><span id="weatherTemp">--°</span></div>
+                    <div class="weather-icon" id="weatherIcon">☀️</div>
+                    <div class="weather-main"><h1 id="weatherBigTemp">25</h1><p id="weatherStatus">Sunny</p></div>
+                    <div class="weather-bottom"><span id="weatherGuide">Loading...</span></div>
+                </div>
+                
+                <div class="info">
+                    <div class="info-body"><h4>🌱 Did You Know</h4><p id="funFact"></p></div>
+                </div>
             </div>
         </div>
-
     </div>
-
-</div>
-
     </div>
 
     <footer>
