@@ -9,22 +9,8 @@
   <link rel="stylesheet" href="farm-adoption-crowdfunding.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-
-  <!-- Marketplace-style header CSS -->
+  <!-- Marketplace-style header CSS only -->
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: white;
-      overflow-x: hidden;
-    }
-
     .header {
       position: sticky;
       top: 0;
@@ -152,11 +138,14 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="logo" onclick="goHome()">FarmFund Adopt</div>
+    <div class="logo" onclick="showView('view-home')">FarmFund Adopt</div>
 
     <div class="menu">
-      <div onclick="goHome()">Home</div>
-      <div onclick="goMarketPrice()">Market Price</div>
+      <div onclick="showView('view-home')">Home</div>
+      <div onclick="scrollToSection('how')">How It Works</div>
+      <div onclick="scrollToSection('projects')">Explore Projects</div>
+      <div onclick="showView('view-dashboard')">Dashboard</div>
+      <div onclick="scrollToSection('faq')">FAQ</div>
     </div>
 
     <div class="user" onclick="goLogin()">
@@ -650,20 +639,12 @@
 
 
 
-  <!-- Marketplace-style header navigation JS -->
+  <!-- Marketplace-style login navigation only. Existing crowdfunding JS still controls projects, details, dashboard, and Stripe. -->
   <script>
     function getBaseUrl() {
       return window.location.hostname.includes("github.io")
         ? "https://aimimisman.github.io/farmster"
         : "";
-    }
-
-    function goHome() {
-      window.location.href = getBaseUrl() + "/index.html";
-    }
-
-    function goMarketPrice() {
-      window.location.href = getBaseUrl() + "/modules/member-a/market-price/market-price.html";
     }
 
     function goLogin() {
