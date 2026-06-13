@@ -7,6 +7,91 @@
   <title>Farm Adoption Crowdfunding</title>
 
   <link rel="stylesheet" href="farm-adoption-crowdfunding.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Marketplace-style header CSS only -->
+  <style>
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      width: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 35px;
+      background: rgba(22, 114, 1, 0.5);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-sizing: border-box;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+      color: #000000;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .menu {
+      display: flex;
+      gap: 30px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .menu div {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 20px;
+      transition: 0.2s ease;
+    }
+
+    .menu div:hover {
+      background: #eaf5ee;
+      color: #2f6f3e;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s ease;
+    }
+
+    .user:hover {
+      color: #2e7d32;
+    }
+
+    @media screen and (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .menu div {
+        font-size: 13px;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
@@ -51,31 +136,23 @@
     </symbol>
   </svg>
 
-  <nav class="navbar">
-    <div class="container nav-inner">
-      <a class="brand" href="#home" aria-label="FarmFund Adopt Home" onclick="showView('view-home')">
-        <span class="brand-mark">
-          <svg class="icon icon-lg"><use href="#icon-leaf"></use></svg>
-        </span>
-        <span>FarmFund Adopt</span>
-      </a>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo" onclick="showView('view-home')">FarmFund Adopt</div>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#how" onclick="scrollToSection('how')">How It Works</a>
-        <a href="#projects" onclick="scrollToSection('projects')">Explore Projects</a>
-        <a href="#dashboard" onclick="showView('view-dashboard')">Dashboard</a>
-        <a href="#faq" onclick="scrollToSection('faq')">FAQ</a>
-      </div>
-
-      <div class="nav-actions">
-        <button class="btn btn-ghost" onclick="scrollToSection('projects')">Explore</button>
-        <button class="btn btn-primary" onclick="scrollToSection('projects')">Fund RM5</button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
-          <svg class="icon"><use href="#icon-menu"></use></svg>
-        </button>
-      </div>
+    <div class="menu">
+      <div onclick="showView('view-home')">Home</div>
+      <div onclick="scrollToSection('how')">How It Works</div>
+      <div onclick="scrollToSection('projects')">Explore Projects</div>
+      <div onclick="showView('view-dashboard')">Dashboard</div>
+      <div onclick="scrollToSection('faq')">FAQ</div>
     </div>
-  </nav>
+
+    <div class="user" onclick="goLogin()">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <span>Login</span>
+    </div>
+  </div>
 
   <main id="home">
     <!-- =========================
@@ -559,6 +636,21 @@
   </footer>
 
   <div class="toast" id="toast">Action completed</div>
+
+
+
+  <!-- Marketplace-style login navigation only. Existing crowdfunding JS still controls projects, details, dashboard, and Stripe. -->
+  <script>
+    function getBaseUrl() {
+      return window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+    }
+
+    function goLogin() {
+      window.location.href = getBaseUrl() + "/modules/member-b/farmer-profile/login.html";
+    }
+  </script>
 
   <script src="farm-adoption-crowdfunding.js"></script>
 </body>
