@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="modules/member-d/notification/notification.css">
     <title>Farm Marketplace Platform</title>
 
     <style>
@@ -408,6 +411,34 @@
         margin-top: 30px;
       }
 
+      /* Ellyana Update - Notification Icon in Navbar */
+      .notification-icon {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      
+
+      #notification-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        background: #1f4d2c;
+        color: #f5fbf2;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+      /* End Notification Icon Styles */
+
+
       @media (max-width: 850px) {
         header h1 {
           font-size: 36px;
@@ -492,8 +523,18 @@
         <a href="#modules">Modules</a>
         <a href="#features">Features</a>
         <a href="#team">Team</a>
+        <a >
+          <div class="notification-icon">
+            <i class="bi bi-bell-fill" id="notificationIcon"></i>
+            <span id="notification-count"></span>
+          </div>
+        </a>
       </div>
     </nav>
+
+    <!-- Modal Container -->
+    <div id="modalContainer"></div>
+
 
     <section id="about">
       <div class="section-header">
@@ -598,7 +639,7 @@
           <p>Chat / Messaging and Notification modules.</p>
           <a
             class="module-link"
-            href="modules/member-d/chat-messaging/chat-messaging.html"
+            href="/modules/member-d/chat-messaging/chat-messaging.html"
             target="_blank"
             >Open Nur Ellyana's Modules</a
           >
@@ -899,5 +940,39 @@
         Assignment Project.
       </p>
     </footer>
+
+    <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="modules/member-d/notification/notification.js"></script>
+
+  <script>
+   
+    
+    document
+      .getElementById("notificationIcon")
+      .addEventListener("click", async () => {
+
+        // Load modal HTML file
+        const response = await fetch("modules/member-d/notification/notification.html");
+        const modalHtml = await response.text();
+
+        // Insert modal into page
+        document.getElementById("modalContainer").innerHTML = modalHtml;
+        loadNotifications();
+
+        // Open modal
+        const modal = new bootstrap.Modal(
+          document.getElementById("notificationModal")
+        );
+
+        modal.show();
+      });
+
+    loadUnreadCount();
+
+    
+
+  </script>
+
   </body>
 </html>
