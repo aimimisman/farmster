@@ -1,29 +1,30 @@
 
-const url = "https://script.google.com/macros/s/AKfycbwAXa4qGaowlDlGRrzyQZZsAkAyLOUhKPK7p33UyZqmDs_n7iMj2fJw_hsEoKobtenIaA/exec";
+const urlApps = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
-const sampleUserId = "U001";
-const farmerId = "U8653503c";
-localStorage.setItem("currentUser", sampleUserId);
+var farmerId = localStorage.getItem("selectedFarmerId");
+var farmName = localStorage.getItem("selectedFarmName");
+var storageUserId = JSON.parse(localStorage.getItem("currentUser"));
 
-const userId = localStorage.getItem("currentUser"); //my user id
-console.log("User ID:", userId);
 fetchReviews();
 
 
 
 //star rating
-const stars = document.querySelectorAll("#starRating .star");
-const ratingInput = document.getElementById("reviewRating");
+function initStarRating() {
+  const stars = document.querySelectorAll("#starRating .star");
+  const ratingInput = document.getElementById("reviewRatingInput");
 
-stars.forEach(star => {
-  star.addEventListener("click", () => {
-    const value = star.dataset.value;
-    ratingInput.value = value;
-    updateStars(value);
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      const value = star.dataset.value;
+      ratingInput.value = value;
+      console.log(value);
+      updateStars(value, stars);
+    });
   });
-});
+}
 
-function updateStars(value) {
+function updateStars(value, stars) {
   stars.forEach(star => {
     const v = star.dataset.value;
 
@@ -36,12 +37,36 @@ function updateStars(value) {
     }
   });
 }
+// const stars = document.querySelectorAll("#starRating .star");
+// const ratingInput = document.getElementById("reviewRating");
+
+// stars.forEach(star => {
+//   star.addEventListener("click", () => {
+//     const value = star.dataset.value;
+//     ratingInput.value = value;
+//     updateStars(value);
+//   });
+// });
+
+// function updateStars(value) {
+//   stars.forEach(star => {
+//     const v = star.dataset.value;
+
+//     if (v <= value) {
+//       star.classList.remove("bi-star");
+//       star.classList.add("bi-star-fill", "text-warning");
+//     } else {
+//       star.classList.remove("bi-star-fill", "text-warning");
+//       star.classList.add("bi-star");
+//     }
+//   });
+// }
 //end star rating
 
 //store review
 function storeReview() {
 
-  const rating = document.getElementById("reviewRating").value;
+  const rating = document.getElementById("reviewRatingInput").value;
   const comment = document.getElementById("reviewComment").value.trim();
 
   document.getElementById("loading-spinner-list").style.display = "flex";
@@ -51,10 +76,10 @@ function storeReview() {
   if (!comment) return;
 
   fetch(
-    url +
+    urlApps +
     "?action=storeReview" +
     "&farmerId=" + encodeURIComponent(farmerId) +
-    "&userId=" + encodeURIComponent(userId) +
+    "&userId=" + encodeURIComponent(storageUserId.userId) +
     "&rating=" + encodeURIComponent(rating) +
     "&comment=" + encodeURIComponent(comment)
   )
@@ -119,7 +144,6 @@ function calculateTotalAverageStars(averageRating){
       "★".repeat(roundedRating) +
       "☆".repeat(5 - roundedRating);
 
-      console.log("Average Stars:", averageStars);
 
   document.getElementById("stars").innerHTML = averageStars;
 }
@@ -130,21 +154,31 @@ function fetchReviews() {
     const reviewList = document.getElementById("review-list");
     const moreReviewsBtn = document.getElementById("moreReviewsBtn");
 
+     if (!reviewList || !moreReviewsBtn) {
+        return;
+    }
+
     let html = "";
     let hiddenHtml = "";
 
-  fetch(url + "?action=getReview&userId=" + userId + "&t=" + Date.now())
+  fetch(urlApps + "?action=getReview&selectedFarmer=" + farmerId + "&t=" + Date.now())
   .then(res => res.json())
   .then(response => {
-      console.log("Review List:", response);
+      console.log("Review List:", response.status);
 
-      document.getElementById("farmName").textContent = response.data[0].farmerName;
+      document.getElementById("farmName").textContent = farmName;
       const totalReviews = response.data.length;
       calculateTotalReview(totalReviews);
 
       //calculate average rating
-      const averageRating = response.data.reduce((sum, review) => sum + review.rating, 0) / totalReviews; 
-      document.getElementById("review-average").textContent = `${averageRating}`;
+      const averageRating =
+            totalReviews > 0
+              ? response.data.reduce((sum, review) => sum + Number(review.rating), 0) / totalReviews
+              : 0;
+
+      document.getElementById("review-average").textContent = averageRating.toFixed(1);
+      document.getElementById("review-average2").textContent = averageRating.toFixed(1);
+      document.getElementById("ratingValue").textContent = averageRating.toFixed(1);
       calculateTotalAverageStars(averageRating);
 
       // loop reviews
@@ -155,20 +189,24 @@ function fetchReviews() {
         "☆".repeat(5 - review.rating);
 
         const reviewHtml = `
-            <div class="review-item">
-                <div class="review-name">
-                    ${review.userId}
+            <div class="review-card bg-white rounded-xl p-6  border border-gray-200 hover:shadow-md transition-all">
+              <div class="flex justify-between items-start mb-3">
+                <div>
+                    <p class="font-semibold text-slate-900">${review.userId}</p>
+                    <p class="text-sm text-gray-600">${review.timeAgo}</p>
+                    <p class="text-gray-700 mb-4">${review.comment}</p>
                 </div>
-
-                <div class="review-stars">
-                    ${stars}
+                <div class="flex gap-0.5">
+                    <div class="review-stars">
+                        ${stars}
+                    </div>
                 </div>
+               
+              </div>
 
-                <p>${review.comment}</p>
-
-                <small>${review.timeAgo}</small>
             </div>
         `;
+      
 
         if (index < 5) {
             html += reviewHtml;
@@ -216,3 +254,5 @@ function fetchReviews() {
 
 
 }
+
+ 

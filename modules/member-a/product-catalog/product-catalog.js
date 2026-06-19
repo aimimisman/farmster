@@ -5,7 +5,7 @@ console.log("JS FILE LOADED");
 // =======================
 const selectedFarm = localStorage.getItem("selectedFarm");
 
-const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+const url = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
 // =======================  
 // STATE

@@ -1,6 +1,6 @@
 console.log("NEW JS LOADED VERSION 20");
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuzeEMdC0knR4qw7-E705Varabmi6IChA62OOAyE0feiWchcrr3sknXOnmSc7KmGVjcw/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
 let products = [];
 let profiles = [];

@@ -4,102 +4,477 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Farmster - Chat Messaging</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="chat-messaging.css">
+  <link rel="stylesheet" href="../../../landing_page.css"/>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.3);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.6);
+        }
+        
+        /* Soft shadows - neumorphism */
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        
+        .soft-shadow-hover:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Message animations */
+        .message-slide {
+            animation: slideInMessage 0.3s ease-out;
+        }
+        
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+          /* Hover lift effect */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+  </style>
 </head>
-<body>
+<body class="bg-gray-100 p-6">
 
-  <header class="page-hero">
-    <div>
-      <span class="tagline">Product Discovery</span>
-      <h1>Chat Messaging</h1>
-      <p>Browse fresh farm products, filter by category, and view product details easily.</p>
-    </div>
-  </header>
-
-  <main class="container">
-
-    <div class="section-header">
-      <p class="section-label">Product Listing</p>
-      <h2>Find Farm Products</h2>
-      <p>Search and filter available farm products by name, category, or price range.</p>
-      <a href="/modules/member-d/review-rating/review_rating.html" target="_blank">test</a>
-      
-      <button class="floating-btn" onclick="openChat()" >Contact Farm</button>
-      
-    </div>
-
-    <!-- POPUP CHAT -->
-    <div id="chat-popup" class="chat-popup" style="display:none;">
-      
-      <div class="phone">
-
-        <!-- ================= CHAT LIST VIEW ================= -->
-        <div id="chat-list-view">
-          <div class="header">
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div class="chat-title">Messages</div>
-              <i class="bi bi-chat-left-fill"></i>
+    <div id="navbar-container"></div>
+ 
+     <div class="space-y-8 flex justify-center mt-24">
+        <div class="how-section w-[1640px] bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl px-9 py-7 text-white ">
+            <div class="flex items-center justify-between mb-2.5">
+                <div class="text-2xl font-bold">
+                    <span class="text-white">Farm</span><span class="text-green-300">ster</span> Chat
+                </div>
+                <a href="homepage.html" class="inline-flex items-center gap-1.5 bg-white/15 border border-white/30 px-4 py-2 rounded-full text-[13px] font-medium text-white no-underline transition-all hover:bg-white/25 hover:-translate-x-0.5">
+                ← Back to Homepage
+                </a>
             </div>
-
-            <!-- SEARCH -->
-            <div class="search-box d-flex align-items-center" id="search-bar">
-              <i class="bi bi-search me-2 text-secondary"></i>
-              <input type="text" placeholder="Search Direct Messages">
+            <h1 class="text-xl font-bold mb-1.5">Chat with sellers directly</h1>
+            <p class="text-[13px] text-white/85 leading-relaxed max-w-[600px]">
+                Buy fresh produce, sell your harvest, or bargain for the best deals —
+                all through direct conversation with farmers and buyers in your area.
+            </p>
+            <div class="flex gap-5 mt-3.5 flex-wrap">
+                <span class="flex items-center gap-1.5 text-xs text-white/90 bg-white/[0.12] px-3 py-1.5 rounded-lg before:content-['✓'] before:font-bold before:text-green-300" >Buy from farmers</span>
+                <span class="flex items-center gap-1.5 text-xs text-white/90 bg-white/[0.12] px-3 py-1.5 rounded-lg before:content-['✓'] before:font-bold before:text-green-300">Sell your harvest</span>
+                <span class="flex items-center gap-1.5 text-xs text-white/90 bg-white/[0.12] px-3 py-1.5 rounded-lg before:content-['✓'] before:font-bold before:text-green-300">Bargain prices</span>
+                <span class="flex items-center gap-1.5 text-xs text-white/90 bg-white/[0.12] px-3 py-1.5 rounded-lg before:content-['✓'] before:font-bold before:text-green-300">Fast delivery coordination</span>
             </div>
-
-          </div>
-          <!-- LOADING -->
-          <div id="loading-spinner-list" class="loading-container" style="display:flex;">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-          </div>
-          
-          <!-- CHAT LIST -->
-          <div id="chat-list"></div>
-
         </div>
-
-        <!-- ================= CHAT VIEW ================= -->
-        <div id="chat-view" style="display:none;">
-
-          <!-- CHAT HEADER -->
-          <div class="header">
-            <div id="chat-header"></div>
-          </div>
-
-          <!-- LOADING -->
-          <div id="loading-spinner-chat" class="loading-container" style="display:flex;">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-          </div>
-      
-          <!-- CHAT BOX -->
-          <div id="chat-box" class="chat-box">
-          </div>
-
-          <!-- INPUT -->
-          <div class="input-container">
-            <input type="text" id="message-input" placeholder="Type a message">
-            <button class="send-btn" onclick="sendMessage()">➤</button>
-          </div>
-
-        </div>
-
-      </div>
     </div>
 
    
 
+
+<!-- Main Container -->
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-6 ">
     
-  </main>
+  <div class="flex w-[1640px] h-[80vh] bg-white rounded-2xl overflow-hidden
+            border border-transparent bg-clip-padding
+            shadow-[0_20px_60px_rgba(16,185,129,0.15)]
+            ring-1 ring-emerald-200/40
+            hover:shadow-[0_25px_80px_rgba(16,185,129,0.25)]
+            transition-all">
+
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <div class="w-[420px] flex flex-col border-r border-gray-200">
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2">
+                    
+                    <div class="nav-logo">Farm<span>ster</span></div>
+                </div>
+                <!-- <button class="p-2 hover:bg-gray-100 rounded-lg transition-smooth" title="Notifications">
+                    <i class="bi bi-bell text-gray-600"></i>
+                </button> -->
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="relative">
+                <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                <input 
+                    type="text" 
+                    placeholder="Search conversations..." 
+                    class="w-full pl-10 pr-4 py-2.5 bg-gray-100 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-green-500 transition-smooth"
+                >
+            </div>
+        </div>
+
+
+        <!-- Conversation Tabs -->
+        <div class="px-4  border-b border-gray-200">
+            <button class="px-4 py-3 text-sm font-semibold text-green-600 border-b-2 border-green-600 hover:text-green-700 transition-smooth">
+                All Messages
+            </button>
+        </div>
+      
+
+        <!-- Conversation List -->
+        <div class="flex-1 overflow-y-auto">
+
+            <!-- Conversation Item 1 -->
+             <div id="chat-list" ></div>
+            <div class="sidebar-item  px-4 py-3 rounded-xl cursor-pointer hover:bg-green-50 soft-shadow transition-all duration-300 hover-lift ">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-green flex items-center justify-center text-white font-bold text-sm">
+                            RS
+                        </div>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Raj Singh</p>
+                            <span class="text-xs text-gray-500">2 min</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Organic tomatoes bulk order</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">Are you still interested in 50kg...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Item 2 -->
+            <div class="sidebar-item px-4 py-3 rounded-xl cursor-pointer hover:bg-green-50 soft-shadow transition-all duration-300 hover-lift">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-emerald flex items-center justify-center text-white font-bold text-sm">
+                            PM
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Priya Mehta</p>
+                            <span class="text-xs text-gray-500">1 hour</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Local market selling tips</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">Check out the farmers market event...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Item 3 -->
+            <div class="sidebar-item px-4 py-4 hover:bg-green-50 cursor-pointer transition-smooth">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-lime flex items-center justify-center text-white font-bold text-sm">
+                            AK
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Aditya Kumar</p>
+                            <span class="text-xs text-gray-500">3 hours</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Irrigation setup consultation</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">I've installed a drip system recently...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Item 4 -->
+            <div class="sidebar-item px-4 py-4 hover:bg-gray-50 cursor-pointer transition-smooth">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-orange flex items-center justify-center text-white font-bold text-sm">
+                            SK
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Suresh Kumar</p>
+                            <span class="text-xs text-gray-500">Yesterday</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Equipment rental inquiry</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">Do you have a harvester available?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Item 5 -->
+            <div class="sidebar-item px-4 py-4 hover:bg-gray-50 cursor-pointer transition-smooth">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-amber flex items-center justify-center text-white font-bold text-sm">
+                            LS
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Lakshmi Sharma</p>
+                            <span class="text-xs text-gray-500">2 days</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Pesticide recommendation</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">My crops have been affected by...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Item 6 -->
+            <div class="sidebar-item px-4 py-4 hover:bg-gray-50 cursor-pointer transition-smooth">
+                <div class="flex items-start gap-3">
+                    <div class="relative mt-1">
+                        <div class="w-12 h-12 rounded-full avatar-sky flex items-center justify-center text-white font-bold text-sm">
+                            RK
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="font-semibold text-gray-900">Rajesh Patel</p>
+                            <span class="text-xs text-gray-500">1 week</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Seed quality discussion</p>
+                        <p class="text-xs text-gray-500 mt-1 truncate">Which variety performs best in...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Profile -->
+        <div class="p-4 border-t border-gray-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full avatar-emerald flex items-center justify-center text-white font-bold text-sm">
+                    JP
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-900">Jatin Patel</p>
+                    <p class="text-xs text-gray-500">Online</p>
+                </div>
+            </div>
+            <button class="p-2 hover:bg-gray-100 rounded-lg transition-smooth">
+                <i class="bi bi-three-dots text-gray-600"></i>
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- ===== MAIN CHAT AREA ===== -->
+
+      <!-- CHAT AREA -->
+    <div id="chatAreaLanding" class="flex-1 flex flex-col" >
+        <!-- Empty state (shown before selecting a chat) -->
+        <div class="flex-1 flex flex-col items-center justify-center text-center px-8" id="emptyState" >
+            <div class="text-6xl mb-4">🌾</div>
+            <h2 class="text-xl font-bold text-gray-700 mb-2">Farmster Chat</h2>
+            <p class="text-sm text-gray-400 max-w-[300px] leading-relaxed">
+                Start chatting with farmers and buyers. Select a conversation from
+                the left to buy, sell, or bargain for fresh produce.
+            </p>
+            <div class="flex gap-3 mt-6">
+                <span
+                class="text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full"
+                >🛒 Buy</span
+                >
+                <span
+                class="text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full"
+                >🌱 Sell</span
+                >
+                <span
+                class="text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full"
+                >💬 Bargain</span
+                >
+            </div>
+        </div>
+    </div>
+
+    <div id="chatAreaActive" class="hidden flex-1 flex-col bg-white" >
+
+        <!-- Chat Header -->
+        <div class="h-20 bg-gradient-to-r from-white to-green-50 glass rounded-2xl border border-emerald-200 px-6 py-4 mt-2 ml-2 mr-2 flex items-center justify-between soft-shadow">
+          <div id="chat-header" ></div>
+          
+        </div>
+
+        <!-- Messages Area -->
+        <div class="flex-1 overflow-y-auto px-8 py-6 space-y-4">
+            
+            <!-- Date Separator -->
+            <div class="flex items-center gap-3 my-6">
+                <div class="flex-1 h-px bg-gray-200"></div>
+                <span class="text-xs text-gray-500 font-semibold uppercase">Today</span>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+            <div id="chat-box" class="chat-box"></div>
+
+            <!-- Message - Received -->
+            <!-- <div class="message-bubble flex items-end gap-3">
+                <div class="relative">
+                    <div class="w-8 h-8 rounded-full avatar-green flex items-center justify-center text-white text-xs font-bold">
+                        RS
+                    </div>
+                </div>
+                <div class="flex flex-col max-w-xs">
+                    <div class="bg-gray-100 text-gray-900 rounded-2xl rounded-bl-none px-4 py-3">
+                        <p class="text-sm">How are you? We need to discuss about the tomato order.</p>
+                    </div>
+                    <span class="text-xs text-gray-500 mt-1 ml-3">10:23 AM</span>
+                </div>
+            </div> -->
+
+            <!-- Message - Sent -->
+            <!-- <div class="message-bubble flex items-end justify-end gap-3">
+                <div class="flex flex-col max-w-xs">
+                    <div class="bg-green-600 text-white rounded-2xl rounded-br-none px-4 py-3">
+                        <p class="text-sm">Hi Raj! Yes, I'm interested in the bulk order.</p>
+                    </div>
+                    <span class="text-xs text-gray-500 mt-1 mr-3">10:25 AM</span>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold">
+                    JP
+                </div>
+            </div> -->
+
+            <!-- Message - Received with info -->
+            <!-- <div class="message-bubble flex items-end gap-3">
+                <div class="relative">
+                    <div class="w-8 h-8 rounded-full avatar-green flex items-center justify-center text-white text-xs font-bold">
+                        RS
+                    </div>
+                </div>
+                <div class="flex flex-col max-w-md gap-2">
+                    <div class="bg-gray-100 text-gray-900 rounded-2xl rounded-bl-none px-4 py-3">
+                        <p class="text-sm font-semibold mb-2">📍 Farm Location & Details</p>
+                        <p class="text-sm mb-2">Location: 12 km from market</p>
+                        <p class="text-sm mb-2">Quantity: 50 kg / week</p>
+                        <p class="text-sm">Price: ₹45/kg</p>
+                    </div>
+                    <span class="text-xs text-gray-500 ml-3">10:28 AM</span>
+                </div>
+            </div> -->
+
+
+            <!-- Typing Indicator -->
+            <div class="message-bubble flex items-end gap-3">
+                <div class="relative">
+                    <div class="w-8 h-8 rounded-full avatar-green flex items-center justify-center text-white text-xs font-bold">
+                        RS
+                    </div>
+                </div>
+                <div class="bg-gray-100 rounded-2xl rounded-bl-none px-4 py-3">
+                    <div class="flex gap-1.5">
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s;"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Message Input Area -->
+        <div class="p-6 border-t border-gray-200 bg-gray-50">
+            <div class="flex items-end gap-3">
+
+                <!-- Input Field -->
+                <div class="flex-1 relative">
+                    <input 
+                        id="message-input"
+                        type="text" 
+                        placeholder="Type your message here..." 
+                        class="chat-input w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm placeholder-gray-400 focus:ring-2 focus:ring-green-500 transition-smooth"
+                    >
+                </div>
+
+                <div class="relative">
+                  <button id="emoji-btn" class="p-2.5 hover:bg-gray-200 rounded-lg">
+                      <i class="bi bi-emoji-smile text-gray-600 text-lg"></i>
+                  </button>
+
+                  <div id="picker-container" class="hidden absolute bottom-14 right-0 z-50">
+                      <emoji-picker></emoji-picker>
+                  </div>
+
+                </div>
+                <!-- Emoji -->
+                <!-- <button id="emoji-btn" class="p-2.5 hover:bg-gray-200 rounded-lg transition-smooth" title="Emoji">
+                    <i class="bi bi-emoji-smile text-gray-600 text-lg"></i>
+                </button> -->
+
+                <!-- Send Button -->
+                <button class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg transition-smooth shadow-md hover:shadow-lg font-semibold" onclick="sendMessage()">
+                    <i class="bi bi-send-fill text-lg"></i>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+  </div>
+</div>
 
 
 <script src="chat-messaging.js"></script>
+<script src="../../../navbar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+  
+const pickerContainer = document.getElementById("picker-container");
+
+document.getElementById("emoji-btn").addEventListener("click", () => {
+    pickerContainer.classList.toggle("hidden");
+});
+
+document
+    .querySelector("emoji-picker")
+    .addEventListener("emoji-click", event => {
+        document.getElementById("message-input").value += event.detail.unicode;
+    });
+
+</script>
+
 </body>
 </html>

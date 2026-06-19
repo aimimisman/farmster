@@ -1,8 +1,8 @@
 // =======================
 // GLOBAL STATE
 // =======================
-const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
-const productUrl ="https://script.google.com/macros/s/AKfycbzuzeEMdC0knR4qw7-E705Varabmi6IChA62OOAyE0feiWchcrr3sknXOnmSc7KmGVjcw/exec";
+const url = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
+const productUrl ="https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 let farms = [];
 let currentPage = 1;
 const itemsPerPage = 12;
@@ -303,7 +303,7 @@ function renderFarms() {
             <i class="fa-solid fa-box"></i> ${farm.productCount || 0} Products
           </p>
 
-          <button onclick="goToProductCatalog('${farm.farmId}', '${farm.name}')">
+          <button onclick="goToProductCatalog('${farm.farmId}', '${farm.name}', '${farm.farmUserId}')">
             View Product
           </button>
         </div>
@@ -579,9 +579,10 @@ function showSuggestions(keyword) {
 // =======================
 // NAVIGATION (UNCHANGED)
 // =======================
-function goToProductCatalog(farmId, farmName) {
+function goToProductCatalog(farmId, farmName, farmUserId) {
   localStorage.setItem("selectedFarm", farmId);
   localStorage.setItem("selectedFarmName", farmName);
+  localStorage.setItem("selectedFarmerId", farmUserId);
   
 
   const BASE_URL = window.location.hostname.includes("github.io")

@@ -69,7 +69,7 @@ document.getElementById("registrationForm")
 
 
 fetch(
-"https://script.google.com/macros/s/AKfycbxGwkquRFThhlRLUI0jhY-sdGj2G0j_Amab2kV9lo908zevKlsaC4lnRX9TC6Xt9btTvQ/exec?action=register",
+"https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec?action=register",
 
 {
 

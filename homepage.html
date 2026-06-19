@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farmster - From Soil to Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="landing_page.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<!-- NAV -->
+<div id="navbar-container"></div>
+<div id="modalContainer"></div>
+
+<section class="how-section" id="how">
+  <main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
+        
+        <div class="space-y-8">
+            
+          <!-- Greeting -->
+            <div class="how-header bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow" style="margin-bottom: 2rem;">
+                <h1 class="section-title font-bold mb-2" style="color: #fdfaf4;">Welcome back, <div id="username"></div>! 👋</h1>
+                <h4 class="section-title mb-4" style="color: #1a3a2a;">Ready to meet your local growers face-to-face today? Fresh harvests are nearby.</h4>
+            </div>
+
+            <div class=" bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow">
+                
+                <div class="grid grid-cols-2 gap-4 bg-white/10 p-3 rounded-xl text-center text-sm">
+                    <div>
+                        <div id="farmer-count" class="block text-xl font-bold">5 Farmers</div>
+                        <div class="text-xs text-emerald-100">Total Farmers</div>
+                    </div>
+                    <div class="border-l border-white/20">
+                        <span id="popup-count" class="block text-xl font-bold">3 Products</span>
+                        <span class="text-xs text-emerald-100">Selling right now</span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Greeting -->
+
+           
+          <!-- How It Works -->
+          <div class="how-section max-w-8xl"  id="how" style="font-family: system-ui, -apple-system, sans-serif; padding: 5rem 1.5rem; margin: 0 auto 1rem; color: #e5e7eb;">
+  
+            <div class="bg-gradient-to-r rounded-2xl p-6 text-white shadow" style="text-align: center; margin-bottom: 4rem;  margin-left: auto; margin-right: auto;">
+              <div class="section-label" style="color: #059669; text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Interactive Guide</div>
+              <h2 class="section-title" style="font-size: 2.25rem; font-weight: 800; color: #111827; line-height: 1.2; margin-bottom: 1rem;">Harvested Today,<br>Purchased Today</h2>
+              <p class="" style="color: #4b5563; font-size: 1rem; line-height: 1.6;">
+                Farmster cuts out the middleman entirely. Here is how our face-to-face platform connects you directly with local growers in your neighborhood.
+              </p>
+            </div>
+            
+            <div class="how-steps" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 5rem;">
+          
+              <div class="how-step">
+                <div class="step-num">01</div>
+                <div class="step-icon-ring">
+                  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </div>
+                <div class="step-title">Browse & Discover</div>
+                <p class="step-desc">Explore hundreds of fresh listings directly from certified Malaysian farms. Filter by region, crop, and harvest date.</p>
+              </div>
+              
+              <div class="how-step">
+                <div class="step-num">02</div>
+                <div class="step-icon-ring">
+                  <svg viewBox="0 0 24 24"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"/><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"/><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"/></svg>
+                </div>
+                <div class="step-title">Find Local Farmers</div>
+                <p class="step-desc">Locate nearby farmers and see exactly where and when they are selling their harvest in your community. Track market locations and setup times easily so you can grab your produce fresh at the source.</p>
+              </div>
+              <div class="how-step">
+                <div class="step-num">03</div>
+                <div class="step-icon-ring">
+                  <svg viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+                </div>
+                <div class="step-title">Meet & Buy Directly</div>
+                <p class="step-desc">Meet face-to-face with community farmers to buy your produce directly from the hands that grew it. Skip retail markups and grocery delays, ensuring fair prices for you and honest earnings for them.</p>
+              </div>
+              <div class="how-step">
+                <div class="step-num">04</div>
+                <div class="step-icon-ring">
+                  <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </div>
+                <div class="step-title">Eat & Reconnect</div>
+                <p class="step-desc">Enjoy honest food knowing exactly where it came from. Rate your experience and build a relationship with your farmer.</p>
+              </div>
+            </div>
+          </div>
+          <!-- End How It Works -->
+
+          <!-- CATEGORIES -->
+          <div class="categories-section" id="categories" style="margin: 0 auto 5rem;">
+            <div class="categories-header">
+              <div>
+                <div class="section-label">Product Categories</div>
+                <h2 class="section-title">Everything fresh, in one place</h2>
+              </div>
+              <a href="#get-started" class="btn-primary" style="flex-shrink:0;">Browse All Products</a>
+            </div>
+            <div class="cat-grid">
+              <div class="cat-card">
+                <img class="cat-img" src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=400&q=80" alt="Vegetables"/>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                  <div class="cat-name">Vegetables</div>
+                  <div class="cat-count">320+ listings</div>
+                </div>
+              </div>
+              <div class="cat-card">
+                <img class="cat-img" src="https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=400&q=80" alt="Fruits"/>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                  <div class="cat-name">Tropical Fruits</div>
+                  <div class="cat-count">180+ listings</div>
+                </div>
+              </div>
+              <div class="cat-card">
+                <img class="cat-img" src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&q=80" alt="Herbs"/>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                  <div class="cat-name">Herbs & Spices</div>
+                  <div class="cat-count">95+ listings</div>
+                </div>
+              </div>
+              <div class="cat-card">
+                <img class="cat-img" src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&q=80" alt="Rice and Grains"/>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                  <div class="cat-name">Rice & Grains</div>
+                  <div class="cat-count">60+ listings</div>
+                </div>
+              </div>
+              <div class="cat-card">
+                <img class="cat-img" src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=80" alt="Dairy and Eggs"/>
+                <div class="cat-overlay"></div>
+                <div class="cat-info">
+                  <div class="cat-name">Dairy & Eggs</div>
+                  <div class="cat-count">45+ listings</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="crowdfunding-section bg-white border border-gray-200 rounded-3xl p-8 md:p-12 shadow-sm my-16" id="crowdfunding" style="margin-top: 5rem; font-family: system-ui, -apple-system, sans-serif;">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 font-bold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider">
+                  <i class="fa-solid fa-seedling"></i> Seed Funding Ecosystem
+                </div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+                  Back Next Season's Crops.<br>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Fund Local Farmers Upfront.</span>
+                </h2>
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed">
+                  Empower smallholder Malaysian farmers by crowdfunding their seed cycles, protective netting infrastructure, or organic inputs before planting day. By pooling resources as a community, you eliminate market uncertainties for growers and secure first-priority harvest allocations at locked-in prices.
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div class="flex items-start gap-3">
+                    <div class="bg-emerald-50 text-emerald-600 rounded-lg p-2 mt-0.5"><i class="fa-solid fa-shield-halved text-sm"></i></div>
+                    <div>
+                      <h4 class="font-bold text-gray-900 text-sm">Guaranteed Livelihoods</h4>
+                      <p class="text-gray-500 text-xs">Protects local smallholders from predatory wholesale price drops.</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <div class="bg-emerald-50 text-emerald-600 rounded-lg p-2 mt-0.5"><i class="fa-solid fa-basket-shopping text-sm"></i></div>
+                    <div>
+                      <h4 class="font-bold text-gray-900 text-sm">Priority Harvest Drops</h4>
+                      <p class="text-gray-500 text-xs">Get high-tier seasonal batches reserved directly under your name.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-4 flex flex-wrap gap-4">
+                  <a href="crowdfunding_discover.html" class="inline-block bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-sm transition-all transform hover:-translate-y-0.5">
+                    Explore Active Campaigns
+                  </a>
+                  <a href="#farmer-apply" class="inline-block border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold text-sm px-6 py-3 rounded-xl transition-all">
+                    Apply as a Grower
+                  </a>
+                </div>
+              </div>
+
+              <div class="lg:col-span-5">
+                <a href="crowdfunding_discover.html" class="group block bg-gray-50 rounded-2xl p-6 border border-gray-100 transition-all duration-300 hover:bg-emerald-50/40 hover:border-emerald-200">
+                  <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 p-6 space-y-6 transition-all duration-300 group-hover:shadow-md">
+                    
+                    <div class="flex items-center justify-between">
+                      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-xl shadow-sm">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                      </div>
+                      <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full group-hover:bg-emerald-100 transition-colors">
+                        Go to Platform <i class="fa-solid fa-arrow-right ml-1"></i>
+                      </span>
+                    </div>
+
+                    <div class="space-y-2">
+                      <h3 class="font-bold text-gray-900 text-lg group-hover:text-emerald-700 transition-colors">
+                        Crowdfunding Dashboard
+                      </h3>
+                      <p class="text-sm text-gray-600 leading-relaxed">
+                        Click here to explore our live crowdfunding pipeline page. View micro-campaign budget requests, read verified agricultural track records, and support active agricultural initiatives spanning across all of Malaysia.
+                      </p>
+                    </div>
+
+                    <div class="border-t border-gray-100 pt-4 flex items-center justify-between text-xs text-gray-500">
+                      <span><i class="fa-solid fa-users mr-1"></i> 12 Active Campaigns</span>
+                      <span>Updated 10m ago</span>
+                    </div>
+                    
+                  </div>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+  </main>
+
+</section>
+
+
+
+
+
+
+
+<!-- CTA -->
+<section class="cta-section" id="get-started">
+  <div class="cta-inner">
+    <div class="section-label" style="text-align:center;">Join the Movement</div>
+    <h2 class="cta-big">Ready to eat <em>honestly</em>?</h2>
+    <p class="cta-sub">Join thousands of Malaysians who've made the switch to fresh, local, and traceable produce.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Farm<span>ster</span></div>
+      <p class="footer-tagline">Reconnecting Malaysians with the land and the people who cultivate it.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="#">For Buyers</a></li>
+        <li><a href="#">For Farmers</a></li>
+        <li><a href="#">How It Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links">
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">2026 Farmster Marketplace Platform.Prepared for the Module Assignment Project. Built with care for Malaysian farmers.</div>
+    <div class="footer-copy">Eat local. Live well.</div>
+  </div>
+</footer>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="modules/member-d/notification/notification.js"></script>
+<script src="navbar.js"></script>
+
+<script>
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Intersection observer for reveal animations
+  const revealEls = document.querySelectorAll('.bento-card, .how-step, .cat-card, .test-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealEls.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = `opacity 0.55s ${i * 0.06}s ease, transform 0.55s ${i * 0.06}s ease`;
+    observer.observe(el);
+  });
+
+  //user name display
+  const username = storageUserId ? storageUserId.farmsterName : "Guest";
+  document.getElementById("username").textContent = username;
+ 
+
+  
+</script>
+
+</body>
+</html>
