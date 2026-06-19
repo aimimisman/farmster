@@ -7,7 +7,7 @@ const productId = params.get("productId");
 const farmId = params.get("farmId");
 
 const DEFAULT_PROFILE_IMAGE =
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop";
+  "https://media.istockphoto.com/id/2149922267/vector/user-icon.jpg?s=612x612&w=0&k=20&c=i6jYPfB1pWjK8pll6YRxAK9fgBmf65-w5wbKH9R1dyQ=";
 
 function normalizeObjectKeys(obj) {
   const normalized = {};

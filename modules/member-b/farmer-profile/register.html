@@ -112,13 +112,17 @@ a {
         <input type="text" id="lastname" placeholder="Bin Abu Hasan" required>
 
         <label>Contact Number</label>
-        <input type="text" id="contact" placeholder="Example: 08123456789" required>
+        <input type="text" id="contact" placeholder="Example: 08123456789*"   pattern="[0-9]{10,11}" required>
 
         <label>Email</label>
         <input type="email" id="email" placeholder="Example: husin.lempoyang@gmail.com" required>
 
+
+     <!-- Change password to actual 8 characters with validation -->
         <label>Password</label>
-        <input type="password" id="password" placeholder="Must be at least 8 characters" minlength="8" required>
+        <input type="password" id="password" placeholder="Must be 8 characters" minlength="8" maxlength="8"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8}$"required>
+        <small id="passwordStrength"></small>
 
         <button type="submit">SIGN UP</button>
 
@@ -183,7 +187,63 @@ document.getElementById(
 BASE_URL +
 
 "/index.html";
+</script>
 
+
+<script>
+
+const passwordInput =
+document.getElementById("password");
+
+const strengthText =
+document.getElementById("passwordStrength");
+
+passwordInput.addEventListener("input", function() {
+
+    const password = this.value;
+
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    strengthText.className = "";
+
+    if (password.length === 0) {
+
+        strengthText.textContent = "";
+
+    }
+    else if (score <= 2) {
+
+        strengthText.textContent = "Weak Password ❌";
+        strengthText.classList.add("weak");
+
+    }
+    else if (score <= 4) {
+
+        strengthText.textContent = "Medium Password ⚠️";
+        strengthText.classList.add("medium");
+
+    }
+    else {
+
+        strengthText.textContent = "Strong Password ✅";
+        strengthText.classList.add("strong");
+
+    }
+
+});
+
+</script>
+
+<script>
+document.getElementById("contact").addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9]/g, "");
+});
 </script>
 
 </body>
