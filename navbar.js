@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  fetch("/nav.html")
+  fetch("https://aimimisman.github.io/farmster/nav.html")
     .then(res => res.text())
     .then(html => {
 
