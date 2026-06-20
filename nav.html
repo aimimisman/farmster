@@ -1,0 +1,131 @@
+
+<link rel="stylesheet" href="/modules/member-d/notification/notification.css">
+
+<style>
+
+    /* Ellyana Update - Notification Icon in Navbar */
+      .notification-icon {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      
+
+      #notification-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        background: #1f4d2c;
+        color: #f5fbf2;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
+      /* End Notification Icon Styles */
+
+
+    .farmster-nav-dropdown {
+    position: relative;
+}
+
+    .farmster-nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    min-width: 200px;
+    padding: 0.5rem 0;
+
+    background: #f8f4ec;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+    list-style: none;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+
+    transition: all 0.25s ease;
+}
+
+.farmster-nav-dropdown-menu li {
+    width: 100%;
+}
+
+.farmster-nav-dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #333;
+    text-decoration: none;
+}
+
+.farmster-nav-dropdown-menu a:hover {
+    background: #f5f5f5;
+}
+
+.farmster-nav-dropdown:hover .farmster-nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+</style>
+
+<nav id="navbar">
+  <div class="nav-logo">Farm<span>ster</span></div>
+  <ul class="nav-links">
+    <li><a href="https://aimimisman.github.io/farmster/homepage.html">Home</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/memberlist.html" target="_blank">Community</a></li>
+    <li class="farmster-nav-dropdown">
+        <a href="#">Marketplace</a>
+        <ul class="farmster-nav-dropdown-menu">
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-c/available-products-detail/available-products-detail.html" target="_blank">Available Products</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/marketplace/marketplace.html" target="_blank">Featured Producers</a></li>
+        </ul>
+    </li>
+    <li class="farmster-nav-dropdown">
+        <a href="#">Market Price</a>
+        <ul class="farmster-nav-dropdown-menu">
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/market-price/market-price.html" target="_blank">Market Price Dashboard</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/market-price/price-comparison.html" target="_blank">Price Comparison</a></li>
+        </ul>
+    </li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-e/farm-adoption-crowdfunding/farm-adoption-crowdfunding.html" target="_blank">Crowdfunding</a></li>
+     <li><a href="https://aimimisman.github.io/farmster/modules/member-d/chat-messaging/chat-messaging.html" target="_blank">Chat-Messaging</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/update.html" target="_blank">Profile</a></li>
+    
+  </ul>
+  <div class="nav-actions">
+     <a >
+        <div class="notification-icon">
+            <i class="bi bi-bell-fill" id="notificationIcon"></i>
+            <span id="notification-count"></span>
+          </div>
+     </a>
+    <a onclick="logoutUser()" class="nav-cta">Logout</a>
+    
+  </div>
+</nav>
+
+<div id="modalContainer"></div>
+
+<script src="https://aimimisman.github.io/farmster/modules/member-d/notification/notification.js"></script>
+<script>
+
+      // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+</script>
+
+
+

@@ -3,7 +3,7 @@ console.log("PRICE COMPARISON JS LOADED");
 // =======================
 // CONFIG
 // =======================
-const url = "https://script.google.com/macros/s/AKfycbythF64y6uKVZxgPq7YvkmQph9Z2ty2_2doXm3DoJzHMNH49bd6ieO2XmzHHvu6A8s-1A/exec";
+const url = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
 let marketChart = null;
 let allProducts = [];
@@ -851,7 +851,7 @@ function goHome() {
         ? "https://aimimisman.github.io/farmster"
         : "";
 
-    window.location.href = BASE_URL + "/index.html";
+    window.location.href = BASE_URL + "/homepage.html";
 }
 
 function goMarketplace() {

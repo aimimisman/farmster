@@ -4,55 +4,156 @@
     <title>Marketplace Module</title>
     <link rel="stylesheet" href="marketplace.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../../landing_page.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+          /* Hero with background image */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(13, 123, 78, 0.7), rgba(16, 169, 91, 0.7)), 
+                        url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1600&h=600&fit=crop') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Search bar enhancement */
+        .search-input {
+            background: white;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-input:focus {
+            border-color: #10a95b;
+            box-shadow: 0 12px 48px rgba(16, 185, 129, 0.3);
+            outline: none;
+        }
+
+    </style>
 </head>
 
-<body>
+<body class="bg-gray-100 p-6">
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">Marketplace</div>
+    <div id="navbar-container"></div>
 
-        <div class="menu">
-            <div onclick="goHome()">Home</div>
-            <!-- <div>Producers</div> -->
-            <div onclick="goMarketPrice()">Market Price</div>
+    <section class="hero-section">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white">
+
+
             
         </div>
+        
+        <div class="max-w-6xl mx-auto w-full px-6 relative justify-content-between">
+            <div class="text-center mb-12">
+                <h1 class="serif-display text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                    Fresh from Farm to Table
+                </h1>
+                <p class="text-xl text-green-50 drop-shadow-md max-w-2xl mx-auto">
+                    Browse organic and fresh products from verified local farmers
+                </p>
+            </div>
 
-        <div class="user" onclick="goLogin()">
-    <i class="fa-solid fa-right-to-bracket"></i>
-    <span>Login</span>
-</div>
-    </div>
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto">
+                <div class="relative">
+                    <i class="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                    <input 
+                        type="text" 
+                         id="searchInput"
+                        placeholder="Search by farmer or producers... (e.g., 'Ladang Kita')"
+                        class="search-input w-full pl-12 pr-12 py-4 rounded-2xl text-gray-900 placeholder-gray-500 text-lg font-medium"
+                    >
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <div id="suggestionBox" class="suggestion-box w-full pl-12 pr-12 py-4 rounded-2xl text-gray-900 placeholder-gray-500 text-lg font-medium"></div>
+                </div>
+            </div>
+
+            <!-- Quick Filters Below Search -->
+            <div class="flex flex-wrap gap-3 justify-center mt-6">
+                <button class="px-4 py-2 bg-white bg-opacity-90 text-gray-700 rounded-full font-semibold hover:bg-white transition-all">
+                    <i class="bi bi-lightning-charge"></i> Hot Deals
+                </button>
+                <button class="px-4 py-2 bg-white bg-opacity-90 text-gray-700 rounded-full font-semibold hover:bg-white transition-all">
+                    <i class="bi bi-leaf"></i> Organic Only
+                </button>
+                <button class="px-4 py-2 bg-white bg-opacity-90 text-gray-700 rounded-full font-semibold hover:bg-white transition-all">
+                    <i class="bi bi-tree"></i> Fresh from Soil
+                </button>
+                <button class="px-4 py-2 bg-white bg-opacity-90 text-gray-700 rounded-full font-semibold hover:bg-white transition-all">
+                    <i class="bi bi-star"></i> Top Rated
+                </button>
+            </div>
+
+            <!-- <div class="banner-wrapper mt-20">
+                <div class="banner-slide active">
+                    <h1 class="text-2xl md:text-3xl font-semibold">
+                        🌾 Find Fresh Farms Here
+                    </h1>
+                </div>
+
+                <div class="banner-slide">
+                    <h1 class="text-2xl md:text-3xl font-semibold">
+                        🚜 Direct from Local Farmers
+                    </h1>
+                </div>
+
+                <div class="banner-slide">
+                    <h1 class="text-2xl md:text-3xl font-semibold">
+                        🍅 Fresh Harvest Daily
+                    </h1>
+                </div>
+            </div> -->
+
+
+         
+
+            <!-- <div class="banner-content">
+                <div class="search-box">
+                    <div class="input-wrapper">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="What are you looking for?">
+                        <div id="suggestionBox" class="suggestion-box"></div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+           <!-- <div class=" max-w-2xl mx-auto">
+                 <div class="banner-slide active mb-4">
+                    <h1 class="md:text-2xl font-semibold">🌾 Find Fresh Farms Here</h1>
+                </div>
+
+                <div class="banner-slide mb-4">
+                    <h1 class="md:text-2xl font-semibold">🚜 Direct from Local Farmers</h1>
+                </div>
+
+                <div class="banner-slide mb-4">
+                    <h1 class="md:text-2xl font-semibold">🍅 Fresh Harvest Daily</h1>
+                </div>
+                
+             </div> -->
+    </section>
+
+
+
+
+    
+ 
 
     <!-- BANNER -->
-   <div class="header-banner">
+   <!-- <div class="header-banner">
 
-    <div class="banner-slide active">
-        <h1>🌾 Find Fresh Farms Here</h1>
-    </div>
-
-    <div class="banner-slide">
-        <h1>🚜 Direct from Local Farmers</h1>
-    </div>
-
-    <div class="banner-slide">
-        <h1>🍅 Fresh Harvest Daily</h1>
-    </div>
-
-    <div class="banner-content">
-        <div class="search-box">
-            <div class="input-wrapper">
-                <i class="fa fa-search"></i>
-                <input type="text" id="searchInput" placeholder="What are you looking for?">
-                <div id="suggestionBox" class="suggestion-box"></div>
-            </div>
-        </div>
-    </div>
-
-</div>
+       
+    </div> -->
 
 
     <!-- CONTENT -->
@@ -132,5 +233,8 @@
     </footer>
 
     <script src="marketplace.js?v=2"></script>
+    <script src="/modules/member-d/notification/notification.js"></script>
+    <script src="../../../navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

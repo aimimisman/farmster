@@ -1,978 +1,394 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="modules/member-d/notification/notification.css">
-    <title>Farm Marketplace Platform</title>
-
-    <style>
-      /*
-      Replace the link placeholders manually later.
-      Example:
-      href="#PUT-DAYAH-LINK-HERE"
-      Change to:
-      href="https://your-module-link.com"
-    */
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        background-color: #f7faf5;
-        color: #203528;
-        line-height: 1.6;
-      }
-
-      header {
-        background:
-          linear-gradient(rgba(20, 75, 38, 0.82), rgba(20, 75, 38, 0.82)),
-          url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80");
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 90px 8% 70px;
-      }
-
-      .hero-content {
-        max-width: 900px;
-      }
-
-      .tagline {
-        display: inline-block;
-        background-color: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        padding: 8px 14px;
-        border-radius: 999px;
-        font-size: 14px;
-        margin-bottom: 20px;
-      }
-
-      header h1 {
-        font-size: 48px;
-        line-height: 1.1;
-        margin-bottom: 18px;
-      }
-
-      header p {
-        font-size: 18px;
-        max-width: 760px;
-        margin-bottom: 28px;
-        color: #eef8ec;
-      }
-
-      .hero-buttons {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 12px 20px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.25s ease;
-      }
-
-      .btn-primary {
-        background-color: white;
-        color: #1f4d2c;
-      }
-
-      .btn-primary:hover {
-        background-color: #e8f5df;
-      }
-
-      .btn-secondary {
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-      }
-
-      .btn-secondary:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-      }
-
-      nav {
-        background-color: white;
-        padding: 14px 8%;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .logo {
-        font-weight: bold;
-        color: #1f4d2c;
-      }
-
-      .nav-links a {
-        color: #203528;
-        text-decoration: none;
-        margin-left: 18px;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      .nav-links a:hover {
-        color: #3f8c46;
-      }
-
-      section {
-        padding: 60px 8%;
-      }
-
-      .section-header {
-        max-width: 760px;
-        margin-bottom: 30px;
-      }
-
-      .section-header.center {
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .section-label {
-        color: #4f8f46;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 13px;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-      }
-
-      h2 {
-        color: #1f4d2c;
-        font-size: 34px;
-        line-height: 1.2;
-        margin-bottom: 12px;
-      }
-
-      .section-header p {
-        color: #58705f;
-      }
-
-      .about-box {
-        background-color: white;
-        border-radius: 24px;
-        padding: 34px;
-        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.07);
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 30px;
-        align-items: center;
-      }
-
-      .about-box p {
-        margin-bottom: 15px;
-        color: #435a49;
-      }
-
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-
-      .stat-box {
-        background-color: #f0f8ed;
-        padding: 20px;
-        border-radius: 18px;
-        text-align: center;
-      }
-
-      .stat-box h3 {
-        font-size: 30px;
-        color: #1f4d2c;
-      }
-
-      .stat-box p {
-        margin: 0;
-        font-size: 14px;
-        color: #58705f;
-      }
-
-      .member-links {
-        background-color: #eef7ea;
-      }
-
-      .member-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 18px;
-      }
-
-      .member-card {
-        background-color: white;
-        border-radius: 20px;
-        padding: 22px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        border: 1px solid #e2eddf;
-      }
-
-      .member-badge {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background-color: #1f4d2c;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        margin-bottom: 14px;
-      }
-
-      .member-card h3 {
-        color: #1f4d2c;
-        margin-bottom: 8px;
-        font-size: 20px;
-      }
-
-      .member-card p {
-        color: #58705f;
-        font-size: 14px;
-        min-height: 72px;
-      }
-
-      .module-link {
-        display: inline-block;
-        width: 100%;
-        text-align: center;
-        margin-top: 16px;
-        padding: 11px 14px;
-        background-color: #1f4d2c;
-        color: white;
-        text-decoration: none;
-        border-radius: 12px;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      .module-link:hover {
-        background-color: #347842;
-      }
-
-      .modules-layout {
-        display: grid;
-        grid-template-columns: 280px 1fr;
-        gap: 24px;
-        align-items: start;
-      }
-
-      .module-sidebar {
-        background-color: white;
-        border-radius: 22px;
-        padding: 22px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        position: sticky;
-        top: 85px;
-      }
-
-      .module-sidebar h3 {
-        color: #1f4d2c;
-        margin-bottom: 10px;
-      }
-
-      .module-sidebar p {
-        color: #58705f;
-        font-size: 14px;
-        margin-bottom: 14px;
-      }
-
-      .module-list {
-        background-color: white;
-        border-radius: 22px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        overflow: hidden;
-      }
-
-      .module-row {
-        display: grid;
-        grid-template-columns: 170px 1fr;
-        gap: 20px;
-        padding: 22px;
-        border-bottom: 1px solid #edf2eb;
-      }
-
-      .module-row:last-child {
-        border-bottom: none;
-      }
-
-      .module-owner {
-        font-weight: bold;
-        color: #1f4d2c;
-      }
-
-      .module-owner span {
-        display: block;
-        font-size: 13px;
-        color: #6a7d70;
-        font-weight: normal;
-        margin-top: 4px;
-      }
-
-      .module-items {
-        display: grid;
-        gap: 14px;
-      }
-
-      .module-item h4 {
-        color: #203528;
-        margin-bottom: 4px;
-        font-size: 17px;
-      }
-
-      .module-item p {
-        color: #58705f;
-        font-size: 14px;
-      }
-
-      .features {
-        background-color: #ffffff;
-      }
-
-      .feature-strip {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-        gap: 16px;
-      }
-
-      .feature-item {
-        background-color: #f7faf5;
-        border: 1px solid #e1ecde;
-        padding: 20px;
-        border-radius: 18px;
-      }
-
-      .feature-item h3 {
-        color: #1f4d2c;
-        margin-bottom: 8px;
-        font-size: 18px;
-      }
-
-      .feature-item p {
-        color: #58705f;
-        font-size: 14px;
-      }
-
-      .table-wrap {
-        overflow-x: auto;
-        background-color: white;
-        border-radius: 20px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 760px;
-      }
-
-      th,
-      td {
-        padding: 16px;
-        border-bottom: 1px solid #edf2eb;
-        text-align: left;
-        vertical-align: top;
-      }
-
-      th {
-        background-color: #1f4d2c;
-        color: white;
-      }
-
-      tr:hover {
-        background-color: #f5fbf2;
-      }
-
-      footer {
-        background-color: #1f4d2c;
-        color: white;
-        text-align: center;
-        padding: 28px 8%;
-        margin-top: 30px;
-      }
-
-      /* Ellyana Update - Notification Icon in Navbar */
-      .notification-icon {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-      }
-
-      
-
-      #notification-count {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        width: 18px;
-        height: 18px;
-        background: #1f4d2c;
-        color: #f5fbf2;
-        border-radius: 50%;
-        font-size: 11px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-      }
-      /* End Notification Icon Styles */
-
-
-      @media (max-width: 850px) {
-        header h1 {
-          font-size: 36px;
-        }
-
-        nav {
-          display: block;
-        }
-
-        .nav-links {
-          margin-top: 10px;
-        }
-
-        .nav-links a {
-          display: inline-block;
-          margin: 6px 12px 6px 0;
-        }
-
-        .about-box,
-        .modules-layout {
-          grid-template-columns: 1fr;
-        }
-
-        .module-sidebar {
-          position: static;
-        }
-
-        .module-row {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 520px) {
-        section {
-          padding: 45px 6%;
-        }
-
-        header {
-          padding: 70px 6% 55px;
-        }
-
-        header h1 {
-          font-size: 32px;
-        }
-
-        h2 {
-          font-size: 28px;
-        }
-
-        .stats {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <div class="hero-content">
-        <span class="tagline">Farm Marketplace Project</span>
-        <h1>Connecting Farmers, Products, and Consumers in One Platform</h1>
-        <p>
-          A digital farm marketplace that helps users browse farm products,
-          compare prices, communicate with producers, make payments, and support
-          farms through adoption or crowdfunding.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#member-links" class="btn btn-primary">Open Team Modules</a>
-          <a href="#modules" class="btn btn-secondary"
-            >View Project Breakdown</a
-          >
-        </div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farmster - From Soil to Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="landing_page.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Farm<span>ster</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#categories">Products</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="/modules/member-b/farmer-profile/login.html" target="_blank" class="nav-register">Login</a>
+    <a href="/modules/member-b/farmer-profile/register.html" target="_blank" class="nav-cta">Register Now</a>
+    
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Now Live - Malaysia's Farm Marketplace
+    </div>
+    <h1 class="hero-title">
+      Fresh from the<br>
+      farm, <em>straight</em><br>
+      <span class="line-accent">to your door</span>
+    </h1>
+    <p class="hero-desc">
+      Farmster bridges the gap between local Malaysian farmers and consumers who care about fresh, sustainably grown produce. No middlemen. Just honest food.
+    </p>
+    <div class="hero-actions">
+      <a href="#get-started" class="btn-primary">Explore Now</a>
+      <a href="#how" class="btn-ghost">
+        <span class="btn-ghost-icon">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </span>
+        See how it works
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">2,400+</div>
+        <div class="hero-stat-label">Active Farmers</div>
       </div>
-    </header>
-
-    <nav>
-      <div class="logo">Farm Marketplace</div>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#member-links">Links</a>
-        <a href="#modules">Modules</a>
-        <a href="#features">Features</a>
-        <a href="#team">Team</a>
-        <a >
-          <div class="notification-icon">
-            <i class="bi bi-bell-fill" id="notificationIcon"></i>
-            <span id="notification-count"></span>
-          </div>
-        </a>
+      <div>
+        <div class="hero-stat-num">18,000+</div>
+        <div class="hero-stat-label">Happy Buyers</div>
       </div>
-    </nav>
-
-    <!-- Modal Container -->
-    <div id="modalContainer"></div>
-
-
-    <section id="about">
-      <div class="section-header">
-        <p class="section-label">Project Overview</p>
-        <h2>What is this project about?</h2>
-        <p>
-          This platform supports local farmers and makes it easier for consumers
-          to discover farm products online.
-        </p>
+      <div>
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Satisfaction Rate</div>
       </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div class="hero-img-overlay"></div>
+    </div>
+    
+  </div>
+</section>
 
-      <div class="about-box">
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Organic Produce</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Farm Fresh Delivery</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Support Local Farmers</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Zero Middlemen</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Trusted by 18k Buyers</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Sustainable Agriculture</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Free Nationwide Shipping</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Seasonal Harvests</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Organic Produce</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Farm Fresh Delivery</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Support Local Farmers</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Zero Middlemen</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Trusted by 18k Buyers</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Sustainable Agriculture</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Free Nationwide Shipping</span>
+    <span class="marquee-sep">&#x2022;</span>
+    <span class="marquee-item">Seasonal Harvests</span>
+    <span class="marquee-sep">&#x2022;</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-header ">
+    <div>
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Harvested today,<br>delivered tomorrow</h2>
+    </div>
+    <p class="how-desc">
+      We've built a seamless system that respects the farmer's cycle and the buyer's time. Simple, transparent, and deeply human.
+    </p>
+  </div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="step-num">01</div>
+      <div class="step-icon-ring">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <div class="step-title">Browse & Discover</div>
+      <p class="step-desc">Explore hundreds of fresh listings directly from certified Malaysian farms. Filter by region, crop, and harvest date.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">02</div>
+      <div class="step-icon-ring">
+        <svg viewBox="0 0 24 24"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"/><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"/><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"/></svg>
+      </div>
+      <div class="step-title">Find Local Farmers</div>
+      <p class="step-desc">Locate nearby farmers and see exactly where and when they are selling their harvest in your community. Track market locations and setup times easily so you can grab your produce fresh at the source.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">03</div>
+      <div class="step-icon-ring">
+        <svg viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+      </div>
+      <div class="step-title">Meet & Buy Directly</div>
+      <p class="step-desc">Meet face-to-face with community farmers to buy your produce directly from the hands that grew it. Skip retail markups and grocery delays, ensuring fair prices for you and honest earnings for them.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">04</div>
+      <div class="step-icon-ring">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
+      <div class="step-title">Eat & Reconnect</div>
+      <p class="step-desc">Enjoy honest food knowing exactly where it came from. Rate your experience and build a relationship with your farmer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-header">
+    <div class="section-label">Platform Features</div>
+    <h2 class="section-title">Everything the farm-to-table<br>journey needs</h2>
+  </div>
+  <div class="bento-grid">
+    <div class="bento-card bc-1">
+      <div class="bento-label">Core Feature</div>
+      <div class="bento-title">Real-time farm inventory with live harvest updates</div>
+      <div class="bento-big-num">Live</div>
+      <p class="bento-desc">Farmers update their stock the moment harvests come in. Buyers see exactly what's available, right now.</p>
+      <div class="bento-pill">Available 24/7</div>
+    </div>
+    <div class="bento-card bc-2">
+      <div class="bento-label">Pricing</div>
+      <div class="bento-title">Zero Hidden Fees</div>
+      <p class="bento-desc">What you see is what you pay. Transparent pricing agreed directly between farmer and buyer.</p>
+      <div class="bento-pill">Fair trade certified</div>
+    </div>
+    <div class="bento-card bc-3">
+      <div class="bento-label">Coverage</div>
+      <div class="bento-title">All 13 States</div>
+      <p class="bento-desc">Farm partners across Peninsular Malaysia, Sabah, and Sarawak.</p>
+    </div>
+    <div class="bento-card bc-4">
+      <div class="bento-label">Safety First</div>
+      <div class="bento-title">Verified & Certified Farms Only</div>
+      <p class="bento-desc">Every farm on Farmster is manually verified for safety standards and sustainable practices.</p>
+      <div class="bento-pill">100% Verified</div>
+    </div>
+    <div class="bento-card bc-5">
+      <div class="bento-label">Freshness</div>
+      <div class="bento-title">Harvest-to-Door in 24h</div>
+      <p class="bento-desc">Our logistics network guarantees next-day delivery for most regions.</p>
+    </div>
+    <div class="bento-card bc-6">
+      <div class="bento-label">Impact</div>
+      <div class="bento-title">Supporting Rural Communities</div>
+      <p class="bento-desc">Every purchase directly funds Malaysian farming families and builds sustainable livelihoods.</p>
+      <div class="bento-pill">2,400+ farmers supported</div>
+    </div>
+    <div class="bento-card bc-7">
+      <div class="bento-label">Smart Tools</div>
+      <div class="bento-title">Farmer Dashboard</div>
+      <p class="bento-desc">Farmers manage orders, track payments, and view analytics from any device.</p>
+    </div>
+    <div class="bento-card bc-8">
+      <div class="bento-label">Community</div>
+      <div class="bento-title">Seasonal Recipe Hub</div>
+      <p class="bento-desc">Discover recipes crafted around what's in season at farms near you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="categories-header">
+    <div>
+      <div class="section-label">Product Categories</div>
+      <h2 class="section-title">Everything fresh, in one place</h2>
+    </div>
+    <a href="#get-started" class="btn-primary" style="flex-shrink:0;">Browse All Products</a>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=400&q=80" alt="Vegetables"/>
+      <div class="cat-overlay"></div>
+      <div class="cat-info">
+        <div class="cat-name">Vegetables</div>
+        <div class="cat-count">320+ listings</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1519996529931-28324d5a630e?w=400&q=80" alt="Fruits"/>
+      <div class="cat-overlay"></div>
+      <div class="cat-info">
+        <div class="cat-name">Tropical Fruits</div>
+        <div class="cat-count">180+ listings</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&q=80" alt="Herbs"/>
+      <div class="cat-overlay"></div>
+      <div class="cat-info">
+        <div class="cat-name">Herbs & Spices</div>
+        <div class="cat-count">95+ listings</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&q=80" alt="Rice and Grains"/>
+      <div class="cat-overlay"></div>
+      <div class="cat-info">
+        <div class="cat-name">Rice & Grains</div>
+        <div class="cat-count">60+ listings</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=80" alt="Dairy and Eggs"/>
+      <div class="cat-overlay"></div>
+      <div class="cat-info">
+        <div class="cat-name">Dairy & Eggs</div>
+        <div class="cat-count">45+ listings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="test-header">
+    <div class="section-label">Real Stories</div>
+    <h2 class="section-title">Voices from the field<br>and the kitchen</h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+      </div>
+      <p class="test-quote">"Since joining Farmster, I've doubled my income. I no longer have to negotiate with middlemen who undervalue my harvest. My customers know my name."</p>
+      <div class="test-author">
+        <div class="test-avatar">R</div>
         <div>
-          <p>
-            The Farm Marketplace Platform allows users to view available farm
-            products, check product information, compare market prices, and
-            contact producers directly.
-          </p>
-          <p>
-            It also supports trust and transparency by showing farmer profiles,
-            farm locations, product labels, and certifications such as Organic
-            or Pesticide-Free.
-          </p>
-          <p>
-            To make the project easier to manage, the system is divided into
-            module groups. Each group is assigned to one team member, and each
-            member can place one combined link for all their modules.
-          </p>
-        </div>
-
-        <div class="stats">
-          <div class="stat-box">
-            <h3>5</h3>
-            <p>Team Members</p>
-          </div>
-          <div class="stat-box">
-            <h3>13</h3>
-            <p>Total Modules</p>
-          </div>
-          <div class="stat-box">
-            <h3>6</h3>
-            <p>Main Features</p>
-          </div>
-          <div class="stat-box">
-            <h3>1</h3>
-            <p>Complete Platform</p>
-          </div>
+          <div class="test-name">Razali bin Hamid</div>
+          <div class="test-role">Paddy Farmer, Kedah</div>
         </div>
       </div>
-    </section>
-
-    <section id="member-links" class="member-links">
-      <div class="section-header center">
-        <p class="section-label">Quick Access</p>
-        <h2>Team Module Links</h2>
-        <p>
-          Each member can place one link for all modules they are responsible
-          for.
-        </p>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
       </div>
-
-      <div class="member-grid">
-        <div class="member-card">
-          <div class="member-badge">A</div>
-          <h3>Dayah</h3>
-          <p>Marketplace, Product Catalog, and Market Price modules.</p>
-          <a
-            class="module-link"
-            href="https://aimimisman.github.io/farmster/modules/member-a/marketplace/marketplace.html"
-            target="_blank"
-            >Open Dayah's Modules</a
-          >
-        </div>
-        <div class="member-card">
-          <div class="member-badge">B</div>
-          <h3>Saba</h3>
-          <p>
-            Farmer Profile, Location, and Certification / Product Label modules.
-          </p>
-          <a class="module-link" 
-          href="https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/login.html" 
-          target="_blank"
-            >Open Saba's Modules</a
-          >
-        </div>
-
-        <div class="member-card">
-          <div class="member-badge">C</div>
-          <h3>Aisyah</h3>
-          <p>Search and Filter, and Available Products Detail modules.</p>
-          <a
-            class="module-link"
-            href="https://aimimisman.github.io/farmster/modules/member-c/available-products-detail/available-products-detail.html"
-            target="_blank"
-            >Open Aisyah's Modules</a
-          >
-        </div>
-
-        <div class="member-card">
-          <div class="member-badge">D</div>
-          <h3>Nur Ellyana</h3>
-          <p>Chat / Messaging and Notification modules.</p>
-          <a
-            class="module-link"
-            href="/modules/member-d/chat-messaging/chat-messaging.html"
-            target="_blank"
-            >Open Nur Ellyana's Modules</a
-          >
-        </div>
-
-        <div class="member-card">
-          <div class="member-badge">E</div>
-          <h3>Aimi</h3>
-          <p>
-            Farm Adoption / Crowdfunding, Payment, and Transaction Coordination
-            modules.
-          </p>
-          <a
-            class="module-link"
-            href="/farmster/modules/member-e/farm-adoption-crowdfunding/farm-adoption-crowdfunding.html"
-            target="_blank"
-            >Open Aimi's Modules</a
-          >
+      <p class="test-quote">"I used to worry about where my vegetables came from. Now I know the exact farm, the exact farmer. The quality is incomparable to anything at the wet market."</p>
+      <div class="test-author">
+        <div class="test-avatar">L</div>
+        <div>
+          <div class="test-name">Lim Mei Shan</div>
+          <div class="test-role">Home Cook, Penang</div>
         </div>
       </div>
-    </section>
-
-    <section id="modules">
-      <div class="section-header">
-        <p class="section-label">Module Breakdown</p>
-        <h2>Project Responsibilities</h2>
-        <p>
-          The modules are grouped by team member, so the page is easier to read
-          and does not feel too crowded.
-        </p>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
       </div>
-
-      <div class="modules-layout">
-        <aside class="module-sidebar">
-          <h3>How to read this section</h3>
-          <p>
-            Each row shows one member and the modules assigned to them. Use the
-            quick links above to open each member's combined module page.
-          </p>
-          <a href="#member-links" class="module-link">Go to Module Links</a>
-        </aside>
-
-        <div class="module-list">
-          <div class="module-row">
-            <div class="module-owner">
-              A: Dayah
-              <span>Marketplace and product information</span>
-            </div>
-            <div class="module-items">
-              <div class="module-item">
-                <h4>Marketplace Module</h4>
-                <p>
-                  Displays producer listings and helps users browse farms and
-                  products available on the platform.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Product Catalog Module</h4>
-                <p>
-                  Shows product information such as name, category, quantity,
-                  and general product descriptions.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Market Price Module</h4>
-                <p>
-                  Displays current market prices so users can compare producer
-                  prices with market value.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-row">
-            <div class="module-owner">
-              B: Saba
-              <span>Farmer identity and product trust</span>
-            </div>
-            <div class="module-items">
-              <div class="module-item">
-                <h4>Farmer Profile Module</h4>
-                <p>
-                  Contains farmer information such as name, background, farm
-                  details, and contact number.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Location Module</h4>
-                <p>
-                  Shows the farm or producer location to help users know where
-                  products come from.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Certification / Product Label Module</h4>
-                <p>
-                  Displays indicators such as Organic or Pesticide-Free for
-                  trust and transparency.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-row">
-            <div class="module-owner">
-              C: Aisyah
-              <span>Product discovery and details</span>
-            </div>
-            <div class="module-items">
-              <div class="module-item">
-                <h4>Search and Filter Module</h4>
-                <p>
-                  Allows users to search and filter listings based on product
-                  type, labels, location, and other criteria.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Available Products Detail Module</h4>
-                <p>
-                  Shows detailed information about available products, including
-                  stock, description, and related details.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-row">
-            <div class="module-owner">
-              D: Nur Ellyana Afiera Binti Hassan
-              <span>Communication and updates</span>
-            </div>
-            <div class="module-items">
-              <div class="module-item">
-                <h4>Chat / Messaging Module</h4>
-                <p>
-                  Enables communication between producers and consumers through
-                  chat on the platform.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Notification Module</h4>
-                <p>
-                  Sends email notifications for updates such as messages,
-                  product availability, or adoption activity.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="module-row">
-            <div class="module-owner">
-              E: Aimi
-              <span>Support, payment, and transaction flow</span>
-            </div>
-            <div class="module-items">
-              <div class="module-item">
-                <h4>Farm Adoption / Crowdfunding Module</h4>
-                <p>
-                  Supports the Adopt a Farm feature where users can contribute a
-                  fixed amount to support a farm.
-                </p>
-              </div>
-              <div class="module-item">
-                <h4>Payment Module</h4>
-                <p>Handles Stripe payment links for farm adoption payments.</p>
-              </div>
-              <div class="module-item">
-                <h4>Transaction Coordination Module</h4>
-                <p>
-                  Supports manual transaction flow where producers and consumers
-                  complete deals through chat or contact.
-                </p>
-              </div>
-            </div>
-          </div>
+      <p class="test-quote">"As a restaurant owner, freshness is everything. Farmster lets us source directly from farms for our daily menu. Our customers can taste the difference."</p>
+      <div class="test-author">
+        <div class="test-avatar">A</div>
+        <div>
+          <div class="test-name">Ahmad Zulkifli</div>
+          <div class="test-role">Restaurant Owner, KL</div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section id="features" class="features">
-      <div class="section-header center">
-        <p class="section-label">Platform Features</p>
-        <h2>Main Features</h2>
-        <p>
-          The platform focuses on product discovery, trust, communication,
-          support, and payment flow.
-        </p>
-      </div>
+<!-- CTA -->
+<section class="cta-section" id="get-started">
+  <div class="cta-inner">
+    <div class="section-label" style="text-align:center;">Join the Movement</div>
+    <h2 class="cta-big">Ready to eat <em>honestly</em>?</h2>
+    <p class="cta-sub">Join thousands of Malaysians who've made the switch to fresh, local, and traceable produce.</p>
+  </div>
+</section>
 
-      <div class="feature-strip">
-        <div class="feature-item">
-          <h3>Browse Products</h3>
-          <p>
-            Users can view farm products and check details such as name,
-            category, quantity, and stock.
-          </p>
-        </div>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Farm<span>ster</span></div>
+      <p class="footer-tagline">Reconnecting Malaysians with the land and the people who cultivate it.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="#">For Buyers</a></li>
+        <li><a href="#">For Farmers</a></li>
+        <li><a href="#">How It Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links">
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">2026 Farmster Marketplace Platform.Prepared for the Module Assignment Project. Built with care for Malaysian farmers.</div>
+    <div class="footer-copy">Eat local. Live well.</div>
+  </div>
+</footer>
 
-        <div class="feature-item">
-          <h3>Compare Prices</h3>
-          <p>
-            Users can compare producer prices with current market prices before
-            making a decision.
-          </p>
-        </div>
+<script>
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
 
-        <div class="feature-item">
-          <h3>Search and Filter</h3>
-          <p>
-            Users can search products based on type, label, location, and
-            selected criteria.
-          </p>
-        </div>
+  // Intersection observer for reveal animations
+  const revealEls = document.querySelectorAll('.bento-card, .how-step, .cat-card, .test-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
 
-        <div class="feature-item">
-          <h3>Chat with Farmers</h3>
-          <p>
-            Consumers and producers can communicate through the chat or
-            messaging module.
-          </p>
-        </div>
+  revealEls.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = `opacity 0.55s ${i * 0.06}s ease, transform 0.55s ${i * 0.06}s ease`;
+    observer.observe(el);
+  });
+</script>
 
-        <div class="feature-item">
-          <h3>Support Farms</h3>
-          <p>
-            Users can support farms through the Farm Adoption or Crowdfunding
-            feature.
-          </p>
-        </div>
-
-        <div class="feature-item">
-          <h3>Payment Updates</h3>
-          <p>
-            The platform supports Stripe payment links and email notifications
-            for important updates.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="team">
-      <div class="section-header">
-        <p class="section-label">Team Summary</p>
-        <h2>Assignment Table</h2>
-        <p>A simple table version of the team responsibilities.</p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Assigned Member</th>
-              <th>Member Name</th>
-              <th>Modules</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>A</td>
-              <td>Dayah</td>
-              <td>Marketplace, Product Catalog, Market Price</td>
-            </tr>
-
-            <tr>
-              <td>B</td>
-              <td>Saba</td>
-              <td>Farmer Profile, Location, Certification / Product Label</td>
-            </tr>
-
-            <tr>
-              <td>C</td>
-              <td>Aisyah</td>
-              <td>Search and Filter, Available Products Detail</td>
-            </tr>
-
-            <tr>
-              <td>D</td>
-              <td>Nur Ellyana Afiera Binti Hassan</td>
-              <td>Chat / Messaging, Notification</td>
-            </tr>
-
-            <tr>
-              <td>E</td>
-              <td>Aimi</td>
-              <td>
-                Farm Adoption / Crowdfunding, Payment, Transaction Coordination
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <footer>
-      <p>
-        &copy; 2026 Farm Marketplace Platform. Prepared for the Module
-        Assignment Project.
-      </p>
-    </footer>
-
-    <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="modules/member-d/notification/notification.js"></script>
-
-  <script>
-   
-    
-    document
-      .getElementById("notificationIcon")
-      .addEventListener("click", async () => {
-
-        // Load modal HTML file
-        const response = await fetch("modules/member-d/notification/notification.html");
-        const modalHtml = await response.text();
-
-        // Insert modal into page
-        document.getElementById("modalContainer").innerHTML = modalHtml;
-        loadNotifications();
-
-        // Open modal
-        const modal = new bootstrap.Modal(
-          document.getElementById("notificationModal")
-        );
-
-        modal.show();
-      });
-
-    loadUnreadCount();
-
-    
-
-  </script>
-
-  </body>
+</body>
 </html>

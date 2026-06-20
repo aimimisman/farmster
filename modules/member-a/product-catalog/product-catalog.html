@@ -3,12 +3,19 @@
 <head>
     <title>Product Catalog</title>
     <link rel="stylesheet" href="product-catalog.css">
+     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../landing_page.css"/>
+    <link rel="stylesheet" href="../../member-d/review-rating/review_rating.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 <!-- HEADER -->
-    <div class="header">
+   
+    <!-- <div class="header">
         <div class="logo">Product Catalog</div>
 
         <div class="menu">
@@ -18,94 +25,158 @@
         </div>
 
         <div class="user"></div>
-    </div>
+    </div>  -->
+     <div id="navbar-container"></div>
 
 <!-- BANNER -->
 <!-- <div class="banner"></div> -->
+<section class="how-section" id="how">
+    <div class="page-container">
 
-<div class="page-container">
-
-    <!-- LOGO + INFO ROW -->
-    <div class="farm-header-row">
-        
-        <div class="farm-logo">
-            <img src="../../../assets/images/farm-logo.png" alt="farm logo">
-        </div>
-        
-        <!-- INFO -->
-        <div class="farm-info">
-            <div class="farm-title-row">
-                <h2 id="farmTitle">Farm Name</h2>
-                <button class="visit-btn">Chat Seller</button>
+        <!-- LOGO + INFO ROW -->
+        <div class="farm-header-row ">
+            
+            <div class="farm-logo">
+                <img src="../../../assets/images/farm-logo.png" alt="farm logo">
             </div>
             
-            <p class="farm-location"></p>
-            <p class="farm-desc"> </p>
-            <p class="contact-no"> </p>
-            <p class="owner-name"> </p>
-            
-        </div>
-    </div>
-
-    
-    
-    <div class="info-grid">
-        <div class="info-card">
-            <p class="label">Joined</p>
-            <h4 id="joinedValue">-</h4>
-        </div>
-        
-        <div class="info-card">
-            <p class="label">Products</p>
-            <h4 id="productCount">0</h4>
-        </div>
-        
-        
-        <div class="info-card">
-            <p class="label">Marketplace</p>
-            <h4>Visit</h4>
-        </div>
-        
-            
-       
-            <div class="info-card" >
-                 
-                <p class="label">Rating</p>
-                <h4 id="ratingValue">0 ⭐</h4>
+            <!-- INFO -->
+            <div class="farm-info ">
+                <div class="farm-title-row">
+                    <h2 id="farmTitle">Farm Name</h2>
+                    <a href="https://aimimisman.github.io/farmster/modules/member-d/chat-messaging/chat-messaging.html" target="_blank" class="bg-emerald-800 hover:bg-emerald-500 rounded-2xl  md:p-3 border-2 border-green-200 text-white">Chat Seller</a>
+                </div>
+                
+                <p class="farm-location"></p>
+                <p class="farm-desc"> </p>
+                <p class="contact-no"> </p>
+                <p class="owner-name"> </p>
                 
             </div>
-        
-        
-        <div class="info-card">
-            <p class="label">Followers</p>
-            <h4 id="followersValue">0</h4>
         </div>
-    </div>
 
-    <div class="title-section" id="productSection">
-        <div class="page-title" id="productTitle">Product From</div> 
-        <p class="page-subtitle">Browse fresh products from selected farm</p>
-    </div>
-    
-    <!-- PRODUCT GRID -->
-    <div class="product-grid" id="productContainer"></div>
-
-    <!-- LOADING -->
-             <div id="loading" class="loading-container">
-                <div class="loader"></div>
-                <p>Loading Product from this farm...</p>
+        
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <p class="label">Joined</p>
+                <h4 id="joinedValue">-</h4>
             </div>
-    
-    <!-- PAGINATION -->
-     <div class="pagination"></div>
-    
-    <!-- DETAIL PANEL / after tekan button view detail (bawah) -->
-    <div id="productDetail" class="product-detail hidden"></div>
+            
+            <div class="info-card">
+                <p class="label">Products</p>
+                <h4 id="productCount">0</h4>
+            </div>
+            
+            
+            <div class="info-card">
+                <p class="label">Marketplace</p>
+                <h4>Visit</h4>
+            </div>
+            
+                
+        
+                <div class="info-card"  onclick="scrollToReviews()">
+                    
+                    <p class="label">Rating</p>
+                    <h4 id="ratingValue">0 ⭐</h4>
+                    
+                </div>
+            
+            
+            <div class="info-card">
+                <p class="label">Followers</p>
+                <h4 id="followersValue">0</h4>
+            </div>
+        </div>
+
+        <div class="title-section" id="productSection">
+            <div class="page-title" id="productTitle">Product From</div> 
+            <p class="page-subtitle">Browse fresh products from selected farm</p>
+        </div>
+        
+        <!-- PRODUCT GRID -->
+        <div class="product-grid" id="productContainer"></div>
+
+        <!-- LOADING -->
+                <div id="loading" class="loading-container">
+                    <div class="loader"></div>
+                    <p>Loading Product from this farm...</p>
+                </div>
+        
+        <!-- PAGINATION -->
+        <div class="pagination"></div>
+        
+        <!-- DETAIL PANEL / after tekan button view detail (bawah) -->
+        <div id="productDetail" class="product-detail hidden"></div>
+
+        <div id="reviewRatingContainer" class="reviewRatingContainer" style="margin: 5rem auto;"></div>
 
 
-</div>
+    </div>
+</section>
 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="/modules/member-d/notification/notification.js"></script>
+<script src="../../../navbar.js"></script>
 <script src="product-catalog.js"></script>
+<script src="../../member-d/review-rating/review_rating.js"></script>
+<script>
+
+      // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+    async function loadReviewRating() {
+        try {
+
+            const response = await fetch(
+                "https://aimimisman.github.io/farmster/modules/member-d/review-rating/review_rating.html"
+            );
+
+            document.getElementById("reviewRatingContainer").innerHTML = await response.text();
+            initStarRating();
+            fetchReviews();
+
+       
+            
+
+           
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    
+    function scrollToReviews(){
+
+        const section =
+            document.getElementById("farmReviewsSection");
+
+        section.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+        section.classList.add("review-highlight");
+
+        setTimeout(() => {
+
+            section.classList.remove("review-highlight");
+
+        },500);
+    }
+
+
+
+    loadReviewRating();
+</script>
+
+
 
 
 

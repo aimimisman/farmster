@@ -167,6 +167,10 @@ function loginUser(e){
 
     e.preventDefault();
 
+    // const email = document.getElementById("email").value.trim();
+
+    // const password = document.getElementById("password").value.trim();
+
     const data = {
 
         email:
@@ -185,7 +189,7 @@ function loginUser(e){
 
 
 fetch(
-"https://script.google.com/macros/s/AKfycbxGwkquRFThhlRLUI0jhY-sdGj2G0j_Amab2kV9lo908zevKlsaC4lnRX9TC6Xt9btTvQ/exec?action=login",
+"https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec?action=login",
 
 {
 
@@ -240,8 +244,7 @@ body:JSON.stringify(data)
 
 
          window.location.href =
-
-        BASE_URL +
+         
 
         "/modules/member-b/farmer-profile/memberlist.html";
 

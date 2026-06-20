@@ -1,124 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-<title>Farm Profile</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-<link rel="stylesheet" href="review_rating.css">
-
-
+    <title>Farm Rating and Reviews</title>
 </head>
 <body>
 
+    
 
-<div class="container mt-lg-5">
+<div id="farmReviewsSection" class="container mt-lg-5">
 
     <!-- CLICKABLE RATING CARD -->
 
-    <div class="farm-rating-card" onclick="scrollToReviews()">
-
+    <div class="farm-rating-card how-section how-header p-6 bg-white rounded-2xl shadow-lg overflow-hidden" onclick="scrollToReviews()">
         <div>
-
-            <div class="rating-score">
-                4.8
+            <div class="flex items-end gap-2">
+                <h1 id="review-average" class="section-title font-bold mb-2"></h1>
+                <h4 class=" text-gray-500 mb-1">/5</h4>
             </div>
-
-            <div class="rating-stars">
-                ★★★★★
-            </div>
-
-            <div class="rating-count">
-                Based on 128 reviews
-            </div>
-
+            <div class="text-lg text-emerald-700 font-bold mb-2">Based on community reviews</div>
         </div>
 
-        <div class="rating-right">
-
-            <i class="bi bi-chevron-double-down"></i>
-
-            <div>
-                View Ratings & Reviews
+        <div class="flex items-center gap-3 text-green-700 group-hover:gap-4 transition-all">
+            <div class="text-right">
+                <p class="font-semibold text-lg">See Reviews</p>
+                <p class="text-sm text-gray-600">What customers love</p>
             </div>
-
+            <i class="bi bi-arrow-down-circle-fill text-3xl group-hover:translate-y-1 transition-transform"></i>
         </div>
 
     </div>
 
-    <!-- PRODUCTS -->
-
-    
-
     <!-- REVIEWS -->
+    <div class="space-y-2 mb-10">
+        <h1 class="section-title text-4xl md:text-5xl font-bold text-slate-900">
+            Trusted by <span class="text-green-700">our community</span>
+        </h1>
+        <p class="text-gray-600 text-lg">Real feedback from real customers</p>
+    </div>
 
-    <section id="farmReviewsSection">
-
-        <div class="review-header">
-
-            <h2 class="fw-bold">
-                Farm Ratings & Reviews
-            </h2>
+    <!-- SUMMARY STATS -->
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 bg-white/10 rounded-xl p-8 border border-green-100 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Average Rating -->
+            <div class="text-white text-xl font-bold text-center border-b md:border-b-0 md:border-r border-gray-200 pb-8 md:pb-0">
+                <div class="section-title text-5xl font-bold text-emerald-50 mb-2" id="review-average2">4.8</div>
+                <div id="stars" class="flex justify-center gap-1 mb-3"></div>
+                <p class="text-emerald-50 font-medium">Average rating</p>
+            </div>
+            
+            <!-- Total Reviews -->
+            <div class="text-center border-b md:border-b-0 md:border-r border-gray-200 pb-8 md:pb-0">
+                <div class="text-4xl font-bold text-emerald-50 mb-2" id="totalReviews">0</div>
+                <p class="text-emerald-50 font-medium">Verified reviews</p>
+            </div>
+            
+            <!-- Trust Badge -->
+            <div class="text-center flex flex-col items-center justify-center">
+                <i class="bi bi-shield-check text-emerald-50 text-3xl mb-2"></i>
+                <p class="text-emerald-50 font-semibold">Community Verified</p>
+                <p class="text-sm text-emerald-50">Authentic feedback</p>
+            </div>
         </div>
+    </div>
 
-        <!-- SUMMARY -->
+<!-- <div class="max-w-md mx-auto bg-gradient-to-r from-[#10b981] to-[#14b8a6] p-[3px] rounded-2xl shadow-lg hover:shadow-md transition-all">
+  
+  <div class="bg-white rounded-[13px] p-6">
+    <h3 class="text-xl font-bold text-gray-900 mb-2">Modern Gradient Border</h3>
+    <p class="text-gray-600 text-sm">
+      This card nests a white container inside a gradient wrapper to achieve flawless rounded corners and a sharp gradient border.
+    </p>
+  </div>
+  
+</div> -->
 
-        <div class="review-summary">
 
-            <h1 id="review-average"></h1>
-
-            <div id="stars" class="stars"></div>
-
-            <h5 class="fw-bold" id="totalReviews"></h5>
-
-        </div>
-
-         <!-- REVIEW CTA -->
-        <div class="review-cta">
-
-            <div class="row align-items-center">
-
-                <div class="col-md-7">
-
-                    <h4>
-                        Share your experience with <span id="farmName"></span>!
-                    </h4>
-
-                    <p class="mb-0">
-                        Your review helps other customers and supports local farmers.
-                    </p>
-
-                </div>
-
-                <div class="col-md-5 text-end">
-                    <button type="button" class="btn btn-review" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                        <i class="bi bi-pencil"></i>
-                        Write Review
-                    </button>
-
-                </div>
-
+     <!-- WRITE REVIEW CTA -->
+    <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 md:p-10 border-2 border-green-200">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+                    Share your farm experience with <span id="farmName" class="text-emerald-700"></span>!
+                </h3>
+                <p class="text-gray-700 text-lg">
+                    Help others discover quality. Your honest review matters.
+                </p>
             </div>
 
-        </div>
-
-        <!-- REVIEWS -->
-         <div class="review-list" id="review-list"></div>
-         <div class="text-center mt-3">
-            <button id="moreReviewsBtn" class="btn btn-outline-success">
-                More Reviews
+            <button 
+                type="button" 
+                class="flex items-center gap-2 bg-emerald-800 hover:bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg"
+                data-bs-toggle="modal" 
+                data-bs-target="#reviewModal"
+            >
+                <i class="bi bi-pencil"></i>
+                Write Review
             </button>
         </div>
+    </div>
 
+    <div class="space-y-4 mt-10">
+        <div id="review-list" class="space-y-4"></div>
         
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+            <button 
+                id="moreReviewsBtn" 
+                class="border-2 border-green-600 text-green-700 hover:bg-green-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
+            >
+                Load More Reviews
+            </button>
+        </div>
+    </div>
 
-        
-       
-
+     <!-- Review Form Modal -->
         <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content notification-modal">
@@ -143,7 +144,7 @@
                                 <i class="bi bi-star fs-1 star" data-value="4"></i>
                                 <i class="bi bi-star fs-1 star" data-value="5"></i>
                             </div>
-                            <input type="hidden" id="reviewRating" value="0">
+                            <input type="hidden" id="reviewRatingInput" value="0">
                         </div>
 
                         <div class="mb-3 mt-4">
@@ -168,6 +169,8 @@
             </div>
         </div>
 
+
+        <!-- Submit Review Thank You Modal -->
         <div class="modal fade" id="thankyouModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content thankyou-modal">
@@ -211,37 +214,13 @@
         </div>
 
 
-    </section>
+
+    <!-- <section id="farmReviewsSection"> </section> -->
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="review_rating.js"></script>
-<script>
-
-
-    
-
-function scrollToReviews(){
-
-    const section =
-        document.getElementById("farmReviewsSection");
-
-    section.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
-
-    section.classList.add("review-highlight");
-
-    setTimeout(() => {
-
-        section.classList.remove("review-highlight");
-
-    },2000);
-}
-
-</script>
 
 </body>
 </html>
