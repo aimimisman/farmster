@@ -1,7 +1,7 @@
 
 console.log("Chat JS FILE LOADED");
 
-let allChats = [];
+let allChatss = [];
 var userchatId = ""; // global variable to store current chatId for sending messages
 var receiverId = ""; // global variable to store receiverId for sending messages
 
@@ -12,9 +12,9 @@ const url = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyi
 const notyUrl = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
 
-const storageUserId = JSON.parse(localStorage.getItem("currentUser"));  //my user id
+const storageUserIds = JSON.parse(localStorage.getItem("currentUser"));  //my user id
 
-const userId = storageUserId.userId; //my user id
+const userId = storageUserIds.userId; //my user id
 console.log("User ID:", userId);
 
 //untuk create new conversation dengan farmer
@@ -25,12 +25,14 @@ console.log(selectedFarm);
 console.log(selectedFarmerName);
 console.log(selectedFarmerId);
 
-openChat();
 
+ openChat()
 
 
 function loadChatList() {
-  console.log(url + "?action=getChatList&userId=" + userId + "&t=" + Date.now());
+  console.log(
+    url + "?action=getChatList&userId=" + userId + "&t=" + Date.now(),
+  );
 
   let html = "";
 
@@ -38,178 +40,107 @@ function loadChatList() {
   chatcontainer.innerHTML = ""; // clear old list
 
   fetch(url + "?action=getChatList&userId=" + userId + "&t=" + Date.now())
-  .then(res => res.json())
-  .then(response => {
+    .then((res) => res.json())
+    .then((response) => {
       console.log("Chat List:", response);
 
-      if(!response.data || response.data.length === 0) {
-        document.getElementById("chat-list").innerHTML = "<p class='text-center text-secondary mt-4'>No chats yet. Start a conversation!</p>";
-       // document.getElementById("loading-spinner-list").style.display = "none";
+      // DIUBAH: Kalau takde chat langsung DAN takde selectedFarmer, tunjuk mesej kosong
+      // SEBELUM: Terus return tanpa check selectedFarmerName
+      if (
+        (!response.data || response.data.length === 0) &&
+        !selectedFarmerName
+      ) {
+        document.getElementById("chat-list").innerHTML =
+          "<p class='text-center text-secondary mt-4'>No chats yet. Start a conversation!</p>";
         return;
       }
 
-     
-      // New conversation card at the top
-       const existingChat = response.data.find(chat => {
-            console.log(
-                `[${chat.userId}]`,
-                `[${selectedFarmerId}]`,
-                String(chat.userId) === String(selectedFarmerId)
-            );
-
-            return String(chat.userId) === String(selectedFarmerId);
+      // DIUBAH: Check kalau farmer yang dipilih dari homepage dah ada dalam chat list
+      // SEBELUM: Terus check tanpa guard — crash kalau selectedFarmerId null
+      let existingChat = null;
+      if (selectedFarmerId && response.data) {
+        existingChat = response.data.find((chat) => {
+          return String(chat.userId) === String(selectedFarmerId);
         });
+      }
+      console.log("existingChat =", existingChat);
 
-        console.log("existingChat =", existingChat);
+      // DIUBAH: Kalau ada selectedFarmer dari homepage DAN belum pernah chat,
+      // tunjuk card "New Conversation" kat atas sekali dalam list
+      // SEBELUM: Tunjuk card tapi TAK tunjuk existing chats di bawah
+      if (selectedFarmerName && !existingChat) {
+        html += `
+          <div
+              id="new-conversation"
+              class="sidebar-item px-4 py-4 hover:bg-green-50 cursor-pointer soft-shadow transition-all duration-300 hover-lift border-l-4 border-transparent"
+              onclick="openChatHistory(this, '', '${selectedFarmerName}')"
+          >
+              <div class="flex items-start gap-3">
+                  <div class="relative mt-1">
+                      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
+                         ${selectedFarmerName.charAt(0)}
+                      </div>
+                      <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                      <div class="flex justify-between items-start mb-1">
+                          <p class="font-semibold text-gray-900">${selectedFarmerName}</p>
+                          <span class="text-xs text-gray-500">Now</span>
+                      </div>
+                      <p class="text-sm text-gray-600 truncate">Currently messaging...</p>
+                  </div>
+              </div>
+          </div>`;
+      }
 
-        if (!existingChat) {
+      // DIUBAH: SENTIASA render semua existing chats
+      // SEBELUM: Hanya render dalam "else" block — jadi kalau farmer baru, existing chats hilang
+      // SELEPAS: Render regardless, supaya user nampak semua chat history
+      // DIUBAH: Sort by timestamp — chat paling baru duduk kat atas (top of all messages)
+      if (response.data && response.data.length > 0) {
+        response.data.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
+        );
+        response.data.forEach((chat) => {
+          html += `
+                  <div
+                      class="sidebar-item px-4 py-4 hover:bg-green-50 cursor-pointer soft-shadow transition-all duration-300 hover-lift border-l-4 border-transparent"
+                      onclick="openChatHistory(this, '${chat.chatId}', '${chat.userName}')"
+                  >
+                      <div class="flex items-start gap-3">
+                          <div class="relative mt-1">
+                              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
+                              ${chat.userName.charAt(0)}
+                              </div>
+                              <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                          </div>
+                          <div class="flex-1 min-w-0">
+                              <div class="flex justify-between items-start mb-1">
+                                  <p class="font-semibold text-gray-900">${chat.userName}</p>
+                                  <span class="text-xs text-gray-500">${formatTimeAgo(chat.timestamp) || ""}</span>
+                              </div>
+                              <p class="text-sm text-gray-600 truncate">${chat.lastMessage || "No messages yet"}</p>
+                          </div>
+                      </div>
+                  </div>`;
+        });
+      }
 
-            html += `
-            <div
-                id="new-conversation"
-                class="sidebar-item px-4 py-4 hover:bg-green-50 cursor-pointer soft-shadow transition-all duration-300 hover-lift"
-                onclick="openChatHistory(this, '', '${selectedFarmerName}')"
-            >
-                <div class="flex items-start gap-3">
+      // Masukkan semua HTML ke dalam container
+      chatcontainer.innerHTML = html;
 
-                    <div class="relative mt-1">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
-                           ${selectedFarmerName.charAt(0)}
-                        </div>
-
-                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                    </div>
-
-                    <div class="flex-1 min-w-0">
-
-                        <div class="flex justify-between items-start mb-1">
-                            <p class="font-semibold text-gray-900">
-                                ${selectedFarmerName}
-                            </p>
-
-                            <span class="text-xs text-gray-500">
-                                "Now"
-                            </span>
-                        </div>
-
-                        <p class="text-sm text-gray-600 truncate">
-                            ${ "Currently messaging..."}
-                        </p>
-
-                    </div>
-
-                </div>
-            </div>`; 
-        } else {
-
-            response.data.forEach(chat => {
-
-            // console.log("Chat ID:", chat.chatId);
-
-            // div.className = "profile ms-3";
-            // div.onclick = function () {
-            //   receiverId = chat.userId; // set receiverId when opening chat
-            //   openChatHistory(chat.chatId, chat.userName);
-            // };
-
-        
-
-            const initials = chat.userName
-            .split(" ")
-            .map(name => name[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase();
-
-            html += `
-                <div
-                    class="sidebar-item px-4 py-4 hover:bg-green-50 cursor-pointer soft-shadow transition-all duration-300 hover-lift"
-                    onclick="openChatHistory(this, '${chat.chatId}', '${chat.userName}')"
-                >
-                    <div class="flex items-start gap-3">
-
-                        <div class="relative mt-1">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
-                            ${chat.userName.charAt(0)}
-                            </div>
-
-                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                        </div>
-
-                        <div class="flex-1 min-w-0">
-
-                            <div class="flex justify-between items-start mb-1">
-                                <p class="font-semibold text-gray-900">
-                                    ${chat.userName}
-                                </p>
-
-                                <span class="text-xs text-gray-500">
-                                    ${formatTimeAgo(chat.timestamp) || ""}
-                                </span>
-                            </div>
-
-                            <p class="text-sm text-gray-600 truncate">
-                                ${chat.lastMessage || "No messages yet"}
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
-                `;
-
-                
-            });
-
-          
-
+      // DIUBAH: Kalau ada new farmer yang belum pernah chat, auto-buka chat tu
+      // SEBELUM: Panggil openChatHistory tanpa check null — crash kalau element tak wujud
+      // TUJUAN: User dari homepage terus masuk chat dengan farmer yang dipilih
+      if (selectedFarmerName && !existingChat) {
+        receiverId = selectedFarm;
+        const newConvEl = document.getElementById("new-conversation");
+        if (newConvEl) {
+          openChatHistory(newConvEl, null, selectedFarmerName);
         }
-
-          chatcontainer.innerHTML = html;
-      
-
-      
-
-        if (!existingChat) {
-
-            receiverId = selectedFarm;
-
-            openChatHistory(
-                document.getElementById("new-conversation"),
-                null,
-                selectedFarmerName
-            );
-        }
-
-        // div.innerHTML = `
-        //   <div class="d-flex align-items-center border-bottom py-3">
-
-        //       <div class="avatar me-3">
-        //           ${chat.userName.charAt(0)}
-        //       </div>
-
-        //       <div>
-        //           <div class="name">
-        //               ${chat.userName}
-        //           </div>
-
-        //           <div class="message-preview text-secondary">
-        //               ${chat.lastMessage}
-        //           </div>
-        //       </div>
-
-        //   </div>
-        // `;
-
-       
-      
-
-    //   document.getElementById("loading-spinner-list").style.display = "none";
-
+      }
     })
-    .catch(err => console.error(err));
-
-
+    .catch((err) => console.error(err));
 }
 
 
@@ -301,7 +232,7 @@ function loadMessages(chatId) {
                       </div>
 
                       <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold">
-                          ${msg.senderId}
+                          ${msg.senderId.charAt(0)}
                       </div>
 
                   </div>
@@ -314,7 +245,7 @@ function loadMessages(chatId) {
 
                       <div class="relative">
                           <div class="w-8 h-8 rounded-full avatar-green flex items-center justify-center text-white text-xs font-bold">
-                               ${msg.senderId}
+                               ${msg.senderId.charAt(0)}
                           </div>
                       </div>
 
@@ -482,7 +413,7 @@ async function openChatHistory(element, chatId, userName) {
             </div>
             <div>
                 <h2 class="text-lg font-bold text-gray-900">${userName}</h2>
-                <p class="text-sm text-green-600">Active right now</p>
+                <p class="text-sm text-green-600">Available</p>
             </div>
         </div>`
     ;
@@ -570,7 +501,7 @@ function sendMessage() {
     fetch(
       notyUrl +
       "?action=storeNotification" +
-      "&receiverId=" + encodeURIComponent(receiverId) +
+      "&receiverId=" + encodeURIComponent(selectedFarmerId) +
       "&senderId=" + encodeURIComponent(userId) +
       "&type=chat" +
       "&message=You have one unread message from " +

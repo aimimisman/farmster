@@ -4,13 +4,14 @@ let allChats = [];
 var userchatId = ""; // global variable to store current chatId for sending messages
 
 
-const url = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
+const notiesurl = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec";
 
 const storageUserId =  JSON.parse(localStorage.getItem("currentUser")); //my user id
+console.log(storageUserId.userId);
 
 function openNotificationModal() {
 
-  fetch("modules/member-d/notification/notification.html")
+  fetch("/modules/member-d/notification/notification.html")
     .then(res => res.text())
     .then(html => {
 
@@ -32,7 +33,7 @@ function openNotificationModal() {
 function loadUnreadCount() {
 
   fetch(
-    url +
+    notiesurl +
     "?action=getUnreadCount" +
     "&userId=" + encodeURIComponent(storageUserId.userId)
   )
@@ -60,7 +61,7 @@ function loadUnreadCount() {
 
 function loadNotifications() {
 
-  fetch(url + "?action=getNotify&userId=" + userId + "&t=" + Date.now())
+  fetch(notiesurl + "?action=getNotify&userId=" + storageUserId.userId + "&t=" + Date.now())
   .then(res => res.json())
   .then(response => {
       console.log("Notification List:", response);

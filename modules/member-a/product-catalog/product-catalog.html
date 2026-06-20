@@ -44,7 +44,7 @@
             <div class="farm-info ">
                 <div class="farm-title-row">
                     <h2 id="farmTitle">Farm Name</h2>
-                    <a href="/modules/member-d/chat-messaging/chat-messaging.html" target="_blank" class="bg-emerald-800 hover:bg-emerald-500 rounded-2xl  md:p-3 border-2 border-green-200 text-white">Chat Seller</a>
+                    <a href="https://aimimisman.github.io/farmster/modules/member-d/chat-messaging/chat-messaging.html" target="_blank" class="bg-emerald-800 hover:bg-emerald-500 rounded-2xl  md:p-3 border-2 border-green-200 text-white">Chat Seller</a>
                 </div>
                 
                 <p class="farm-location"></p>
@@ -118,6 +118,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="/modules/member-d/notification/notification.js"></script>
 <script src="../../../navbar.js"></script>
 <script src="product-catalog.js"></script>
 <script src="../../member-d/review-rating/review_rating.js"></script>
@@ -133,7 +134,7 @@
         try {
 
             const response = await fetch(
-                "../../member-d/review-rating/review_rating.html"
+                "https://aimimisman.github.io/farmster/modules/member-d/review-rating/review_rating.html"
             );
 
             document.getElementById("reviewRatingContainer").innerHTML = await response.text();

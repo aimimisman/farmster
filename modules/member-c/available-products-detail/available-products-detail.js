@@ -256,7 +256,7 @@ function renderProducts(data) {
 
   data.forEach((p, index) => {
     productList.innerHTML += `
-      <div class="product-card" onclick="showDetail(${index})">
+      <div class="product-card " onclick="showDetail(${index})">
         <div class="img-wrapper">
           <img
             src="${p.image}"

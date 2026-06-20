@@ -81,24 +81,25 @@
 <nav id="navbar">
   <div class="nav-logo">Farm<span>ster</span></div>
   <ul class="nav-links">
-    <li><a href="/homepage.html">Home</a></li>
-    <li><a href="/modules/member-b/farmer-profile/memberlist.html" target="_blank">Community</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/homepage.html">Home</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/memberlist.html" target="_blank">Community</a></li>
     <li class="farmster-nav-dropdown">
         <a href="#">Marketplace</a>
         <ul class="farmster-nav-dropdown-menu">
-            <li><a href="/modules/member-c/available-products-detail/available-products-detail.html" target="_blank">Available Products</a></li>
-            <li><a href="/modules/member-a/marketplace/marketplace.html" target="_blank">Featured Producers</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-c/available-products-detail/available-products-detail.html" target="_blank">Available Products</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/marketplace/marketplace.html" target="_blank">Featured Producers</a></li>
         </ul>
     </li>
     <li class="farmster-nav-dropdown">
         <a href="#">Market Price</a>
         <ul class="farmster-nav-dropdown-menu">
-            <li><a href="/modules/member-a/market-price/market-price.html" target="_blank">Market Price Dashboard</a></li>
-            <li><a href="/modules/member-a/market-price/price-comparison.html" target="_blank">Price Comparison</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/market-price/market-price.html" target="_blank">Market Price Dashboard</a></li>
+            <li><a href="https://aimimisman.github.io/farmster/modules/member-a/market-price/price-comparison.html" target="_blank">Price Comparison</a></li>
         </ul>
     </li>
-    <li><a href="/modules/member-e/farm-adoption-crowdfunding/farm-adoption-crowdfunding.html" target="_blank">Crowdfunding</a></li>
-    <li><a href="/modules/member-b/farmer-profile/login.html" target="_blank">Profile</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-e/farm-adoption-crowdfunding/farm-adoption-crowdfunding.html" target="_blank">Crowdfunding</a></li>
+     <li><a href="https://aimimisman.github.io/farmster/modules/member-d/chat-messaging/chat-messaging.html" target="_blank">Chat-Messaging</a></li>
+    <li><a href="https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/update.html" target="_blank">Profile</a></li>
     
   </ul>
   <div class="nav-actions">
@@ -112,5 +113,19 @@
     
   </div>
 </nav>
+
+<div id="modalContainer"></div>
+
+<script src="https://aimimisman.github.io/farmster/modules/member-d/notification/notification.js"></script>
+<script>
+
+      // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+</script>
+
 
 

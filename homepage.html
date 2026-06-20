@@ -16,7 +16,7 @@
 
 <!-- NAV -->
 <div id="navbar-container"></div>
-<div id="modalContainer"></div>
+
 
 <section class="how-section" id="how">
   <main class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
@@ -29,7 +29,7 @@
                 <h4 class="section-title mb-4" style="color: #1a3a2a;">Ready to meet your local growers face-to-face today? Fresh harvests are nearby.</h4>
             </div>
 
-            <div class=" bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow">
+            <!-- <div class=" bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow">
                 
                 <div class="grid grid-cols-2 gap-4 bg-white/10 p-3 rounded-xl text-center text-sm">
                     <div>
@@ -41,7 +41,7 @@
                         <span class="text-xs text-emerald-100">Selling right now</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- End Greeting -->
 
            
@@ -102,7 +102,7 @@
                 <div class="section-label">Product Categories</div>
                 <h2 class="section-title">Everything fresh, in one place</h2>
               </div>
-              <a href="#get-started" class="btn-primary" style="flex-shrink:0;">Browse All Products</a>
+              <a href="https://aimimisman.github.io/farmster/modules/member-c/available-products-detail/available-products-detail.html" class="btn-primary" style="flex-shrink:0;">Browse All Products</a>
             </div>
             <div class="cat-grid">
               <div class="cat-card">
@@ -289,11 +289,7 @@
 <script src="navbar.js"></script>
 
 <script>
-  // Nav scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
+
 
   // Intersection observer for reveal animations
   const revealEls = document.querySelectorAll('.bento-card, .how-step, .cat-card, .test-card');

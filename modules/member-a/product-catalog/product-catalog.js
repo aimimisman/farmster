@@ -325,10 +325,7 @@ function viewProductDetail(product) {
                         Compare Price
                     </button>
 
-                    <button class="chat-btn"
-                        onclick="goToChat('${product.farmId}')">
-                        Chat Seller
-                    </button>
+             
 
                 </div>
 

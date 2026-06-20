@@ -851,7 +851,7 @@ function goHome() {
         ? "https://aimimisman.github.io/farmster"
         : "";
 
-    window.location.href = BASE_URL + "/index.html";
+    window.location.href = BASE_URL + "/homepage.html";
 }
 
 function goMarketplace() {

@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("navbar-container").innerHTML = html;
 
       // NOW navbar exists → safe to use elements
-      //initNavbar();
+      initNavbar();
 
-      //loadUnreadCount(); // safe AFTER render
+      loadUnreadCount(); // safe AFTER render
     });
 
 });
@@ -20,7 +20,7 @@ function initNavbar() {
 
   if (!icon) return;
 
- // icon.addEventListener("click", openNotificationModal);
+  icon.addEventListener("click", openNotificationModal);
 
 }
 

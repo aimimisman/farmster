@@ -3,7 +3,7 @@ const urlApps = "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HN
 
 var farmerId = localStorage.getItem("selectedFarmerId");
 var farmName = localStorage.getItem("selectedFarmName");
-var storageUserId = JSON.parse(localStorage.getItem("currentUser"));
+var storageUserIds = JSON.parse(localStorage.getItem("currentUser"));
 
 fetchReviews();
 
@@ -79,7 +79,7 @@ function storeReview() {
     urlApps +
     "?action=storeReview" +
     "&farmerId=" + encodeURIComponent(farmerId) +
-    "&userId=" + encodeURIComponent(storageUserId.userId) +
+    "&userId=" + encodeURIComponent(storageUserIds.userId) +
     "&rating=" + encodeURIComponent(rating) +
     "&comment=" + encodeURIComponent(comment)
   )
