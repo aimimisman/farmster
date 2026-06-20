@@ -11,7 +11,7 @@ console.log(storageUserId.userId);
 
 function openNotificationModal() {
 
-  fetch("/modules/member-d/notification/notification.html")
+  fetch("https://aimimisman.github.io/farmster/modules/member-d/notification/notification.html")
     .then(res => res.text())
     .then(html => {
 

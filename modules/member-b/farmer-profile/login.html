@@ -82,7 +82,6 @@
 <div class="box">
     <h2>Login to Farmster 🌱</h2>
 
-
     <form onsubmit="loginUser(event)">
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password" required>
@@ -92,173 +91,100 @@
 
     <div class="link">
 
-    <p>
-        Don't have an account?
+        <p>
+            Don't have an account?
+            <a id="registerLink">Sign Up</a>
+        </p>
 
-        <a id="registerLink">
-        Sign Up
-        </a>
+        <p>
+            <a id="mainLink">Go to Main Website</a>
+        </p>
 
-    </p>
-
-
-    <p>
-
-        <a id="mainLink">
-        Go to Main Website
-        </a>
-
-    </p>
-
-</div>
+    </div>
 
     <h6>© 2026 Farm Marketplace Platform | Module Assignment Project</h6>
 </div>
-
-<!-- <script>
-function loginUser(e) {
-    e.preventDefault();
-
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    fetch(`YOUR_WEB_APP_URL?email=${email}&password=${password}`)
-    .then(res => res.text())
-    .then(response => {
-        if (response === "SUCCESS") {
-            alert("Login successful!");
-            window.location.href = "main.html";
-        } else {
-            alert("Invalid email or password!");
-        }
-    });
-}
-</script> -->
-
-
 
 <script>
 
 const BASE_URL =
 window.location.hostname.includes("github.io")
-
 ? "https://aimimisman.github.io/farmster"
-
 : "";
 
-document.getElementById(
-"registerLink"
-).href =
+document.getElementById("registerLink").href =
+BASE_URL + "/modules/member-b/farmer-profile/register.html";
 
-BASE_URL +
-
-"/modules/member-b/farmer-profile/register.html";
-
-document.getElementById(
-"mainLink"
-).href =
-
-BASE_URL +
-
-"/index.html";
+document.getElementById("mainLink").href =
+BASE_URL + "/index.html";
 
 
 function loginUser(e){
 
     e.preventDefault();
 
-    // const email = document.getElementById("email").value.trim();
-
-    // const password = document.getElementById("password").value.trim();
-
     const data = {
 
-        email:
-        document
-        .getElementById("email")
-        .value
-        .trim(),
+        email: document.getElementById("email").value.trim(),
 
-        password:
-        document
-        .getElementById("password")
-        .value
-        .trim()
+        password: document.getElementById("password").value.trim()
 
     };
 
+    fetch(
+    "https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec?action=login",
+    {
+        method:"POST",
+        body:JSON.stringify(data)
+    })
 
-fetch(
-"https://script.google.com/macros/s/AKfycbxQGdtvTVude_65_W2zb_HNSVyieVngi3dt5n4bYbjmoLUrHGGUlRIMzhTPGEVM7YyRvg/exec?action=login",
+    .then(res=>res.json())
 
-{
+    .then(res=>{
 
-method:"POST",
+        console.log("FULL RESPONSE:", res);
 
-body:JSON.stringify(data)
+        const user = res.data?.user || res.user;
 
-})
+        const isSuccess =
+            (res.status === "success" ||
+            res.data?.status === "success")
+            &&
+            user != null;
 
-.then(res=>res.json())
-
-.then(res=>{
-
-    console.log(res);
-
-    alert(
-
-        res.data?.message ||
-
-        res.message ||
-
-        "Login successful"
-
-    );
-
-
-    if(
-
-      res.status==="success"
-
-      ||
-
-      res.data?.status==="success"
-
-    ){
-
-        localStorage.setItem(
-
-            "currentUser",
-
-            JSON.stringify(
-
-                res.data?.user
-
-                ||
-
-                res.user
-
-            )
-
+        alert(
+            res.data?.message ||
+            res.message ||
+            "Login failed"
         );
 
+        // ✅ FIXED CONFLICT SECTION ONLY
+        if (!isSuccess) {
+            document.getElementById("password").value = "";
+            document.getElementById("email").value = "";
+            return;
+}
 
-         window.location.href =
-         
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(user)
+        );
 
-       BASE_URL + "/modules/member-b/farmer-profile/memberlist.html";
+        const BASE_URL =
+        window.location.hostname.includes("github.io")
+        ? "https://aimimisman.github.io/farmster"
+        : "";
+        
+        window.location.href =
+        BASE_URL +
+        "/modules/member-b/farmer-profile/memberlist.html";
 
-    }
+    })
 
-})
-
-.catch(err=>{
-
-    console.error(err);
-
-    alert("Login failed");
-
-});
+    .catch(err=>{
+        console.error(err);
+        alert("Login failed");
+    });
 
 }
 
