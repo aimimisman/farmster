@@ -28,5 +28,5 @@ function logoutUser() {
     localStorage.removeItem("currentUser");
 
     window.location.href =
-   "/modules/member-b/farmer-profile/login.html";
+   "https://aimimisman.github.io/farmster/modules/member-b/farmer-profile/login.html";
 }
